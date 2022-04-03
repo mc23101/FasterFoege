@@ -1,7 +1,8 @@
 package com.example.examplemod.client.event;
 
 
-import com.example.examplemod.client.gui.BackGround;
+import ForgeAPI.Widget.Bossbar;
+import com.example.examplemod.client.gui.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -24,7 +25,10 @@ public class KeyboardInputEvent {
     @SubscribeEvent
     public static void onKeyPressed(InputEvent.KeyInputEvent event) {
         if (MY_HOTKEY.isPressed()) {
-            Minecraft.getMinecraft().displayGuiScreen(new BackGround());
+            gui gaui= new gui();
+            Bossbar bossbar = new Bossbar(Minecraft.getMinecraft());
+            bossbar.renderBossHealth();
+            Minecraft.getMinecraft().displayGuiScreen(gaui);
 //            EntityPlayer player=com.zhang.ForgeAPI.Minecraft.getMinecraft().player;
 //            player.sendMessage(new TextComponentString("aaa"));
 //            if(player!=null){
