@@ -29,7 +29,7 @@ public class TextField extends Gui {
     private int cursorPositionY=0;
     private int cursorPositionX=0;
     private int cursorPositionLine=0;
-
+    private int ClickedLine;
     private int cursorCounter;
     private int line=1;
     private int MaxLine=0;
@@ -97,7 +97,12 @@ public class TextField extends Gui {
     public void writeText(String textToWrite)
     {
             String inputString = ChatAllowedCharacters.filterAllowedCharacters(textToWrite);
-            this.text=this.text+inputString;
+            if(this.cursorStringPosition==this.text.length()){
+                this.text=this.text.substring(0,this.cursorStringPosition)+inputString;
+            }else{
+                this.text=this.text.substring(0,this.cursorStringPosition)+inputString+this.text.substring(this.cursorStringPosition);
+            }
+            this.cursorStringPosition=this.cursorStringPosition+inputString.length();
             createLines();
     }
 
@@ -134,9 +139,13 @@ public class TextField extends Gui {
     }
     public void getClickCursorPosition(int mouseX,int mouseY){
         int X=mouseX-this.x;
-        if(textlist.containsKey(this.cursorPositionLine)){
-            String s=textlist.get(this.cursorPositionLine);
-            this.cursorPositionY=(this.cursorPositionLine-this.VisibleLineBegin)*this.fontRenderer.FONT_HEIGHT;
+        if(textlist.containsKey(this.ClickedLine)){
+            String s=textlist.get(this.ClickedLine);
+            int sum=0;
+            for(int i=1;i<this.ClickedLine                                                                                                                                                                                  ;i++){
+                sum=sum+this.textlist.get(i).length();
+            }
+
             if(s.length()!=0){
                 char[] chars=s.toCharArray();
                 for(int i=0;i<chars.length;i++){
@@ -145,19 +154,32 @@ public class TextField extends Gui {
                     int StringWidth1=StringWidth+this.fontRenderer.getCharWidth(chars[i])/2;
                     int StringWidth2=StringWidth+this.fontRenderer.getCharWidth(chars[i]);
                     if(X>StringWidth1&&X<=StringWidth2){
-                        this.cursorPositionX=StringWidth2;
-                        this.cursorStringPosition=i+1;
+                        this.cursorStringPosition=sum+i+1;
                     }else if(X<=StringWidth1&&X>StringWidth){
-                        this.cursorPositionX=StringWidth;
-                        this.cursorStringPosition=i;
+                        this.cursorStringPosition=sum+i;
                     }else if(X>this.fontRenderer.getStringWidth(s)&X<=this.width-this.lineScrollOffset){
-                        this.cursorPositionX=this.fontRenderer.getStringWidth(s);
-                        this.cursorStringPosition=s.length();
+                        this.cursorStringPosition=sum+s.length();
                     }
                 }
             }
         }
 
+    }
+    public void loadCursorPosition(){
+        int sum=0;
+        String s="";
+        for(int i=1;i<=textlist.size();i++){
+            sum=sum+this.textlist.get(i).length();
+            if(sum>=this.cursorStringPosition){
+                sum=sum-this.textlist.get(i).length();
+                s=this.textlist.get(i-1);
+                this.cursorPositionLine=i;
+                break;
+            }
+        }
+        String ss=this.text.substring(sum,this.cursorStringPosition);
+        this.cursorPositionX=this.fontRenderer.getStringWidth(ss);
+        this.cursorPositionY=(this.cursorPositionLine-this.VisibleLineBegin)*this.fontRenderer.FONT_HEIGHT;
     }
     public void drawTextToScreen(){
             int color = this.isEnabled ? this.enabledColor : this.disabledColor;
@@ -196,7 +218,8 @@ public class TextField extends Gui {
                     boolean flag2=cursorPositionLine!=0;
                     if(flag2&&cursorPositionLine>=VisibleLineBegin&&cursorPositionLine<=VisibleLineEnd){
                         Gui.drawRect(this.x + this.cursorPositionX, this.y + this.cursorPositionY - 1, this.x + this.cursorPositionX + 1, this.y + this.cursorPositionY + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
-                    }else if(!flag2&&TextEndLine>=VisibleLineBegin&&TextEndLine<=VisibleLineEnd){
+                    }
+                    else if(!flag2&&TextEndLine>=VisibleLineBegin&&TextEndLine<=VisibleLineEnd){
                         Gui.drawRect(this.x + this.TextEndPositionX, this.y + this.TextEndPositionY - 1, this.x + this.TextEndPositionX + 1, this.y + this.TextEndPositionY + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
                     }
                 }
@@ -206,13 +229,13 @@ public class TextField extends Gui {
 
     public void drawTextBox()
     {
-        //System.out.println(this.cursorStringPosition);
-        System.out.println(this.cursorPositionLine);
+        System.out.println(this.cursorStringPosition);
         if (this.getVisible()) {
             if (this.getEnableBackgroundDrawing()) {
                 drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, -6250336);
                 drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
             }
+            loadCursorPosition();
             drawTextToScreen();
             drawCursor();
         }
@@ -227,26 +250,10 @@ public class TextField extends Gui {
 
     public void deleteFromCursor(int num)
     {
-
-
-        if(this.cursorPositionLine!=0){
-            if(this.text.length()>=1){
-                this.text=this.text.substring(0,this.text.length()-1);
-            }else{
-                this.text="";
-            }
-        }else{
-            int sum=0;
-            for(int i=1;i<this.cursorPositionLine-1;i++){
-                sum=sum+this.textlist.get(i).length();
-            }
-            if(this.text.length()>=1&&this.cursorStringPosition>=1){
-                String s1=this.text.substring(0,sum+this.cursorStringPosition-1);
-                String s2=this.text.substring(sum+this.cursorStringPosition);
-                this.text=s1+s2;
-            }
+        if(this.cursorStringPosition>=1){
+            this.text=this.text.substring(0,this.cursorStringPosition-1)+this.text.substring(this.cursorStringPosition);
+            this.cursorStringPosition=this.cursorStringPosition-1;
         }
-
         createLines();
     }
 
@@ -493,7 +500,7 @@ public class TextField extends Gui {
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
 
-        cursorPositionLine=getClickedLine(mouseX,mouseY);
+        ClickedLine=getClickedLine(mouseX,mouseY);
         getClickCursorPosition(mouseX,mouseY);
         boolean flag = mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height;
         if (this.canLoseFocus)
