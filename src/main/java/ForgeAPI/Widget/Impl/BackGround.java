@@ -65,7 +65,7 @@ public abstract class BackGround extends GuiScreen {
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+       super.mouseClicked(mouseX, mouseY, mouseButton);
        for(IBaseGUI gui: Guis){
            gui.mouseClicked(mouseX, mouseY,mouseButton);
        }
