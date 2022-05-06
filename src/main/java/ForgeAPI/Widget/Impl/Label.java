@@ -1,7 +1,7 @@
-package ForgeAPI.Widget;
+package ForgeAPI.Widget.Impl;
 
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiLabel;
 
 import java.lang.reflect.Field;
@@ -10,10 +10,7 @@ import java.lang.reflect.Field;
  * Label无法修改文本框
  * */
 @SuppressWarnings("all")
-public class Label extends GuiLabel {
-    public Label( int id, int x, int y, int height, int width, int textColor) {
-        super(Minecraft.getMinecraft().fontRenderer, id, x,y,height, width, textColor);
-    }
+public class Label extends BaseGui {
 
 
     /**
@@ -65,5 +62,45 @@ public class Label extends GuiLabel {
         }catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+
+    }
+
+    @Override
+    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        return false;
+    }
+
+    @Override
+    public boolean mousePressed(int mouseX, int mouseY) {
+        return false;
+    }
+
+    @Override
+    public void mouseDragged(int mouseX, int mouseY) {
+
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY) {
+
+    }
+
+    @Override
+    public void playPressSound(SoundHandler soundHandlerIn) {
+
+    }
+
+    @Override
+    public void updateGUI() {
+
+    }
+
+    @Override
+    public void KeyInput(char typedChar, int keyCode) {
+
     }
 }

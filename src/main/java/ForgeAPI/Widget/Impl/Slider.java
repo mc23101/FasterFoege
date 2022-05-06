@@ -1,15 +1,14 @@
-package ForgeAPI.Widget;
+package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 @SuppressWarnings("all")
-public class Slider extends GuiButton {
+public class Slider extends Button {
     protected  ResourceLocation SLIDER_TEXTURES = new ResourceLocation("textures/gui/widgets.png");
     private float sliderPosition = 1.0F;
     public boolean isMouseDown;
@@ -87,6 +86,11 @@ public class Slider extends GuiButton {
         return 0;
     }
 
+    @Override
+    public void mouseDragged(int mouseX, int mouseY) {
+
+    }
+
     protected void mouseDragged(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
@@ -121,10 +125,23 @@ public class Slider extends GuiButton {
         this.displayString = this.getDisplayString();
     }
 
+    @Override
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+
+    }
+
+    @Override
+    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        return false;
+    }
+
+    @Override
+    public boolean mousePressed(int mouseX, int mouseY) {
+        return false;
+    }
+
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
     {
-        if (super.mousePressed(mc, mouseX, mouseY))
-        {
             this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
 
             if (this.sliderPosition < 0.0F)
@@ -140,16 +157,22 @@ public class Slider extends GuiButton {
             this.displayString = this.getDisplayString();
             this.isMouseDown = true;
             return true;
-        }
-        else
-        {
-            return false;
-        }
+
     }
 
     public void mouseReleased(int mouseX, int mouseY)
     {
         this.isMouseDown = false;
+    }
+
+    @Override
+    public void updateGUI() {
+
+    }
+
+    @Override
+    public void KeyInput(char typedChar, int keyCode) {
+
     }
 
 

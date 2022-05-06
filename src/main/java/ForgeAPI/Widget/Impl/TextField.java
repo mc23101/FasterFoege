@@ -1,6 +1,7 @@
-package ForgeAPI.Widget;
+package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextField extends Gui {
+public class TextField extends BaseGui {
     private final int id;
     private final FontRenderer fontRenderer;
     public int x;
@@ -227,20 +228,6 @@ public class TextField extends Gui {
 
     }
 
-    public void drawTextBox()
-    {
-        System.out.println(this.cursorStringPosition);
-        if (this.getVisible()) {
-            if (this.getEnableBackgroundDrawing()) {
-                drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, -6250336);
-                drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
-            }
-            loadCursorPosition();
-            drawTextToScreen();
-            drawCursor();
-        }
-
-    }
 
 
     public void deleteWords(int num)
@@ -497,6 +484,19 @@ public class TextField extends Gui {
         }
     }
 
+    @Override
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+        if (this.getVisible()) {
+            if (this.getEnableBackgroundDrawing()) {
+                drawRect(this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, -6250336);
+                drawRect(this.x, this.y, this.x + this.width, this.y + this.height, -16777216);
+            }
+            loadCursorPosition();
+            drawTextToScreen();
+            drawCursor();
+        }
+    }
+
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
 
@@ -510,6 +510,35 @@ public class TextField extends Gui {
         return  true;
     }
 
+    @Override
+    public boolean mousePressed( int mouseX, int mouseY) {
+        return false;
+    }
+
+    @Override
+    public void mouseDragged(int mouseX, int mouseY) {
+
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY) {
+
+    }
+
+    @Override
+    public void playPressSound(SoundHandler soundHandlerIn) {
+
+    }
+
+    @Override
+    public void updateGUI() {
+
+    }
+
+    @Override
+    public void KeyInput(char typedChar, int keyCode) {
+
+    }
 
 
     private void drawSelectionBox(int startX, int startY, int endX, int endY)

@@ -1,7 +1,7 @@
 package com.example.examplemod.client.event;
 
 
-import ForgeAPI.Widget.Bossbar;
+import ForgeAPI.Widget.Impl.BossBar;
 import com.example.examplemod.client.gui.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -26,7 +26,7 @@ public class KeyboardInputEvent {
     public static void onKeyPressed(InputEvent.KeyInputEvent event) {
         if (MY_HOTKEY.isPressed()) {
             gui gaui= new gui();
-            Bossbar bossbar = new Bossbar(Minecraft.getMinecraft());
+            BossBar bossbar = new BossBar(Minecraft.getMinecraft());
             bossbar.renderBossHealth();
             Minecraft.getMinecraft().displayGuiScreen(gaui);
 //            EntityPlayer player=com.zhang.ForgeAPI.Minecraft.getMinecraft().player;
