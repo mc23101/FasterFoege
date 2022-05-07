@@ -1,4 +1,4 @@
-package ForgeAPI.Utils.Texture;
+package ForgeAPI.Utils.Image;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,6 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
-import ForgeAPI.Utils.Texture.ImageLoader;
+import ForgeAPI.Utils.Image.ImageLoader;
 import net.minecraft.client.audio.SoundHandler;
 
 import java.awt.image.BufferedImage;
