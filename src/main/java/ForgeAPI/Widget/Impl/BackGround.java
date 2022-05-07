@@ -3,6 +3,7 @@ package ForgeAPI.Widget.Impl;
 import ForgeAPI.Widget.IBaseGUI;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
@@ -12,6 +13,15 @@ public abstract class BackGround extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();
     protected List<IBaseGUI> Guis= Lists.<IBaseGUI>newArrayList();
     public BackGround(){
+
+    }
+
+    @Override
+    public void setWorldAndResolution(Minecraft mc, int width, int height) {
+        super.setWorldAndResolution(mc, width, height);
+        for(IBaseGUI gui: Guis){
+            gui.setResolution(width,height);
+        }
     }
 
     public <T extends IBaseGUI> T addGui(T Gui) {
@@ -19,6 +29,11 @@ public abstract class BackGround extends GuiScreen {
         return Gui;
     }
 
+    @Deprecated
+    @Override
+    protected <T extends GuiButton> T addButton(T buttonIn) {
+        return null;
+    }
 
     /**
      * 屏幕绘制事件
@@ -60,6 +75,7 @@ public abstract class BackGround extends GuiScreen {
         for(IBaseGUI gui:Guis) {
             gui.KeyInput(typedChar,keyCode);
         }
+        super.keyTyped(typedChar,keyCode);
     }
 
 
@@ -72,7 +88,5 @@ public abstract class BackGround extends GuiScreen {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
-    }
+    public abstract void initGui();
 }

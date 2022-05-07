@@ -26,7 +26,8 @@ public class Slider extends Button {
         this.displayString = this.getDisplayString();
     }
 
-    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
+    @Override
+    public void drawGUI( int mouseX, int mouseY, float partialTicks){
         FontRenderer fontrenderer = mc.fontRenderer;
         mc.getTextureManager().bindTexture(SLIDER_TEXTURES);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -125,10 +126,6 @@ public class Slider extends Button {
         this.displayString = this.getDisplayString();
     }
 
-    @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-
-    }
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {

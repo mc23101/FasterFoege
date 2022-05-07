@@ -2,12 +2,15 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
         mavenCentral()
+
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+
     }
 }
-        
+
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -64,6 +67,9 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
+
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    implementation 'com.alibaba:fastjson:1.2.75'
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

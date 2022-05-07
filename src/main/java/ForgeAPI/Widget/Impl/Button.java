@@ -11,18 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("all")
 @SideOnly(Side.CLIENT)
-public abstract class Button extends BaseGui
+public  class Button extends BaseGui
 {
     protected  ResourceLocation BUTTON_TEXTURES = new ResourceLocation("textures/gui/widgets.png");
-    public int width;
-    public int height;
-    public int x;
-    public int y;
     public String displayString;
-    public int id;
     public boolean enabled;
-    public boolean visible;
-    protected boolean hovered;
     public int packedFGColour; //FML
 
     public Button(int buttonId, int x, int y, String buttonText)
@@ -52,7 +45,7 @@ public abstract class Button extends BaseGui
             mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            int i = this.getHoverState(this.hovered);
+            int i = this.getHoverState();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -79,21 +72,32 @@ public abstract class Button extends BaseGui
         }
     }
 
+    @Override
+    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        return false;
+    }
+
+    @Override
+    public boolean mousePressed(int mouseX, int mouseY) {
+        return false;
+    }
+
+    @Override
+    public void mouseDragged(int mouseX, int mouseY) {
+
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY) {
+
+    }
 
 
-
-
-
-    public abstract void mouseDragged( int mouseX, int mouseY);
-    public abstract void mouseReleased(int mouseX, int mouseY);
-    public abstract boolean mouseClicked(int mouseX, int mouseY, int mouseButton);
-    public abstract boolean mousePressed(int mouseX, int mouseY);
-
-
-
-
-
-    protected int getHoverState(boolean mouseOver)
+    /**
+     * 获取鼠标聚焦状态
+     * @param mouseOver
+     * */
+    protected int getHoverState()
     {
         int i = 1;
 
@@ -101,7 +105,7 @@ public abstract class Button extends BaseGui
         {
             i = 0;
         }
-        else if (mouseOver)
+        else if (this.hovered)
         {
             i = 2;
         }
@@ -109,7 +113,7 @@ public abstract class Button extends BaseGui
         return i;
     }
 
-    public boolean isMouseOver()
+    public boolean isMouseOvered()
     {
         return this.hovered;
     }
@@ -133,6 +137,16 @@ public abstract class Button extends BaseGui
     public void playPressSound(SoundHandler soundHandlerIn)
     {
         soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+    }
+
+    @Override
+    public void updateGUI() {
+
+    }
+
+    @Override
+    public void KeyInput(char typedChar, int keyCode) {
+
     }
 }
 

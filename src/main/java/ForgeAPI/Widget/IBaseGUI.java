@@ -65,5 +65,13 @@ public interface IBaseGUI {
      * @param keyCode 按键ASCII码
      * */
     public void KeyInput(char typedChar, int keyCode);
+
+    /**
+     * 接口名称：setResolution
+     * 作用：设置窗口分辨率
+     * @param width 宽
+     * @param height 高
+     * */
+    public void setResolution(int width, int height);
 }
 
