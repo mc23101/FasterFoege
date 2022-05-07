@@ -1,12 +1,13 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.Image.ImageLoader;
+import ForgeAPI.Widget.BaseGui;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Image extends BaseGui{
+public class Image extends BaseGui {
 
     protected int textureId;
 

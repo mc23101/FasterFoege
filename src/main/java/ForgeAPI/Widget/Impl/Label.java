@@ -1,6 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
 
+import ForgeAPI.Widget.BaseGui;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;

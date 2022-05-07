@@ -1,6 +1,5 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Widget;
 
-import ForgeAPI.Widget.IBaseGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;

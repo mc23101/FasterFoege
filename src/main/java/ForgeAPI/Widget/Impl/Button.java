@@ -1,5 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
+import ForgeAPI.Widget.BaseGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
