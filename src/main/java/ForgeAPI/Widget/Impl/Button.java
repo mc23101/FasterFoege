@@ -1,10 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -109,25 +106,6 @@ public class Button extends BaseGui
         return this.hovered;
     }
 
-    @Override
-    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        return false;
-    }
-
-    @Override
-    public boolean mousePressed(int mouseX, int mouseY) {
-        return false;
-    }
-
-    @Override
-    public void mouseDragged(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-
-    }
 
     public int getButtonWidth()
     {
@@ -145,28 +123,6 @@ public class Button extends BaseGui
     {
     }
 
-
-
-    @Override
-    public void playPressSound(SoundHandler soundHandlerIn)
-    {
-        soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-    }
-
-    @Override
-    public void updateGUI() {
-
-    }
-
-    @Override
-    public void KeyInput(char typedChar, int keyCode) {
-
-    }
-
-    @Override
-    public void onGuiClosed() {
-
-    }
 }
 
 

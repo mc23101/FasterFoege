@@ -1,7 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.Image.ImageLoader;
-import net.minecraft.client.audio.SoundHandler;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -45,40 +44,6 @@ public class Image extends BaseGui{
         this.drawTexturedModalRect(x,y,0,0,width,height);
     }
 
-    @Override
-    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        return false;
-    }
-
-    @Override
-    public boolean mousePressed(int mouseX, int mouseY) {
-        return false;
-    }
-
-    @Override
-    public void mouseDragged(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void playPressSound(SoundHandler soundHandlerIn) {
-
-    }
-
-    @Override
-    public void updateGUI() {
-
-    }
-
-    @Override
-    public void KeyInput(char typedChar, int keyCode) {
-
-    }
 
     @Override
     public void onGuiClosed() {

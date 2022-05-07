@@ -1,7 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -501,42 +500,6 @@ public class TextField extends BaseGui {
         }
         return  true;
     }
-
-    @Override
-    public boolean mousePressed( int mouseX, int mouseY) {
-        return false;
-    }
-
-    @Override
-    public void mouseDragged(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void playPressSound(SoundHandler soundHandlerIn) {
-
-    }
-
-    @Override
-    public void updateGUI() {
-
-    }
-
-    @Override
-    public void KeyInput(char typedChar, int keyCode) {
-
-    }
-
-    @Override
-    public void onGuiClosed() {
-
-    }
-
 
     private void drawSelectionBox(int startX, int startY, int endX, int endY)
     {

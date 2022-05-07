@@ -1,6 +1,5 @@
 package ForgeAPI.Widget.Impl;
 
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -39,45 +38,6 @@ public class Bar extends BaseGui {
         this.renderOverlap();
     }
 
-    @Override
-    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        return false;
-    }
-
-    @Override
-    public boolean mousePressed( int mouseX, int mouseY) {
-        return false;
-    }
-
-    @Override
-    public void mouseDragged(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-
-    }
-
-    @Override
-    public void playPressSound(SoundHandler soundHandlerIn) {
-
-    }
-
-    @Override
-    public void updateGUI() {
-
-    }
-
-    @Override
-    public void KeyInput(char typedChar, int keyCode) {
-
-    }
-
-    @Override
-    public void onGuiClosed() {
-
-    }
 
     public float getCurr() {
         return curr;

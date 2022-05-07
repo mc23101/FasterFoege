@@ -162,15 +162,5 @@ public class Slider extends Button {
         this.isMouseDown = false;
     }
 
-    @Override
-    public void updateGUI() {
-
-    }
-
-    @Override
-    public void KeyInput(char typedChar, int keyCode) {
-
-    }
-
 
 }
