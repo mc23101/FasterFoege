@@ -2,7 +2,8 @@ package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.audio.SoundHandler;
 
-public class BossBar extends BaseGui {
+public class Image extends BaseGui{
+
 
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {

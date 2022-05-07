@@ -125,3 +125,4 @@ sourceSets {
         output.resourcesDir = output.classesDir
     }
 }
+compileJava.options.encoding("UTF-8")

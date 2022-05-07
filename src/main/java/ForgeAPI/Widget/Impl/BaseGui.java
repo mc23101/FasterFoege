@@ -17,12 +17,12 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int width;
     protected int height;
 
-    protected int MaxWidth;
-    protected int MaxHeight;
+    protected int maxWidth;
+    protected int maxHeight;
 
     @Override
     public void setResolution(int width, int height) {
-        this.MaxHeight=height;
-        this.MaxWidth=width;
+        this.maxHeight =height;
+        this.maxWidth =width;
     }
 }
