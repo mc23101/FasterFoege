@@ -1,4 +1,4 @@
-package com.example.examplemod.client.gui;
+package examplemod.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

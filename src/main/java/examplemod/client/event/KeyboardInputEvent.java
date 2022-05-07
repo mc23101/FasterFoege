@@ -1,7 +1,7 @@
-package com.example.examplemod.client.event;
+package examplemod.client.event;
 
 
-import com.example.examplemod.client.gui.gui;
+import examplemod.client.gui.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyConflictContext;

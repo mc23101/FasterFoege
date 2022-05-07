@@ -1,4 +1,4 @@
-package com.example.examplemod.client.gui;
+package examplemod.client.gui;
 
 import ForgeAPI.Widget.Impl.BackGround;
 import ForgeAPI.Widget.Impl.Bar;

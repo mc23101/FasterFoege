@@ -1,6 +1,6 @@
-package com.example.examplemod;
+package examplemod;
 
-import com.example.examplemod.client.event.KeyboardInputEvent;
+import examplemod.client.event.KeyboardInputEvent;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;

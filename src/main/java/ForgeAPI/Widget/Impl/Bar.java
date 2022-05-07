@@ -65,11 +65,7 @@ public class Bar extends BaseGui {
 
     @Override
     public void updateGUI() {
-        if(curr<max){
-            curr++;
-        }else{
-            curr=0;
-        }
+
     }
 
     @Override
