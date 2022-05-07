@@ -1,17 +1,28 @@
 package ForgeAPI.Widget.Impl;
 
+import ForgeAPI.Utils.Texture.ImageLoader;
 import net.minecraft.client.audio.SoundHandler;
+
+import java.io.IOException;
 
 public class Image extends BaseGui{
 
+    protected int textureId;
 
-
+    public Image(int x,int y,int width,int height,String url) throws IOException {
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.textureId= ImageLoader.loadTexture(url);
+    }
 
 
 
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-
+        ImageLoader.bindTexture(textureId);
+        this.drawTexturedModalRect(x,y,0,0,width,height);
     }
 
     @Override
@@ -51,6 +62,6 @@ public class Image extends BaseGui{
 
     @Override
     public void onGuiClosed() {
-
+        ImageLoader.deleteTexture(textureId);
     }
 }

@@ -1,7 +1,11 @@
 package examplemod.client.gui;
 
-import ForgeAPI.Widget.Impl.*;
+import ForgeAPI.Widget.Impl.BackGround;
+import ForgeAPI.Widget.Impl.Image;
+import ForgeAPI.Widget.Impl.TextField;
 import net.minecraft.util.TabCompleter;
+
+import java.io.IOException;
 
 public class gui extends BackGround {
     private TabCompleter tabCompleter;
@@ -13,13 +17,12 @@ public class gui extends BackGround {
 
     @Override
     public void initGui() {
-        Bar bar=new Bar(40,50,10,182,5);
-        this.addGui(bar);
-        Button button=new Button(1,23,32,"的阿瓦达");
-        this.addGui(button);
-        Label  label=new Label(1,90,90,50,50,1);
-        label.addLine("中文");
-        this.addGui(label);
+        try {
+            Image image=new Image(10,10,200,200,"https://img2022.cnblogs.com/blog/2488947/202203/2488947-20220323193058289-703233879.png");
+            this.addGui(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -41,14 +41,17 @@ public class ImageLoader extends AbstractTexture {
 
 
 
-
+    /**
+     * 绑定Texture
+     * @param textureId texture的ID,通过ImageLoader.loadTexture获取
+     * */
     public static void bindTexture(int textureId) {
         GlStateManager.bindTexture(textureId);
     }
 
-
     /**
-     *
+     * 获取图片的textureID
+     * @param file File类型的图片文件
      * */
     public static int loadTexture(File file) throws IOException {
         ITextureObject texture = new ImageLoader(file);
@@ -58,6 +61,12 @@ public class ImageLoader extends AbstractTexture {
 
     public static int loadTexture(BufferedImage image) throws IOException {
         ITextureObject texture = new ImageLoader(image);
+        texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
+        return texture.getGlTextureId();
+    }
+
+    public static int loadTexture(String url) throws IOException {
+        ITextureObject texture = new ImageLoader(url);
         texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
         return texture.getGlTextureId();
     }
