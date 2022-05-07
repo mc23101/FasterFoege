@@ -24,6 +24,20 @@ public abstract class BackGround extends GuiScreen {
         }
     }
 
+
+    /**
+     * Gui关闭事件
+     * 当Gui关闭时调用此事件
+     * */
+    @Override
+    public void onGuiClosed() {
+        for(IBaseGUI gui:Guis){
+            gui.onGuiClosed();
+        }
+        super.onGuiClosed();
+    }
+
+
     public <T extends IBaseGUI> T addGui(T Gui) {
         Guis.add(Gui);
         return Gui;

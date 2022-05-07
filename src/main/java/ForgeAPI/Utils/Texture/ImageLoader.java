@@ -39,10 +39,17 @@ public class ImageLoader extends AbstractTexture {
     }
 
 
+
+
+
     public static void bindTexture(int textureId) {
         GlStateManager.bindTexture(textureId);
     }
 
+
+    /**
+     *
+     * */
     public static int loadTexture(File file) throws IOException {
         ITextureObject texture = new ImageLoader(file);
         texture.loadTexture(Minecraft.getMinecraft().getResourceManager());

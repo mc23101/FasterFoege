@@ -73,6 +73,11 @@ public class Bar extends BaseGui {
 
     }
 
+    @Override
+    public void onGuiClosed() {
+
+    }
+
     public float getCurr() {
         return curr;
     }

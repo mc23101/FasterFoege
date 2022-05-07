@@ -73,5 +73,12 @@ public interface IBaseGUI {
      * @param height 高
      * */
     public void setResolution(int width, int height);
+
+
+    /**
+     * 接口名称：onGuiClosed
+     * 作用：Gui关事件
+     * */
+    public void onGuiClosed();
 }
 

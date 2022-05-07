@@ -162,6 +162,11 @@ public class Button extends BaseGui
     public void KeyInput(char typedChar, int keyCode) {
 
     }
+
+    @Override
+    public void onGuiClosed() {
+
+    }
 }
 
 

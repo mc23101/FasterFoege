@@ -540,6 +540,11 @@ public class TextField extends BaseGui {
 
     }
 
+    @Override
+    public void onGuiClosed() {
+
+    }
+
 
     private void drawSelectionBox(int startX, int startY, int endX, int endY)
     {

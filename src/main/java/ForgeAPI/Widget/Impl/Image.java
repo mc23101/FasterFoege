@@ -5,6 +5,10 @@ import net.minecraft.client.audio.SoundHandler;
 public class Image extends BaseGui{
 
 
+
+
+
+
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
 
@@ -42,6 +46,11 @@ public class Image extends BaseGui{
 
     @Override
     public void KeyInput(char typedChar, int keyCode) {
+
+    }
+
+    @Override
+    public void onGuiClosed() {
 
     }
 }
