@@ -9,7 +9,8 @@ public class Image extends BaseGui{
 
     protected int textureId;
 
-    public Image(int x,int y,int width,int height,String url) throws IOException {
+    public Image(int id,int x,int y,int width,int height,String url) throws IOException {
+        this.id=id;
         this.x=x;
         this.y=y;
         this.width=width;

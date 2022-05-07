@@ -14,7 +14,8 @@ public class Bar extends BaseGui {
     protected int OverlapTextureX=0;
     protected int OverlapTextureY=5;
     private ResourceLocation BAR_TEXTURES=new ResourceLocation("textures/gui/bars.png");
-    public Bar(float curr, int x,int y,int width, int height) {
+    public Bar(int id,float curr, int x,int y,int width, int height) {
+        this.id=id;
         this.y=y;
         this.x=x;
         this.curr = curr;

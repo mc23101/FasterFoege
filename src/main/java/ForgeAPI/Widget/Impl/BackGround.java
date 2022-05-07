@@ -1,25 +1,24 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Widget.IBaseGUI;
-import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BackGround extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();
-    protected List<IBaseGUI> Guis= Lists.<IBaseGUI>newArrayList();
+    protected Map<Integer,IBaseGUI> Guis= new HashMap();
     public BackGround(){
-
     }
 
     @Override
     public void setWorldAndResolution(Minecraft mc, int width, int height) {
         super.setWorldAndResolution(mc, width, height);
-        for(IBaseGUI gui: Guis){
+        for(IBaseGUI gui: Guis.values()){
             gui.setResolution(width,height);
         }
     }
@@ -31,7 +30,7 @@ public abstract class BackGround extends GuiScreen {
      * */
     @Override
     public void onGuiClosed() {
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.onGuiClosed();
         }
         super.onGuiClosed();
@@ -39,7 +38,7 @@ public abstract class BackGround extends GuiScreen {
 
 
     public <T extends IBaseGUI> T addGui(T Gui) {
-        Guis.add(Gui);
+        Guis.put(Gui.getGuiID(),Gui);
         return Gui;
     }
 
@@ -58,7 +57,7 @@ public abstract class BackGround extends GuiScreen {
      * */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        for(IBaseGUI gui : Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.drawGUI(mouseX,mouseY,partialTicks);
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -72,7 +71,7 @@ public abstract class BackGround extends GuiScreen {
      * */
     @Override
     public void updateScreen() {
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.updateGUI();
         }
         super.updateScreen();
@@ -86,7 +85,7 @@ public abstract class BackGround extends GuiScreen {
      * */
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        for(IBaseGUI gui:Guis) {
+        for(IBaseGUI gui:Guis.values()) {
             gui.KeyInput(typedChar,keyCode);
         }
         super.keyTyped(typedChar,keyCode);
@@ -96,7 +95,7 @@ public abstract class BackGround extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
        super.mouseClicked(mouseX, mouseY, mouseButton);
-       for(IBaseGUI gui: Guis){
+       for(IBaseGUI gui:Guis.values()){
            gui.mouseClicked(mouseX, mouseY,mouseButton);
        }
     }

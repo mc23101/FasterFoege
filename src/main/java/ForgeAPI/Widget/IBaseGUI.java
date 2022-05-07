@@ -80,5 +80,12 @@ public interface IBaseGUI {
      * 作用：Gui关事件
      * */
     public void onGuiClosed();
+
+
+    /**
+     * 接口名称：getGuiID
+     * 作用：获取Gui的id
+     * */
+    public int getGuiID();
 }
 

@@ -25,4 +25,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         this.maxHeight =height;
         this.maxWidth =width;
     }
+
+    public int getGuiID(){
+        return  id;
+    }
 }
