@@ -2,7 +2,6 @@ package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -16,12 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TextField extends BaseGui {
-    private final int id;
-    private final FontRenderer fontRenderer;
-    public int x;
-    public int y;
-    public int width;
-    public int height;
     private boolean enabledCenter=false;
     private boolean enabledLines=true;
     private String text = "";
@@ -47,7 +40,6 @@ public class TextField extends BaseGui {
     private int TextEndLine=1;
     private int enabledColor = 14737632;
     private int disabledColor = 7368816;
-    private boolean visible = true;
     private int cursorStringPosition;
 
 

@@ -3,7 +3,6 @@ package ForgeAPI.Widget.Impl;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
@@ -22,23 +21,6 @@ public class Label extends BaseGui {
     private int ulColor;
     private int brColor;
     private int border;
-
-    public Label(FontRenderer fontRendererObj, int id, int x, int y, int width, int height, int textColor)
-    {
-        this.fontRenderer = fontRendererObj;
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.centered = false;
-        this.labelBgEnabled = false;
-        this.textColor = textColor;
-        this.backColor = -1;
-        this.ulColor = 0x00868B;
-        this.brColor = 0x00868B;
-        this.border = 1;
-    }
 
     public Label(int id,int x, int y,int width, int height,  int textColor) {
         this.width = width;

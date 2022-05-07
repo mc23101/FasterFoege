@@ -3,6 +3,8 @@ package ForgeAPI.Widget.Impl;
 import ForgeAPI.Utils.Texture.ImageLoader;
 import net.minecraft.client.audio.SoundHandler;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class Image extends BaseGui{
@@ -18,6 +20,23 @@ public class Image extends BaseGui{
         this.textureId= ImageLoader.loadTexture(url);
     }
 
+    public Image(int id, int x, int y, int width, int height, File file) throws IOException {
+        this.id=id;
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.textureId= ImageLoader.loadTexture(file);
+    }
+
+    public Image(int id, int x, int y, int width, int height, BufferedImage image) throws IOException {
+        this.id=id;
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.textureId= ImageLoader.loadTexture(image);
+    }
 
 
     @Override
