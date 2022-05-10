@@ -26,7 +26,7 @@ public class Bar extends BaseGui {
 
     private void renderOverlap()
     {
-        this.drawTexturedModalRect(x, y, OverlapTextureX, OverlapTextureY, (int) (width*(curr/max)), height);
+        this.drawModalRectWithCustomSizedTexture(x, y, OverlapTextureX, OverlapTextureY, (int) (width*(curr/max)), height, (int) (width*(curr/max)), height);
     }
 
 
@@ -35,7 +35,7 @@ public class Bar extends BaseGui {
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(BAR_TEXTURES);
-        this.drawTexturedModalRect(x, y, BackTextureX, BackTextureY, width, height);
+        this.drawModalRectWithCustomSizedTexture(x, y, BackTextureX, BackTextureY, width, height,width, height);
         this.renderOverlap();
     }
 

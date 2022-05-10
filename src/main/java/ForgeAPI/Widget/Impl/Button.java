@@ -53,9 +53,9 @@ public class Button extends BaseGui
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             if(i==1){
-                this.drawTexturedModalRect(this.x, this.y, textureX, textureY, this.width , this.height);
+                this.drawModalRectWithCustomSizedTexture(this.x, this.y, textureX, textureY, this.width , this.height,this.width,this.height);
             }else if(i==2){
-                this.drawTexturedModalRect(this.x, this.y, hoveredTextureX, getHoveredTextureY, this.width , this.height);
+                this.drawModalRectWithCustomSizedTexture(this.x, this.y, hoveredTextureX, getHoveredTextureY, this.width , this.height, this.width,this.height);
             }
             this.mouseDragged(mouseX, mouseY);
             int j = 14737632;
