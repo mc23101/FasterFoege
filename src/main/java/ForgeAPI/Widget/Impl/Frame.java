@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BackGround extends GuiScreen {
+public abstract class Frame extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();
     protected Map<Integer,IBaseGUI> Guis= new HashMap();
-    public BackGround(){
+    public Frame(){
     }
 
     @Override
@@ -40,6 +40,7 @@ public abstract class BackGround extends GuiScreen {
 
     public <T extends IBaseGUI> T addGui(T Gui) {
         Guis.put(Gui.getGuiID(),Gui);
+        Gui.setFrame(this);
         return Gui;
     }
 

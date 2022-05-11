@@ -1,5 +1,6 @@
 package ForgeAPI.Widget;
 
+import ForgeAPI.Widget.Impl.Frame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -19,6 +20,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int y;
     protected int width;
     protected int height;
+
+    protected Frame frame;
 
     protected int maxWidth;
     protected int maxHeight;
@@ -91,5 +94,14 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
 
     public int getGuiID(){
         return  id;
+    }
+    @Override
+    public Frame getFrame() {
+        return frame;
+    }
+
+    @Override
+    public void setFrame(Frame frame) {
+        this.frame = frame;
     }
 }

@@ -1,5 +1,6 @@
 package ForgeAPI.Widget;
 
+import ForgeAPI.Widget.Impl.Frame;
 import net.minecraft.client.audio.SoundHandler;
 
 public interface IBaseGUI {
@@ -87,5 +88,20 @@ public interface IBaseGUI {
      * 作用：获取Gui的id
      * */
     public int getGuiID();
+
+
+    /**
+     * 接口名称：getFrame
+     * 作用：获取Gui的父窗口
+     * */
+    public Frame getFrame();
+
+    /**
+     * 接口名称：setFrame
+     * 作用：设置Gui的父窗口
+     * @param frame 父窗口
+     * */
+    public void setFrame(Frame frame);
+
 }
 

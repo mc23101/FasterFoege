@@ -2,6 +2,7 @@ package ForgeAPI.Widget.Impl;
 
 
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.ex.GuiBaseException;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -23,6 +24,8 @@ public class Label extends BaseGui {
     private int border;
 
     public Label(int id,int x, int y,int width, int height,  int textColor) {
+        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
+        if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = width;
         this.height = height;
         this.x = x;

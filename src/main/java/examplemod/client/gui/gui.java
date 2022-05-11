@@ -1,7 +1,7 @@
 package examplemod.client.gui;
 
 import ForgeAPI.Utils.Image.ImageLoader;
-import ForgeAPI.Widget.Impl.BackGround;
+import ForgeAPI.Widget.Impl.Frame;
 import ForgeAPI.Widget.Impl.Image;
 import ForgeAPI.Widget.Impl.TextField;
 import net.minecraft.util.TabCompleter;
@@ -9,7 +9,7 @@ import net.minecraft.util.TabCompleter;
 import java.io.File;
 import java.io.IOException;
 
-public class gui extends BackGround {
+public class gui extends Frame {
     private TabCompleter tabCompleter;
     public TextField inputField;
     @Override
