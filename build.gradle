@@ -118,7 +118,7 @@ jar.finalizedBy('reobfJar')
 //publish.dependsOn('reobfJar')
 
 publishing {
-    publications {4444
+    publications {
         mavenJava(MavenPublication) {
            artifact jar
         }
@@ -129,11 +129,7 @@ publishing {
         }
     }
 }
-sourceSets {
-    main {
-        output.resourcesDir = output.classesDir
-    }
-}
+
 
 allprojects {
     repositories {
@@ -141,6 +137,9 @@ allprojects {
         maven{ url='http://maven.aliyun.com/nexus/content/repositories/jcenter'}
     }
 }
-
-
 compileJava.options.encoding("UTF-8")
+sourceSets {
+    main {
+        output.resourcesDir = java.outputDir
+    }
+}

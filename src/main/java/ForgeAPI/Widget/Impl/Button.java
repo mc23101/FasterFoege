@@ -1,6 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.ex.GuiBaseException;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +29,8 @@ public class Button extends BaseGui
 
     public Button(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
+        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
+        if(widthIn<0||heightIn<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = 200;
         this.height = 20;
         this.enabled = true;

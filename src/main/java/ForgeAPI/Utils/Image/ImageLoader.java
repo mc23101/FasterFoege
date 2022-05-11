@@ -41,7 +41,7 @@ public class ImageLoader extends AbstractTexture {
     public void setImageSize(int width,int height){
         try {
             if(this.imageBuffer!=null){
-                this.imageBuffer= Thumbnails.of(this.imageBuffer).size(width,height).asBufferedImage();
+                this.imageBuffer= Thumbnails.of(this.imageBuffer).size(width,height).outputQuality(1).asBufferedImage();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class ImageLoader extends AbstractTexture {
     public void scaleImage(double scale){
         try {
             if(this.imageBuffer!=null){
-                this.imageBuffer= Thumbnails.of(this.imageBuffer).scale(scale).asBufferedImage();
+                this.imageBuffer= Thumbnails.of(this.imageBuffer).outputQuality(1).scale(scale).asBufferedImage();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class ImageLoader extends AbstractTexture {
     public void scaleImage(double scaleWidth,double scaleHeight){
         try {
             if(this.imageBuffer!=null){
-                this.imageBuffer= Thumbnails.of(this.imageBuffer).scale(scaleWidth,scaleHeight).asBufferedImage();
+                this.imageBuffer= Thumbnails.of(this.imageBuffer).scale(scaleWidth,scaleHeight).outputQuality(1).asBufferedImage();
             }
         } catch (IOException e) {
             e.printStackTrace();

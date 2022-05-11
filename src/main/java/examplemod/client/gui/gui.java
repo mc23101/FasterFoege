@@ -6,6 +6,7 @@ import ForgeAPI.Widget.Impl.Image;
 import ForgeAPI.Widget.Impl.TextField;
 import net.minecraft.util.TabCompleter;
 
+import java.io.File;
 import java.io.IOException;
 
 public class gui extends BackGround {
@@ -19,10 +20,12 @@ public class gui extends BackGround {
     @Override
     public void initGui() {
         try {
-
-            ImageLoader imageLoader = new ImageLoader("https://cdn3-banquan.ituchong.com/weili/l/253783080657223739.jpeg");
-            imageLoader.setImageSize(100,100);
-            Image image=new Image(1,0,0,100,100,imageLoader);
+            String url=this.getClass().getResource("/assets/mod/Weight/Button/test.png").getPath();
+            File file = new File(url);
+           // System.out.println(svgLoader.getDocument());
+            //BufferedImage rasterize = SvgUtil.renderToImage(svgLoader.getDocument(),2000,2000);
+            ImageLoader imageLoader = new ImageLoader(file);
+            Image image=new Image(1,0,0,200,200,imageLoader);
             this.addGui(image);
         } catch (IOException e) {
             e.printStackTrace();

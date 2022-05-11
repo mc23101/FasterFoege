@@ -4,6 +4,7 @@ import ForgeAPI.Widget.IBaseGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public abstract class BackGround extends GuiScreen {
      * */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        GL11.glColor4f(1, 1, 1, 1);
         for(IBaseGUI gui:Guis.values()){
             gui.drawGUI(mouseX,mouseY,partialTicks);
         }

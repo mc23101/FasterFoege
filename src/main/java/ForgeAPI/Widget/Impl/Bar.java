@@ -1,6 +1,8 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.ex.GuiBaseException;
+import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,6 +17,9 @@ public class Bar extends BaseGui {
     protected int OverlapTextureY=5;
     private ResourceLocation BAR_TEXTURES=new ResourceLocation("textures/gui/bars.png");
     public Bar(int id,float curr, int x,int y,int width, int height) {
+        if(curr>100||curr<0) throw new ParamErrorException("进度条进度值大于100或小于0");
+        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
+        if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.id=id;
         this.y=y;
         this.x=x;
