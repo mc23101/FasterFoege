@@ -41,7 +41,6 @@ public abstract class Frame extends GuiScreen {
         for(IBaseGUI gui:Guis.values()){
             gui.onGuiClosed();
         }
-        super.onGuiClosed();
     }
 
 
@@ -77,7 +76,6 @@ public abstract class Frame extends GuiScreen {
         for(IBaseGUI gui:Guis.values()){
             gui.drawGUI(mouseX,mouseY,partialTicks);
         }
-        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
 
@@ -91,7 +89,6 @@ public abstract class Frame extends GuiScreen {
         for(IBaseGUI gui:Guis.values()){
             gui.updateGUI();
         }
-        super.updateScreen();
     }
 
     /**
@@ -118,8 +115,9 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-        super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
-        System.out.println(clickedMouseButton);
+        for(IBaseGUI gui:Guis.values()){
+            gui.mouseDragged(mouseX,mouseY);
+        }
     }
 
     /**
@@ -131,11 +129,21 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-       super.mouseClicked(mouseX, mouseY, mouseButton);
        for(IBaseGUI gui:Guis.values()){
+           gui.mousePressed(mouseX,mouseY);
            gui.mouseClicked(mouseX, mouseY,mouseButton);
        }
     }
+
+
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        System.out.println(state);
+        for (IBaseGUI gui:Guis.values()){
+            gui.mouseReleased(mouseX,mouseY);
+        }
+    }
+
 
     /**
      * 窗口初始化事件

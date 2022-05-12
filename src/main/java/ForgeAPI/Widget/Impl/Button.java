@@ -43,6 +43,9 @@ public class Button extends BaseGui
         this.displayString = buttonText;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if (this.visible)

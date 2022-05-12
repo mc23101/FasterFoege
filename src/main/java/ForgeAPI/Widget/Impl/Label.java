@@ -118,6 +118,9 @@ public class Label extends BaseGui {
             this.backColor=value;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if (this.visible)

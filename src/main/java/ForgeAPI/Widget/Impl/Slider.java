@@ -1,6 +1,5 @@
 package ForgeAPI.Widget.Impl;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.renderer.GlStateManager;
@@ -39,7 +38,7 @@ public class Slider extends Button {
         //绘画滑条材质
         this.drawTexturedModalRect(this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
         this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.mouseDragged(mc, mouseX, mouseY);
+        this.mouseDragged(mouseX, mouseY);
         int j = 14737632;
 
         if (packedFGColour != 0)
@@ -87,12 +86,9 @@ public class Slider extends Button {
         return 0;
     }
 
+
     @Override
-    public void mouseDragged(int mouseX, int mouseY) {
-
-    }
-
-    protected void mouseDragged(Minecraft mc, int mouseX, int mouseY)
+    public void mouseDragged(int mouseX, int mouseY)
     {
         if (this.visible)
         {
@@ -127,36 +123,28 @@ public class Slider extends Button {
     }
 
 
-    @Override
-    public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        return false;
-    }
 
     @Override
     public boolean mousePressed(int mouseX, int mouseY) {
-        return false;
-    }
+        this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
 
-    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
-    {
-            this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
+        if (this.sliderPosition < 0.0F)
+        {
+            this.sliderPosition = 0.0F;
+        }
 
-            if (this.sliderPosition < 0.0F)
-            {
-                this.sliderPosition = 0.0F;
-            }
+        if (this.sliderPosition > 1.0F)
+        {
+            this.sliderPosition = 1.0F;
+        }
 
-            if (this.sliderPosition > 1.0F)
-            {
-                this.sliderPosition = 1.0F;
-            }
-
-            this.displayString = this.getDisplayString();
-            this.isMouseDown = true;
-            return true;
+        this.displayString = this.getDisplayString();
+        this.isMouseDown = true;
+        return true;
 
     }
 
+    @Override
     public void mouseReleased(int mouseX, int mouseY)
     {
         this.isMouseDown = false;
