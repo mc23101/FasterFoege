@@ -44,4 +44,13 @@ public class Image extends BaseGui {
     public void onGuiClosed() {
         ImageUtil.deleteTexture(textureId);
     }
+
+
+    /**
+     * 设置绘制图像的大小
+     * */
+    public void setImageRange(int width,int height){
+        this.imageWidth=width;
+        this.imageHeight=height;
+    }
 }

@@ -27,6 +27,7 @@ public class Slider extends Button {
 
     @Override
     public void drawGUI( int mouseX, int mouseY, float partialTicks){
+        long time=System.currentTimeMillis();
         FontRenderer fontrenderer = mc.fontRenderer;
         mc.getTextureManager().bindTexture(SLIDER_TEXTURES);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -38,7 +39,7 @@ public class Slider extends Button {
         //绘画滑条材质
         this.drawTexturedModalRect(this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
         this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.mouseDragged(mouseX, mouseY);
+        this.mouseDragged(mouseX, mouseY,0);
         int j = 14737632;
 
         if (packedFGColour != 0)
@@ -56,6 +57,7 @@ public class Slider extends Button {
         }
 
         this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+        System.out.println(System.currentTimeMillis()-time);
     }
 
 
@@ -88,7 +90,7 @@ public class Slider extends Button {
 
 
     @Override
-    public void mouseDragged(int mouseX, int mouseY)
+    public void mouseDragged(int mouseX, int mouseY,int mouseButton)
     {
         if (this.visible)
         {
@@ -125,7 +127,7 @@ public class Slider extends Button {
 
 
     @Override
-    public boolean mousePressed(int mouseX, int mouseY) {
+    public boolean mousePressed(int mouseX, int mouseY,int mouseButton) {
         this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
 
         if (this.sliderPosition < 0.0F)
@@ -145,7 +147,7 @@ public class Slider extends Button {
     }
 
     @Override
-    public void mouseReleased(int mouseX, int mouseY)
+    public void mouseReleased(int mouseX, int mouseY,int mouseButton)
     {
         this.isMouseDown = false;
     }

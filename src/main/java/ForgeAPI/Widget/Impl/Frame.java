@@ -116,7 +116,7 @@ public abstract class Frame extends GuiScreen {
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         for(IBaseGUI gui:Guis.values()){
-            gui.mouseDragged(mouseX,mouseY);
+            gui.mouseDragged(mouseX,mouseY,clickedMouseButton);
         }
     }
 
@@ -130,17 +130,16 @@ public abstract class Frame extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
        for(IBaseGUI gui:Guis.values()){
-           gui.mousePressed(mouseX,mouseY);
+           gui.mousePressed(mouseX,mouseY,mouseButton);
            gui.mouseClicked(mouseX, mouseY,mouseButton);
        }
     }
 
 
     @Override
-    protected void mouseReleased(int mouseX, int mouseY, int state) {
-        System.out.println(state);
+    protected void mouseReleased(int mouseX, int mouseY,int mouseButton) {
         for (IBaseGUI gui:Guis.values()){
-            gui.mouseReleased(mouseX,mouseY);
+            gui.mouseReleased(mouseX,mouseY,mouseButton);
         }
     }
 

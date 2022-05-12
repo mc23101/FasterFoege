@@ -16,7 +16,7 @@ public interface IBaseGUI {
      * 鼠标点击事件
      * @param mouseX 鼠标x坐标
      * @param mouseY 鼠标Y坐标
-     * @param mouseButton 点击类型
+     * @param mouseButton 按键类型  0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
      * */
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton);
 
@@ -24,22 +24,25 @@ public interface IBaseGUI {
      * 鼠标按下事件
      * @param mouseX 鼠标x坐标
      * @param mouseY 鼠标Y坐标
+     * @param mouseButton 按键类型 0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
      * */
-    public boolean mousePressed(int mouseX, int mouseY);
+    public boolean mousePressed(int mouseX, int mouseY,int mouseButton);
 
     /**
      * 鼠标拖动事件
      * @param mouseX 鼠标x坐标
      * @param mouseY 鼠标Y坐标
+     * @param mouseButton 按键类型 0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
      * */
-    public void mouseDragged( int mouseX, int mouseY);
+    public void mouseDragged( int mouseX, int mouseY,int mouseButton);
 
     /**
      * 鼠标释放事件
      * @param mouseX 鼠标x坐标
      * @param mouseY 鼠标Y坐标
+     * @param mouseButton 按键类型 0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
      * */
-    public void mouseReleased(int mouseX, int mouseY);
+    public void mouseReleased(int mouseX, int mouseY,int mouseButton );
 
     /**
      * 播放声音

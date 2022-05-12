@@ -63,7 +63,7 @@ public class Button extends BaseGui
             }else if(i==2){
                 this.drawModalRectWithCustomSizedTexture(this.x, this.y, hoveredTextureX, getHoveredTextureY, this.width , this.height, this.width,this.height);
             }
-            this.mouseDragged(mouseX, mouseY);
+            this.mouseDragged(mouseX, mouseY,0);
             int j = 14737632;
 
             if (packedFGColour != 0)
@@ -112,24 +112,6 @@ public class Button extends BaseGui
     {
         return this.hovered;
     }
-
-
-    public int getButtonWidth()
-    {
-        return this.width;
-    }
-
-    public void setWidth(int width)
-    {
-        this.width = width;
-    }
-
-
-
-    public void drawButtonForegroundLayer(int mouseX, int mouseY)
-    {
-    }
-
 }
 
 
