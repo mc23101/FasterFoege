@@ -1,1 +1,1 @@
-﻿package ForgeAPI.Utils.Image;
+package ForgeAPI.Utils.Image;

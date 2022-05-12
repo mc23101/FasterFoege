@@ -1,9 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 @SuppressWarnings("all")
@@ -14,15 +12,14 @@ public class Slider extends Button {
     private final String name;
     private final float min;
     private final float max;
-    private GuiSlider.FormatHelper formatHelper;
+    protected String displayString;
 
-    public Slider( int idIn, int x, int y, int width,int height,String nameIn, float minIn, float maxIn, float defaultValue) {
+    public Slider( String idIn, int x, int y, int width,int height,String nameIn, float minIn, float maxIn, float defaultValue) {
         super(idIn, x, y, width, height, "");
         this.name = nameIn;
         this.min = minIn;
         this.max = maxIn;
         this.sliderPosition = (defaultValue - minIn) / (maxIn - minIn);
-        this.displayString = this.getDisplayString();
     }
 
     @Override
@@ -57,7 +54,6 @@ public class Slider extends Button {
         }
 
         this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
-        System.out.println(System.currentTimeMillis()-time);
     }
 
 
@@ -80,7 +76,7 @@ public class Slider extends Button {
 
     private String getDisplayString()
     {
-        return this.formatHelper == null ? I18n.format(this.name) + ": " + this.getSliderValue() : this.formatHelper.getText(this.id, I18n.format(this.name), this.getSliderValue());
+        return displayString;
     }
 
     protected int getHoverState(boolean mouseOver)

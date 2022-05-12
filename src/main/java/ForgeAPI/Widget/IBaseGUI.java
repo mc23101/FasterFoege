@@ -79,7 +79,7 @@ public interface IBaseGUI {
     /**
      * 获取Gui的id
      * */
-    public int getGuiID();
+    public String getGuiID();
 
 
     /**

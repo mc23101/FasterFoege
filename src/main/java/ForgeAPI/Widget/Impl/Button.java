@@ -25,12 +25,12 @@ public class Button extends BaseGui
     protected int buttonHorveredColor=0x96CDCD;
 
 
-    public Button(int buttonId, int x, int y, String buttonText)
+    public Button(String buttonId, int x, int y, String buttonText)
     {
         this(buttonId, x, y, 200, 20, buttonText);
     }
 
-    public Button(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
+    public Button(String buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(widthIn<0||heightIn<0) throw new GuiBaseException("宽度width或高度height小于0");

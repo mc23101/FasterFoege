@@ -12,7 +12,7 @@ import java.util.Map;
 
 public abstract class Frame extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();
-    protected Map<Integer,IBaseGUI> Guis= new HashMap();
+    protected Map<String,IBaseGUI> Guis= new HashMap();
     public Frame(){
     }
 

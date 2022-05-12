@@ -1,1 +1,1 @@
-﻿package ForgeAPI.NetWork;
+package ForgeAPI.NetWork;

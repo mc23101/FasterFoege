@@ -13,7 +13,7 @@ public class Image extends BaseGui {
     protected int imageWidth;
     protected int imageHeight;
 
-    public Image(int id, int x, int y, int width, int height, ImageLoader imageLoader) throws IOException {
+    public Image(String id, int x, int y, int width, int height, ImageLoader imageLoader) throws IOException {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         if(imageLoader==null) throw new NullPointerException("ImageLoader的值为null");

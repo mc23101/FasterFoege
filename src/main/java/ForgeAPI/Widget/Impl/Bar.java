@@ -19,7 +19,14 @@ public class Bar extends BaseGui {
     protected int OverlapTextureX=0;
     protected int OverlapTextureY=10;
     private ResourceLocation BAR_TEXTURES=new ResourceLocation("textures/gui/bars.png");
-    public Bar(int id,float curr, int x,int y,int width, int height) {
+
+    /**
+     *
+     *
+     *
+     *
+     * */
+    public Bar(String id,float curr, int x,int y,int width, int height) {
         if(curr>100||curr<0) throw new ParamErrorException("进度条进度值大于100或小于0");
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");

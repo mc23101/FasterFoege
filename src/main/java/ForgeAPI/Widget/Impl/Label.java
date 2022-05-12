@@ -23,7 +23,7 @@ public class Label extends BaseGui {
     private int brColor;
     private int border;
 
-    public Label(int id,int x, int y,int width, int height,  int textColor) {
+    public Label(String id,int x, int y,int width, int height,  int textColor) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = width;
@@ -37,7 +37,7 @@ public class Label extends BaseGui {
         this.brColor = 0x00868B;
         this.border = 1;
         this.centered = false;
-        this.labelBgEnabled = false;
+        this.labelBgEnabled = true;
     }
 
 

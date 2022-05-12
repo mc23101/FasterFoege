@@ -13,13 +13,35 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.io.IOException;
 
+/**
+ * 所有Gui控件的父类，所有Gui都继承此类
+ * */
 @SuppressWarnings("all")
 public abstract class BaseGui extends Gui implements IBaseGUI {
+    /**
+     * Mc主类
+     * */
     protected Minecraft mc=Minecraft.getMinecraft();
+
+    /**
+     *  Gui字体信息
+     * */
     protected FontRenderer fontRenderer=Minecraft.getMinecraft().fontRenderer;
+
+    /**
+     * Gui是否可以被看见
+     * */
     protected boolean visible = true;
+
+    /**
+     * Gui是否为聚焦状态
+     * */
     protected boolean hovered;
-    protected int id;
+
+    /**
+     * Gui的id信息
+     * */
+    protected String id;
     protected int x;
     protected int y;
     protected int width;
@@ -141,7 +163,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * {@inheritDoc}
      * */
-    public int getGuiID(){
+    public String getGuiID(){
         return  id;
     }
 
@@ -178,11 +200,11 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         this.hovered = hovered;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,1 +1,1 @@
-﻿package ForgeAPI.Utils.Svg;
+package ForgeAPI.Utils.Svg;

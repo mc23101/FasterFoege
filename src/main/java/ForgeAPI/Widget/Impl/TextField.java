@@ -43,7 +43,7 @@ public class TextField extends BaseGui {
     private int cursorStringPosition;
 
 
-    public TextField(int componentId, int x, int y, int par5Width, int par6Height)
+    public TextField(String componentId, int x, int y, int par5Width, int par6Height)
     {
         this.id = componentId;
         this.fontRenderer = Minecraft.getMinecraft().fontRenderer;
@@ -236,7 +236,7 @@ public class TextField extends BaseGui {
         createLines();
     }
 
-    public int getId()
+    public String getId()
     {
         return this.id;
     }
