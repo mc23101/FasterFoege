@@ -1,6 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Widget.IBaseGUI;
+import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -16,6 +17,13 @@ public abstract class Frame extends GuiScreen {
     public Frame(){
     }
 
+
+    /**
+     * 设置窗口分辨率事件
+     * @param mc Minecraft类
+     * @param width mc主窗口宽度
+     * @param height mc主窗口高度
+     * */
     @Override
     public void setWorldAndResolution(Minecraft mc, int width, int height) {
         super.setWorldAndResolution(mc, width, height);
@@ -23,7 +31,6 @@ public abstract class Frame extends GuiScreen {
             gui.setResolution(width,height);
         }
     }
-
 
     /**
      * Gui关闭事件
@@ -38,7 +45,14 @@ public abstract class Frame extends GuiScreen {
     }
 
 
+    /**
+     * 在窗口中添加Gui
+     * @param Gui 要添加的Gui
+     * */
     public <T extends IBaseGUI> T addGui(T Gui) {
+        if(Guis.containsKey(Gui.getGuiID())){
+            throw new ParamErrorException("Gui的ID被占用，请更换其他ID");
+        }
         Guis.put(Gui.getGuiID(),Gui);
         Gui.setFrame(this);
         return Gui;
@@ -94,11 +108,27 @@ public abstract class Frame extends GuiScreen {
         super.keyTyped(typedChar,keyCode);
     }
 
+    /**
+     * 鼠标点击移动事件
+     * 鼠标按住，并移动鼠标会调用此方法
+     * @param mouseX 鼠标的X坐标
+     * @param mouseY 鼠标的Y坐标
+     * @param clickedMouseButton 鼠标按键类型  0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
+     * @param timeSinceLastClick 上一次鼠标点击到这一次鼠标点击的时间间隔
+     * */
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+        System.out.println(clickedMouseButton);
     }
 
+    /**
+     * 鼠标点击事件
+     * 鼠标点击会调用此方法
+     * @param mouseX 鼠标的X坐标
+     * @param mouseY 鼠标的Y坐标
+     * @param mouseButton 鼠标按键类型  0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
+     * */
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
        super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -107,6 +137,10 @@ public abstract class Frame extends GuiScreen {
        }
     }
 
+    /**
+     * 窗口初始化事件
+     * 如果需要添加Gui，则在此方法中添加
+     * */
     @Override
     public abstract void initGui();
 }

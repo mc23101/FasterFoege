@@ -28,13 +28,18 @@ public class Image extends BaseGui {
     }
 
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         ImageUtil.bindTexture(textureId);
         this.drawCustomSizedTexture(x,y,0,0,width,height,imageWidth,imageHeight);
     }
 
-
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void onGuiClosed() {
         ImageUtil.deleteTexture(textureId);

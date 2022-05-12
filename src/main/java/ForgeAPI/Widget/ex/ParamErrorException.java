@@ -1,6 +1,6 @@
 package ForgeAPI.Widget.ex;
 
-public class ParamErrorException extends GuiBaseException{
+public class ParamErrorException extends Error{
     public ParamErrorException() {
     }
 

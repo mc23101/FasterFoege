@@ -41,65 +41,105 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     }
 
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public boolean mousePressed(int mouseX, int mouseY) {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void mouseDragged(int mouseX, int mouseY) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void mouseReleased(int mouseX, int mouseY) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void playPressSound(SoundHandler soundHandlerIn) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void updateGUI() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void KeyInput(char typedChar, int keyCode) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void setResolution(int width, int height) {
         this.maxHeight =height;
         this.maxWidth =width;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void onGuiClosed() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     public int getGuiID(){
         return  id;
     }
+
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public Frame getFrame() {
         return frame;
     }
 
+    /**
+     * {@inheritDoc}
+     * */
     @Override
     public void setFrame(Frame frame) {
         this.frame = frame;
