@@ -42,15 +42,52 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * Gui的id信息
      * */
     protected String id;
+
+    /**
+     * Gui的横坐标X
+     * */
     protected int x;
+
+    /**
+     * Gui的纵坐标Y
+     * */
     protected int y;
+
+    /**
+     * Gui的宽度
+     * */
     protected int width;
+
+    /**
+     * Gui的高度
+     * */
     protected int height;
+
+    /**
+     * Gui的材质id
+     * 由ImageUtil.loadTexture()方法获得
+     * */
     protected int textureId=-1;
+
+    /**
+     * 是否启用绘制材质
+     * 如果为true则绘制材质图片，如果为false则单纯使用颜色填充gui
+     * */
     protected boolean enableTexture=true;
+
+    /**
+     * Gui的Frame父类
+     * */
     protected Frame frame;
 
+    /**
+     * 屏幕的最大宽度
+     * */
     protected int maxWidth;
+
+    /**
+     * 屏幕的最大高度
+     * */
     protected int maxHeight;
 
     public static void drawCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight)
