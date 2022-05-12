@@ -4,9 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.util.ResourceLocation;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class ImageUtil {
@@ -20,33 +19,23 @@ public class ImageUtil {
 
     /**
      * 获取图片的textureID
-     * @param file File类型的图片文件
+     * @param imageLoader 图片加载器
      * */
-    public static int loadTexture(File file) throws IOException {
-        ITextureObject texture = new ImageLoader(file);
+    public static int loadTexture(ImageLoader imageLoader) throws IOException {
+        ITextureObject texture =imageLoader;
         texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
         return texture.getGlTextureId();
     }
 
-    /**
-     * 获取图片的textureID
-     * @param image BufferedImage类型的图片文件
-     * */
-    public static int loadTexture(BufferedImage image) throws IOException {
-        ITextureObject texture = new ImageLoader(image);
-        texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
-        return texture.getGlTextureId();
-    }
+    public static int getResourceLocationTextureId(ResourceLocation resource){
+        ITextureObject itextureobject = Minecraft.getMinecraft().getTextureManager().getTexture(resource);
 
+        if (itextureobject == null||resource==null)
+        {
+            return -1;
+        }
 
-    /**
-     * 获取图片的textureID
-     * @param url 图片的网络url链接
-     * */
-    public static int loadTexture(String url) throws IOException {
-        ITextureObject texture = new ImageLoader(url);
-        texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
-        return texture.getGlTextureId();
+        return itextureobject.getGlTextureId();
     }
 
     /**
@@ -55,6 +44,8 @@ public class ImageUtil {
      *      建议在onGuiClosed事件中调用，以便释放内存
      * */
     public static void deleteTexture(int textureId) {
-        TextureUtil.deleteTexture(textureId);
+        if(textureId!=-1){
+            TextureUtil.deleteTexture(textureId);
+        }
     }
 }

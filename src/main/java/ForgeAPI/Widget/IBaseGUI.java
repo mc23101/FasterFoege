@@ -93,5 +93,6 @@ public interface IBaseGUI {
      * */
     public void setFrame(Frame frame);
 
+
 }
 

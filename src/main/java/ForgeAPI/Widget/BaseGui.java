@@ -1,5 +1,7 @@
 package ForgeAPI.Widget;
 
+import ForgeAPI.Utils.Image.ImageLoader;
+import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Widget.Impl.Frame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -8,6 +10,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+
+import java.io.IOException;
 
 @SuppressWarnings("all")
 public abstract class BaseGui extends Gui implements IBaseGUI {
@@ -20,7 +24,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int y;
     protected int width;
     protected int height;
-
+    protected int textureId=-1;
+    protected boolean enableTexture=true;
     protected Frame frame;
 
     protected int maxWidth;
@@ -40,6 +45,17 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         tessellator.draw();
     }
 
+    /**
+     * 加载Gui的材质
+     * */
+    public void setTexture(ImageLoader loader) {
+        ImageUtil.deleteTexture(this.textureId);
+        try {
+            this.textureId= ImageUtil.loadTexture(loader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -119,7 +135,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     @Override
     public void onGuiClosed() {
-
+        ImageUtil.deleteTexture(this.textureId);
     }
 
     /**
@@ -144,7 +160,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
-
 
 
     public boolean isVisible() {
@@ -203,4 +218,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         this.height = height;
     }
 
+    public void setEnableTexture(boolean enableTexture) {
+        this.enableTexture = enableTexture;
+    }
 }

@@ -22,7 +22,7 @@ public class Image extends BaseGui {
         this.y=y;
         this.width=width;
         this.height=height;
-        this.textureId= ImageUtil.loadTexture(imageLoader.getImageBuffer());
+        this.textureId= ImageUtil.loadTexture(imageLoader);
         this.imageWidth=imageLoader.getImageBuffer().getWidth();
         this.imageHeight=imageLoader.getImageBuffer().getHeight();
     }

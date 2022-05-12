@@ -1,7 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Widget.IBaseGUI;
-import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -49,9 +48,6 @@ public abstract class Frame extends GuiScreen {
      * @param Gui 要添加的Gui
      * */
     public <T extends IBaseGUI> T addGui(T Gui) {
-        if(Guis.containsKey(Gui.getGuiID())){
-            throw new ParamErrorException("Gui的ID被占用，请更换其他ID");
-        }
         Guis.put(Gui.getGuiID(),Gui);
         Gui.setFrame(this);
         return Gui;

@@ -1,5 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
+import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Widget.BaseGui;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import net.minecraft.client.gui.FontRenderer;
@@ -18,8 +19,10 @@ public class Button extends BaseGui
     public int packedFGColour; //FML
     protected int textureX=0;
     protected int textureY=66;
+    protected int buttonColor=0xBBFFFF;
     protected int hoveredTextureX=0;
-    protected int getHoveredTextureY=86;
+    protected int hoveredTextureY=86;
+    protected int buttonHorveredColor=0x96CDCD;
 
 
     public Button(int buttonId, int x, int y, String buttonText)
@@ -41,6 +44,7 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
+        this.textureId= ImageUtil.getResourceLocationTextureId(BUTTON_TEXTURES);
     }
 
     /**
@@ -51,19 +55,30 @@ public class Button extends BaseGui
         if (this.visible)
         {
             FontRenderer fontrenderer = mc.fontRenderer;
-            mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             int i = this.getHoverState();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+
+            //绘制按钮材质或按钮颜色
             if(i==1){
-                this.drawModalRectWithCustomSizedTexture(this.x, this.y, textureX, textureY, this.width , this.height,this.width,this.height);
+                if(textureId!=0&&enableTexture){
+                    this.drawModalRectWithCustomSizedTexture(this.x, this.y, textureX, textureY, this.width , this.height,this.width,this.height);
+                }else{
+                    drawRect(x,y,x+width,y+height,0xFF000000+buttonColor);
+                }
             }else if(i==2){
-                this.drawModalRectWithCustomSizedTexture(this.x, this.y, hoveredTextureX, getHoveredTextureY, this.width , this.height, this.width,this.height);
+                if(textureId!=0&&enableTexture){
+                    this.drawModalRectWithCustomSizedTexture(this.x, this.y, hoveredTextureX, hoveredTextureY, this.width , this.height, this.width,this.height);
+                }else{
+                    drawRect(x,y,x+width,y+height,0xFF000000+buttonHorveredColor);
+                }
             }
             this.mouseDragged(mouseX, mouseY,0);
+
+            //绘制字体颜色
             int j = 14737632;
 
             if (packedFGColour != 0)
