@@ -1,28 +1,30 @@
 package ForgeAPI.Widget.Impl;
 
+import ForgeAPI.Utils.Image.ImageLoader;
 import ForgeAPI.Utils.Image.ImageUtil;
+import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.io.File;
 
 @SuppressWarnings("all")
 @SideOnly(Side.CLIENT)
 public class Button extends BaseGui
 {
-    protected  ResourceLocation BUTTON_TEXTURES = new ResourceLocation("textures/gui/widgets.png");
     public String displayString;
     public boolean enabled;
     public int packedFGColour; //FML
-    protected int textureX=0;
-    protected int textureY=66;
     protected int buttonColor=0xBBFFFF;
-    protected int hoveredTextureX=0;
-    protected int hoveredTextureY=86;
     protected int buttonHorveredColor=0x96CDCD;
+    protected TexturePos2D texturePos;
+    protected TexturePos2D hoveredTexturePos;
+
 
 
     public Button(String buttonId, int x, int y, String buttonText)
@@ -44,7 +46,10 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
-        this.textureId= ImageUtil.getResourceLocationTextureId(BUTTON_TEXTURES);
+        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/widgets.png")));
+        this.textureId= ImageUtil.loadTexture(imageLoader1);
+        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
+        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
     }
 
     /**
@@ -65,13 +70,15 @@ public class Button extends BaseGui
             //绘制按钮材质或按钮颜色
             if(i==1){
                 if(textureId!=0&&enableTexture){
-                    this.drawModalRectWithCustomSizedTexture(this.x, this.y, textureX, textureY, this.width , this.height,this.width,this.height);
+                    ImageUtil.bindTexture(this.textureId);
+                    this.drawCustomSizedTexture(this.x, this.y,texturePos );
                 }else{
                     drawRect(x,y,x+width,y+height,0xFF000000+buttonColor);
                 }
             }else if(i==2){
                 if(textureId!=0&&enableTexture){
-                    this.drawModalRectWithCustomSizedTexture(this.x, this.y, hoveredTextureX, hoveredTextureY, this.width , this.height, this.width,this.height);
+                    ImageUtil.bindTexture(this.textureId);
+                    this.drawCustomSizedTexture(this.x, this.y,hoveredTexturePos);
                 }else{
                     drawRect(x,y,x+width,y+height,0xFF000000+buttonHorveredColor);
                 }
@@ -119,6 +126,7 @@ public class Button extends BaseGui
         return i;
     }
 
+
     /**
      * 判断Button是否为聚焦状态
      * @return Button聚焦状态
@@ -126,6 +134,14 @@ public class Button extends BaseGui
     public boolean isMouseOvered()
     {
         return this.hovered;
+    }
+
+    public void setTexturePos(TexturePos2D texturePos) {
+        this.texturePos = texturePos;
+    }
+
+    public void setHoveredTexturePos(TexturePos2D hoveredTexturePos) {
+        this.hoveredTexturePos = hoveredTexturePos;
     }
 }
 

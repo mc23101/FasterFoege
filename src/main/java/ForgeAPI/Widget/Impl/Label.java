@@ -2,6 +2,7 @@ package ForgeAPI.Widget.Impl;
 
 
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,13 +16,15 @@ import java.util.List;
 @SuppressWarnings("all")
 public class Label extends BaseGui {
     private List<String> labels = Lists.<String>newArrayList();;
-    private boolean centered;
-    private boolean labelBgEnabled;
-    private final int textColor;
-    private int backColor;
-    private int ulColor;
-    private int brColor;
-    private int border;
+    private boolean centered=false;
+    private boolean labelBgEnabled=true;
+
+    private final int textColor=-1;
+    private TexturePos2D backTexturePos;
+    private int backColor=-1;
+    private int ulColor=0x00868B;
+    private int brColor=0x00868B;
+    private int border=1;
 
     public Label(String id,int x, int y,int width, int height,  int textColor) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
@@ -31,13 +34,6 @@ public class Label extends BaseGui {
         this.x = x;
         this.y = y;
         this.id = id;
-        this.textColor = textColor;
-        this.backColor = -1;
-        this.ulColor = 0x00868B;
-        this.brColor = 0x00868B;
-        this.border = 1;
-        this.centered = false;
-        this.labelBgEnabled = true;
     }
 
 
@@ -65,20 +61,25 @@ public class Label extends BaseGui {
     {
         if (this.labelBgEnabled)
         {
-            int BackWidth = this.width - this.border ;
-            int BackHeight = this.height - this.border ;
-            int BackX=this.x+this.border;
-            int BackY=this.y+this.border;
-            drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.backColor);
+            if(this.textureId!=-1&&this.enableTexture){
 
-            //绘制水平边框
-            drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.ulColor);
+            }else{
+                int BackWidth = this.width - this.border ;
+                int BackHeight = this.height - this.border ;
+                int BackX=this.x+this.border;
+                int BackY=this.y+this.border;
+                drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.backColor);
 
-            drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.ulColor);
+                //绘制水平边框
+                drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.ulColor);
 
-            //绘制垂直边框
-            drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
-            drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+                drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.ulColor);
+
+                //绘制垂直边框
+                drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
+                drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
+            }
 
         }
     }
@@ -102,17 +103,17 @@ public class Label extends BaseGui {
 
     /**
      * 设置背景边界颜色
-     * @param value 代表颜色的整数型数值
-     * 1代表黑色,-1代表白色
+     * @param brColor 竖直边界颜色
+     * @param ulColor 水平边界颜色
      * */
-    public void setBorderColor(int value){
-            this.brColor=value;
+    public void setBorderColor(int brColor,int ulColor){
+            this.brColor=brColor;
+            this.ulColor=ulColor;
     }
 
     /**
      * 设置背景的颜色
      * @param value 代表颜色的整数型数值
-     * 1代表黑色,-1代表白色
      * */
     public void setBackColor(int value){
             this.backColor=value;

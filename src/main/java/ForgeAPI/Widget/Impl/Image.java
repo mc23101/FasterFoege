@@ -3,17 +3,15 @@ package ForgeAPI.Widget.Impl;
 import ForgeAPI.Utils.Image.ImageLoader;
 import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
-
-import java.io.IOException;
 
 public class Image extends BaseGui {
 
     protected int textureId;
-    protected int imageWidth;
-    protected int imageHeight;
+    protected TexturePos2D imageTexture;
 
-    public Image(String id, int x, int y, int width, int height, ImageLoader imageLoader) throws IOException {
+    public Image(String id, int x, int y, int width, int height, ImageLoader imageLoader) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         if(imageLoader==null) throw new NullPointerException("ImageLoader的值为null");
@@ -23,8 +21,7 @@ public class Image extends BaseGui {
         this.width=width;
         this.height=height;
         this.textureId= ImageUtil.loadTexture(imageLoader);
-        this.imageWidth=imageLoader.getImageBuffer().getWidth();
-        this.imageHeight=imageLoader.getImageBuffer().getHeight();
+        imageTexture=new TexturePos2D(0,0,width,height,imageLoader.getImageBuffer().getWidth(),imageLoader.getImageBuffer().getHeight());
     }
 
 
@@ -34,7 +31,11 @@ public class Image extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         ImageUtil.bindTexture(textureId);
-        this.drawCustomSizedTexture(x,y,0,0,width,height,imageWidth,imageHeight);
+        this.drawCustomSizedTexture(x,y,imageTexture);
+    }
+
+    public void setImageTexture(TexturePos2D imageTexture) {
+        this.imageTexture = imageTexture;
     }
 
     /**
@@ -45,12 +46,4 @@ public class Image extends BaseGui {
         ImageUtil.deleteTexture(textureId);
     }
 
-
-    /**
-     * 设置绘制图像的大小
-     * */
-    public void setImageRange(int width,int height){
-        this.imageWidth=width;
-        this.imageHeight=height;
-    }
 }

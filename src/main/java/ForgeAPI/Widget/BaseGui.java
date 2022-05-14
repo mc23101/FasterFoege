@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
-import java.io.IOException;
-
 /**
  * 所有Gui控件的父类，所有Gui都继承此类
  * */
@@ -70,6 +68,16 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int textureId=-1;
 
     /**
+     *
+     * */
+    protected int maxTextureWidth;
+
+    /**
+     *
+     * */
+    protected int maxTextureHeight;
+
+    /**
      * 是否启用绘制材质
      * 如果为true则绘制材质图片，如果为false则单纯使用颜色填充gui
      * */
@@ -90,17 +98,25 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     protected int maxHeight;
 
-    public static void drawCustomSizedTexture(int x, int y, float u, float v, int width, int height, float textureWidth, float textureHeight)
+    public static void drawCustomSizedTexture(int x, int y,TexturePos2D texturePos)
     {
-        float f = 1F / textureWidth;
-        float f1 = 1F / textureHeight;
+        int width=texturePos.getWidth();
+        int height=texturePos.getHeight();
+        float f = 1F/ (float)texturePos.getMaxWidth();
+        float f1 = 1F /(float)texturePos.getMaxHeight();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
+        float u= texturePos.getU();
+        float v=texturePos.getV();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        //矩形点左下
+        bufferbuilder.pos((double)x+0, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        //矩形点右下
         bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
-        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        //矩形点右上
+        bufferbuilder.pos((double)(x + width), (double)y+0, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        //矩形点左上
+        bufferbuilder.pos((double)x+0, (double)y+0, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
     }
 
@@ -109,11 +125,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     public void setTexture(ImageLoader loader) {
         ImageUtil.deleteTexture(this.textureId);
-        try {
-            this.textureId= ImageUtil.loadTexture(loader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.textureId= ImageUtil.loadTexture(loader);
     }
 
     /**
@@ -195,6 +207,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     @Override
     public void onGuiClosed() {
         ImageUtil.deleteTexture(this.textureId);
+        this.textureId=-1;
     }
 
     /**

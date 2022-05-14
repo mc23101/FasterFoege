@@ -1,42 +1,41 @@
 package ForgeAPI.Widget.Impl;
 
+import ForgeAPI.Utils.Image.ImageLoader;
 import ForgeAPI.Utils.Image.ImageUtil;
+import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Widget.BaseGui;
+import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+
+import java.io.File;
 
 public class Bar extends BaseGui {
     protected  final float min=0;
     protected final float max=100;
     protected float curr;
     protected boolean CenterString=false;
-    protected int BackTextureX=0;
-    protected int BackTextureY=0;
     protected int BackColor=0xFFFAFA;
     protected int OverlapColor=0x668B8B;
-    protected int OverlapTextureX=0;
-    protected int OverlapTextureY=10;
-    private ResourceLocation BAR_TEXTURES=new ResourceLocation("textures/gui/bars.png");
+    protected TexturePos2D backTexture;
+    protected TexturePos2D overlapTexture;
 
-    /**
-     *
-     *
-     *
-     *
-     * */
+
     public Bar(String id,float curr, int x,int y,int width, int height) {
         if(curr>100||curr<0) throw new ParamErrorException("进度条进度值大于100或小于0");
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
-        this.textureId= ImageUtil.getResourceLocationTextureId(BAR_TEXTURES);
         this.id=id;
         this.y=y;
         this.x=x;
         this.curr = curr;
         this.width = width;
         this.height = height;
+        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Bar/bars.png")));
+        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
+        this.overlapTexture=new TexturePos2D(0,10,182,5,256,256);
+        this.textureId=ImageUtil.loadTexture(imageLoader);
     }
 
     /**
@@ -45,7 +44,8 @@ public class Bar extends BaseGui {
     private void renderOverlap()
     {
         if(textureId!=-1&&enableTexture){
-            this.drawModalRectWithCustomSizedTexture(x, y, OverlapTextureX, OverlapTextureY, (int) (width*(curr/max)), height, (int) (width*(curr/max)), height);
+            overlapTexture.setWidth((int) (width*(curr/max)));
+            this.drawCustomSizedTexture(x,y,overlapTexture);
         }else{
             drawRect(x,y,x+(int) (width*(curr/max)),y+height,0xFF000000+OverlapColor);
         }
@@ -61,7 +61,7 @@ public class Bar extends BaseGui {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         if(textureId!=-1&&enableTexture){
             ImageUtil.bindTexture(textureId);
-            this.drawModalRectWithCustomSizedTexture(x, y, BackTextureX, BackTextureY, width, height,width, height);
+            this.drawCustomSizedTexture(x, y,this.backTexture);
         }else{
             drawRect(x,y,x+width,y+height,0xFF000000+BackColor);
         }
@@ -85,22 +85,16 @@ public class Bar extends BaseGui {
 
     /**
      * 设置进度条背景位置
-     * @param backTextureX 背景起始坐标X
-     * @param backTextureY 背景起始坐标Y
      * */
-    public void setBackTexture(int backTextureX,int backTextureY){
-        this.BackTextureX=backTextureX;
-        this.BackTextureY=backTextureY;
+    public void setBackTexture(TexturePos2D backTexture){
+       this.backTexture=backTexture;
     }
 
     /**
      * 设置进度条进度位置
-     * @param overlapTextureX 进度图起始位置X
-     * @param overlapTextureY 进度图起始位置Y
      * */
-    public  void setOverlapTexture(int overlapTextureX,int overlapTextureY){
-        this.OverlapTextureX=overlapTextureX;
-        this.OverlapTextureY=overlapTextureY;
+    public  void setOverlapTexture(TexturePos2D overlapTexture){
+        this.overlapTexture=overlapTexture;
     }
 
     /**
@@ -111,7 +105,7 @@ public class Bar extends BaseGui {
         super.updateGUI();
         curr++;
         if(curr==100){
-            curr=min;
+            curr=1;
         }
     }
 

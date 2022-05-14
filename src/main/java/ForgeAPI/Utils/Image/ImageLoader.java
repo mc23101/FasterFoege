@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ImageLoader extends AbstractTexture {
@@ -18,18 +19,31 @@ public class ImageLoader extends AbstractTexture {
     private URL url;
     private File file;
 
-    public ImageLoader(File file) throws IOException {
-        this.imageBuffer = TextureUtil.readBufferedImage(new FileInputStream(file));
+    public ImageLoader(File file)  {
+        try {
+            this.imageBuffer = TextureUtil.readBufferedImage(new FileInputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ImageLoader(BufferedImage image) {
         this.imageBuffer = image;
     }
 
-    public ImageLoader(String urlValue) throws IOException {
-        URL url=new URL(urlValue);
+    public ImageLoader(String urlValue)  {
+        URL url= null;
+        try {
+            url = new URL(urlValue);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         this.url=url;
-        this.imageBuffer=ImageIO.read(url);
+        try {
+            this.imageBuffer=ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

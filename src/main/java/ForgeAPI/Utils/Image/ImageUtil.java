@@ -3,6 +3,7 @@ package ForgeAPI.Utils.Image;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,9 +22,13 @@ public class ImageUtil {
      * 获取图片的textureID
      * @param imageLoader 图片加载器
      * */
-    public static int loadTexture(ImageLoader imageLoader) throws IOException {
+    public static int loadTexture(ImageLoader imageLoader){
         ITextureObject texture =imageLoader;
-        texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
+        try {
+            texture.loadTexture(Minecraft.getMinecraft().getResourceManager());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return texture.getGlTextureId();
     }
 
@@ -32,7 +37,8 @@ public class ImageUtil {
 
         if (itextureobject == null||resource==null)
         {
-            return -1;
+            itextureobject = new SimpleTexture(resource);
+            Minecraft.getMinecraft().getTextureManager().loadTexture(resource,itextureobject);
         }
 
         return itextureobject.getGlTextureId();
