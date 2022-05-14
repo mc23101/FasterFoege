@@ -26,9 +26,9 @@ public class gui extends Frame {
         ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/test.png")));
         Image image=new Image("image",0,0,400,200,imageLoader);
 
-        //this.addGui(image);
-        this.addGui(button);
-        this.addGui(bar);
+        this.addGui(image);
+        //this.addGui(button);
+        //this.addGui(bar);
         //this.addGui(label);
     }
 

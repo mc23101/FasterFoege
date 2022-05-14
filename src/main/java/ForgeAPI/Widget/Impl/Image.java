@@ -21,7 +21,7 @@ public class Image extends BaseGui {
         this.width=width;
         this.height=height;
         this.textureId= ImageUtil.loadTexture(imageLoader);
-        imageTexture=new TexturePos2D(0,0,width,height,imageLoader.getImageBuffer().getWidth(),imageLoader.getImageBuffer().getHeight());
+        imageTexture=new TexturePos2D(0,0,imageLoader.getImageBuffer().getWidth(),imageLoader.getImageBuffer().getHeight(),imageLoader.getImageBuffer().getWidth(),imageLoader.getImageBuffer().getHeight());
     }
 
 
@@ -31,7 +31,7 @@ public class Image extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         ImageUtil.bindTexture(textureId);
-        this.drawCustomSizedTexture(x,y,imageTexture);
+        this.drawCustomSizedImage(x,y,width,height,imageTexture);
     }
 
     public void setImageTexture(TexturePos2D imageTexture) {

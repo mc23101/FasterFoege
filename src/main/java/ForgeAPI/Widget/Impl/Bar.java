@@ -1,3 +1,9 @@
+/**
+ * Gui控件：进度条
+ * 状态：已完成
+ * 作者：mc23
+ * 最后一次修改时间：2022.5.14
+ * */
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.Image.ImageLoader;
@@ -21,7 +27,15 @@ public class Bar extends BaseGui {
     protected TexturePos2D backTexture;
     protected TexturePos2D overlapTexture;
 
-
+    /**
+     * 构造函数
+     * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
+     * @param curr 进度条的当前进度
+     * @param x 进度条在屏幕上的横坐标X
+     * @param y 进度条在屏幕上的纵坐标Y
+     * @param width 进度条的宽度
+     * @param height 进度条的高度
+     * */
     public Bar(String id,float curr, int x,int y,int width, int height) {
         if(curr>100||curr<0) throw new ParamErrorException("进度条进度值大于100或小于0");
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
@@ -78,6 +92,7 @@ public class Bar extends BaseGui {
 
     /**
      * 设置进度条进度
+     * @param curr 进度条的当前进度
      * */
     public void setCurr(float curr) {
         this.curr = curr;
@@ -85,6 +100,7 @@ public class Bar extends BaseGui {
 
     /**
      * 设置进度条背景位置
+     * @param backTexture 进度条背景位置
      * */
     public void setBackTexture(TexturePos2D backTexture){
        this.backTexture=backTexture;
@@ -92,6 +108,7 @@ public class Bar extends BaseGui {
 
     /**
      * 设置进度条进度位置
+     * @param overlapTexture 进度条进度位置
      * */
     public  void setOverlapTexture(TexturePos2D overlapTexture){
         this.overlapTexture=overlapTexture;

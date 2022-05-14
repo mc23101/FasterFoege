@@ -120,6 +120,28 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         tessellator.draw();
     }
 
+    public static void drawCustomSizedImage(int x, int y,int width,int height,TexturePos2D texturePos)
+    {
+        float w=(float)texturePos.getWidth()/width;
+        float h=(float)texturePos.getMaxHeight()/height;
+        float f = w/ (float)texturePos.getMaxWidth();
+        float f1 = h /(float)texturePos.getMaxHeight();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        float u= texturePos.getU();
+        float v=texturePos.getV();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        //矩形点左下
+        bufferbuilder.pos((double)x+0, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        //矩形点右下
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
+        //矩形点右上
+        bufferbuilder.pos((double)(x + width), (double)y+0, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        //矩形点左上
+        bufferbuilder.pos((double)x+0, (double)y+0, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
+
     /**
      * 加载Gui的材质
      * */
