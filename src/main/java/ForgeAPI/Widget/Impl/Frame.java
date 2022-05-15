@@ -10,6 +10,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 作为父窗体加载其他Gui控件
+ * 状态：已完成
+ * 作者：mc23
+ * 最后一次修改时间：2022.5.15
+ * */
 public abstract class Frame extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();
     protected Map<String,IBaseGUI> Guis= new HashMap();
@@ -132,6 +138,12 @@ public abstract class Frame extends GuiScreen {
     }
 
 
+    /**
+     * 鼠标释放事件
+     * @param mouseX 鼠标的X坐标
+     * @param mouseY 鼠标的Y坐标
+     * @param mouseButton 鼠标按键类型  0：鼠标左键，1：鼠标右键，3鼠标侧键下，4鼠标侧键上
+     * */
     @Override
     protected void mouseReleased(int mouseX, int mouseY,int mouseButton) {
         for (IBaseGUI gui:Guis.values()){
