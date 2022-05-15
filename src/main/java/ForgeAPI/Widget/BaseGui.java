@@ -68,16 +68,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int textureId=-1;
 
     /**
-     *
-     * */
-    protected int maxTextureWidth;
-
-    /**
-     *
-     * */
-    protected int maxTextureHeight;
-
-    /**
      * 是否启用绘制材质
      * 如果为true则绘制材质图片，如果为false则单纯使用颜色填充gui
      * */
