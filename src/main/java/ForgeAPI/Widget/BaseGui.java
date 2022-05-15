@@ -256,62 +256,116 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     }
 
 
+    /**
+     * Gui是否可视
+     * */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * 设置Gui是否可视
+     * @param visible Gui是否可视
+     * */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    /**
+     * Gui是否为聚焦状态
+     * */
     public boolean isHovered() {
         return hovered;
     }
 
+    /**
+     * 设置Gui的聚焦状态
+     * @param hovered Gui的聚焦状态
+     * */
     public void setHovered(boolean hovered) {
         this.hovered = hovered;
     }
 
+    /**
+     * 获取Gui的ID
+     * */
     public String getId() {
         return id;
     }
 
+    /**
+     * 设置Gui的ID
+     * */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * 获取Gui的横坐标x
+     * */
     public int getX() {
         return x;
     }
 
+    /**
+     * 设置Gui的横坐标x
+     * @param x Gui的横坐标
+     * */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * 获取Gui的纵坐标y
+     * */
     public int getY() {
         return y;
     }
 
+    /**
+     * 设置Gui的纵坐标y
+     * @param y Gui的纵坐标
+     * */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * 获取Gui的宽度
+     * */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * 设置Gui的宽度
+     * @param width Gui的宽度
+     * */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * 获取Gui的高度
+     * */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * 设置Gui的高度
+     * @param height Gui的高度
+     * */
     public void setHeight(int height) {
         this.height = height;
     }
 
+
+    /**
+     * 是否启用材质
+     * @param enableTexture 是否启用
+     * true：Gui绘制材质，false：Gui绘制颜色
+     * */
     public void setEnableTexture(boolean enableTexture) {
         this.enableTexture = enableTexture;
     }

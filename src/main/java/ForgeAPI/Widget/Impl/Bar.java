@@ -29,9 +29,23 @@ public class Bar extends BaseGui {
     protected int OverlapColor=0x668B8B;
     protected TexturePos2D backTexture;
     protected TexturePos2D overlapTexture;
+    /**
+     * 使用原版自带大小的进度条（Boss血条）
+     * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
+     * @param curr 进度条的当前进度
+     * @param x 进度条在屏幕上的横坐标X
+     * @param y 进度条在屏幕上的纵坐标Y
+     * */
+    public Bar(String id,float curr, int x,int y) {
+        this(id,curr,x,y,182,5);
+        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
+        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
+        this.overlapTexture=new TexturePos2D(0,10,182,5,256,256);
+        this.textureId=ImageUtil.loadTexture(imageLoader);
+    }
 
     /**
-     * 构造函数
+     * 自定义大小的进度条控件
      * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
      * @param curr 进度条的当前进度
      * @param x 进度条在屏幕上的横坐标X
@@ -49,10 +63,6 @@ public class Bar extends BaseGui {
         this.curr = curr;
         this.width = width;
         this.height = height;
-        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Bar/bars.png")));
-        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
-        this.overlapTexture=new TexturePos2D(0,10,182,5,256,256);
-        this.textureId=ImageUtil.loadTexture(imageLoader);
     }
 
     /**
@@ -136,4 +146,22 @@ public class Bar extends BaseGui {
     public void onGuiClosed() {
         super.onGuiClosed();
     }
+
+    /**
+     *  设置绘制背景的RGB颜色
+     * @param backColor 背景的RGB颜色
+     * */
+    public void setBackColor(int backColor) {
+        BackColor = backColor;
+    }
+
+    /**
+     * 设置进度条进度的RGB颜色
+     * @param overlapColor 进度条进度的RGB颜色
+     * */
+    public void setOverlapColor(int overlapColor) {
+        OverlapColor = overlapColor;
+    }
+
+
 }

@@ -42,7 +42,7 @@ public class Button extends BaseGui
     public Button(String buttonId, int x, int y, String buttonText)
     {
         this(buttonId, x, y, 200, 20, buttonText);
-        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/widgets.png")));
+        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
         this.textureId= ImageUtil.loadTexture(imageLoader1);
         this.texturePos=new TexturePos2D(0,66,200,20,256,256);
         this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
