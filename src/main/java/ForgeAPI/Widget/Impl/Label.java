@@ -49,6 +49,7 @@ public class Label extends BaseGui {
 
     /**
      * 设置Label文本居中
+     * @param value 是否居中
      * */
     public void setCentered(boolean value)
     {

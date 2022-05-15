@@ -21,6 +21,7 @@ public class ImageUtil {
     /**
      * 获取图片的textureID
      * @param imageLoader 图片加载器
+     * @return textureId  材质的ID
      * */
     public static int loadTexture(ImageLoader imageLoader){
         ITextureObject texture =imageLoader;
@@ -48,6 +49,7 @@ public class ImageUtil {
      * 删除textureId
      * 说明：删除textureId可以减少内存浪费，
      *      建议在onGuiClosed事件中调用，以便释放内存
+     * @param textureId 要删除的材质Id
      * */
     public static void deleteTexture(int textureId) {
         if(textureId!=-1){
