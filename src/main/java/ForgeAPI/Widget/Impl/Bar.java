@@ -23,13 +23,39 @@ import java.io.File;
  * */
 @SideOnly(Side.CLIENT)
 public class Bar extends BaseGui {
+    /**
+     * 进度条的最小值
+     * */
     protected  final float min=0;
+
+    /**
+     * 进度条的最大值
+     * */
     protected final float max=100;
+
+    /**
+     * 进度条的进度
+     * */
     protected float curr;
-    protected boolean CenterString=false;
+
+    /**
+     * 进度条背景颜色
+     * */
     protected int BackColor=0xFFFAFA;
+
+    /**
+     * 进度条进度颜色
+     * */
     protected int OverlapColor=0x668B8B;
+
+    /**
+     * 进度条背景材质位置
+     * */
     protected TexturePos2D backTexture;
+
+    /**
+     * 进度条进度材质位置
+     * */
     protected TexturePos2D overlapTexture;
     /**
      * 使用原版自带大小的进度条（Boss血条）
