@@ -1,6 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
 
+import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Widget.BaseGui;
 import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
@@ -62,7 +63,8 @@ public class Label extends BaseGui {
         if (this.labelBgEnabled)
         {
             if(this.textureId!=-1&&this.enableTexture){
-
+                ImageUtil.bindTexture(textureId);
+                this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
             }else{
                 int BackWidth = this.width - this.border ;
                 int BackHeight = this.height - this.border ;

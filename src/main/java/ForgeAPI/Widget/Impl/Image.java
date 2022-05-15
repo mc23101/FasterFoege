@@ -40,7 +40,7 @@ public class Image extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         ImageUtil.bindTexture(textureId);
-        this.drawCustomSizedImage(x,y,width,height,imageTexture);
+        this.drawCustomSizedTexture(x,y,width,height,imageTexture);
     }
 
     public void setImageTexture(TexturePos2D imageTexture) {

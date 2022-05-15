@@ -98,6 +98,12 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     protected int maxHeight;
 
+    /**
+     * 绘制自定义材质
+     * @param x Gui的横坐标x
+     * @param y Gui的纵坐标y
+     * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
+     */
     public static void drawCustomSizedTexture(int x, int y,TexturePos2D texturePos)
     {
         int width=texturePos.getWidth();
@@ -119,8 +125,15 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         bufferbuilder.pos((double)x+0, (double)y+0, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
     }
-
-    public static void drawCustomSizedImage(int x, int y,int width,int height,TexturePos2D texturePos)
+    /**
+     * 绘制自定义材质
+     * @param x Gui的横坐标x
+     * @param y Gui的纵坐标y
+     * @param width Gui的宽度
+     * @param height Gui的高度
+     * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
+     */
+    public static void drawCustomSizedTexture(int x, int y,int width,int height,TexturePos2D texturePos)
     {
         float w=(float)texturePos.getWidth()/width;
         float h=(float)texturePos.getMaxHeight()/height;
