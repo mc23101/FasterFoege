@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.yourname.modid</groupId>
+  <artifactId>ForgeAPI-1.12.2</artifactId>
+  <versioning>
+    <release>1.0</release>
+    <versions>
+      <version>1.0</version>
+    </versions>
+    <lastUpdated>20220515123832</lastUpdated>
+  </versioning>
+</metadata>

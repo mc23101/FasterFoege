@@ -12,12 +12,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
-
+/* =======================
+||类名：Bar
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.15
+==========================*/
 /**
  * Gui控件：进度条
- * 状态：已完成
- * 作者：mc23
- * 最后一次修改时间：2022.5.14
  * */
 @SideOnly(Side.CLIENT)
 public class Bar extends BaseGui {

@@ -9,12 +9,14 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+/* =======================
+||类名：Frame
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.15
+==========================*/
 /**
  * 作为父窗体加载其他Gui控件
- * 状态：已完成
- * 作者：mc23
- * 最后一次修改时间：2022.5.15
  * */
 public abstract class Frame extends GuiScreen {
     public Minecraft mc=Minecraft.getMinecraft();

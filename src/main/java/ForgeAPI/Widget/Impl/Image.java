@@ -5,11 +5,20 @@ import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Widget.BaseGui;
 import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
-
+/* =======================
+||类名：Image
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.15
+==========================*/
+/**
+ * Gui控件：图片框
+ * */
 public class Image extends BaseGui {
 
     protected int textureId;
     protected TexturePos2D imageTexture;
+
 
     public Image(String id, int x, int y, int width, int height, ImageLoader imageLoader) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
