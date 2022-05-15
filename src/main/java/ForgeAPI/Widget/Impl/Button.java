@@ -131,7 +131,6 @@ public class Button extends BaseGui
 
     /**
      * 获取鼠标聚焦状态
-     * @param mouseOver
      * @return 鼠标聚焦状态 0:未启用 1:未聚焦 2:聚焦
      * */
     protected int getHoverState()
