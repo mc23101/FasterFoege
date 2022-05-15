@@ -25,12 +25,39 @@ import java.io.File;
 @SideOnly(Side.CLIENT)
 public class Button extends BaseGui
 {
+    /**
+     * 按钮显示的文本
+     * */
     public String displayString;
+
+    /**
+     * 按钮是否启用，如果为false则按钮不能被操作
+     * */
     public boolean enabled;
-    public int packedFGColour; //FML
+
+    /**
+     * FML
+     * */
+    public int packedFGColour;
+
+    /**
+     * 按钮未聚焦时的颜色
+     * */
     protected int buttonColor=0xBBFFFF;
+
+    /**
+     * 按钮聚焦时的颜色
+     * */
     protected int buttonHorveredColor=0x96CDCD;
+
+    /**
+     * 按钮未聚焦时的材质位置
+     * */
     protected TexturePos2D texturePos;
+
+    /**
+     * 按钮聚焦时的材质位置
+     * */
     protected TexturePos2D hoveredTexturePos;
 
 
