@@ -13,6 +13,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
+/**
+ * Gui控件：按钮
+ * 状态：已完成
+ * 作者：mc23
+ * 最后一次修改时间：2022.5.15
+ * */
 @SuppressWarnings("all")
 @SideOnly(Side.CLIENT)
 public class Button extends BaseGui
@@ -26,12 +32,31 @@ public class Button extends BaseGui
     protected TexturePos2D hoveredTexturePos;
 
 
-
+    /**
+     *  使用原版自带大小按钮
+     * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
+     * @param x 按钮在屏幕上的横坐标X
+     * @param y 按钮在屏幕上的纵坐标Y
+     * @param buttonText 按钮上显示的文本
+     * */
     public Button(String buttonId, int x, int y, String buttonText)
     {
         this(buttonId, x, y, 200, 20, buttonText);
+        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/widgets.png")));
+        this.textureId= ImageUtil.loadTexture(imageLoader1);
+        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
+        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
     }
 
+    /**
+     * 使用自定义大小的按钮
+     * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
+     * @param x 按钮在屏幕上的横坐标X
+     * @param y 按钮在屏幕上的纵坐标Y
+     * @param widthIn 按钮的宽度
+     * @param heightIn 按钮的高度
+     * @param buttonText 按钮上显示的文本
+     * */
     public Button(String buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
@@ -46,10 +71,7 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
-        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/widgets.png")));
-        this.textureId= ImageUtil.loadTexture(imageLoader1);
-        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
-        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
+
     }
 
     /**
@@ -136,10 +158,18 @@ public class Button extends BaseGui
         return this.hovered;
     }
 
+    /**
+     * 设置未聚焦状态的按钮材质位置
+     * @param texturePos 按钮材质的位置
+     * */
     public void setTexturePos(TexturePos2D texturePos) {
         this.texturePos = texturePos;
     }
 
+    /**
+     * 设置聚焦状态的按钮材质位置
+     * @param hoveredTexturePos 按钮材质位置
+     * */
     public void setHoveredTexturePos(TexturePos2D hoveredTexturePos) {
         this.hoveredTexturePos = hoveredTexturePos;
     }

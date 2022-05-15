@@ -1,9 +1,3 @@
-/**
- * Gui控件：进度条
- * 状态：已完成
- * 作者：mc23
- * 最后一次修改时间：2022.5.14
- * */
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.Image.ImageLoader;
@@ -14,9 +8,18 @@ import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 
+/**
+ * Gui控件：进度条
+ * 状态：已完成
+ * 作者：mc23
+ * 最后一次修改时间：2022.5.14
+ * */
+@SideOnly(Side.CLIENT)
 public class Bar extends BaseGui {
     protected  final float min=0;
     protected final float max=100;
