@@ -1,7 +1,7 @@
 package ForgeAPI.Widget;
 
-import ForgeAPI.Widget.Impl.Frame;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.gui.Gui;
 
 public interface IBaseGUI {
     /**
@@ -85,13 +85,13 @@ public interface IBaseGUI {
     /**
      * 获取Gui的父窗口
      * */
-    public Frame getFrame();
+    public Gui getFrame();
 
     /**
      * 设置Gui的父窗口
      * @param frame 父窗口
      * */
-    public void setFrame(Frame frame);
+    public void setFrame(Gui frame);
 
 
 }

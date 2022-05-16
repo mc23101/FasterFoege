@@ -2,7 +2,6 @@ package ForgeAPI.Widget;
 
 import ForgeAPI.Utils.Image.ImageLoader;
 import ForgeAPI.Utils.Image.ImageUtil;
-import ForgeAPI.Widget.Impl.Frame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -74,9 +73,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected boolean enableTexture=true;
 
     /**
-     * Gui的Frame父类
+     * Gui的容器
      * */
-    protected Frame frame;
+    protected Gui frame;
 
     /**
      * 屏幕的最大宽度
@@ -246,7 +245,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * {@inheritDoc}
      * */
     @Override
-    public Frame getFrame() {
+    public Gui getFrame() {
         return frame;
     }
 
@@ -254,7 +253,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * {@inheritDoc}
      * */
     @Override
-    public void setFrame(Frame frame) {
+    public void setFrame(Gui frame) {
         this.frame = frame;
     }
 

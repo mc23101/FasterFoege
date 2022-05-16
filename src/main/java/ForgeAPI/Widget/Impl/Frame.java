@@ -124,6 +124,7 @@ public abstract class Frame extends GuiScreen {
         }
     }
 
+
     /**
      * 鼠标点击事件
      * 鼠标点击会调用此方法
@@ -152,6 +153,7 @@ public abstract class Frame extends GuiScreen {
             gui.mouseReleased(mouseX,mouseY,mouseButton);
         }
     }
+
 
 
     /**

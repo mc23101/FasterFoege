@@ -10,24 +10,63 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
 import java.util.List;
-
+/* =======================
+||类名：Label
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.16
+==========================*/
 /**
  * Label无法修改文本框
  * */
 @SuppressWarnings("all")
 public class Label extends BaseGui {
-    private List<String> labels = Lists.<String>newArrayList();;
+    /**
+     * Label文本，每一个元素代表一行文本
+     * */
+    private List<String> labels = Lists.<String>newArrayList();
+
+    /**
+     * 是否启用文本居中
+     * */
     private boolean centered=false;
+
+    /**
+     * 是否绘制Label背景
+     * */
     private boolean labelBgEnabled=true;
 
-    private final int textColor=-1;
+    /**
+     * Gui背景材质位置
+     * */
     private TexturePos2D backTexturePos;
-    private int backColor=-1;
+
+    /**
+     * 文本字体颜色
+     * */
+    private int textColor=0x000000;
+
+    /**
+     * Gui背景颜色
+     * */
+    private int backColor=0xFFFFFF;
+
+    /**
+     * Gui水平边框颜色
+     * */
     private int ulColor=0x00868B;
+
+    /**
+     * Gui竖直边框颜色
+     * */
     private int brColor=0x00868B;
+
+    /**
+     * Gui边框宽度
+     * */
     private int border=1;
 
-    public Label(String id,int x, int y,int width, int height,  int textColor) {
+    public Label(String id,int x, int y,int width, int height) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = width;
@@ -146,7 +185,7 @@ public class Label extends BaseGui {
                 }
                 else
                 {
-                    this.drawString(this.fontRenderer, this.labels.get(k), BackX, BackY+10*k, this.textColor);
+                    this.drawString(this.fontRenderer, this.labels.get(k), BackX, BackY+10*k, 0xFF000000+this.textColor);
                 }
             }
         }

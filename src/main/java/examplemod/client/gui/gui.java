@@ -20,7 +20,7 @@ public class gui extends Frame {
         //Slider slider=new Slider(1,0,0,200,20,"",0,100,44);
         Bar bar=new Bar("bar",10,0,20,182,5);
         Button button=new Button("button",0,40,200,20,"sss");
-        Label label=new Label("label",0,150,50,50,-1);
+        Label label=new Label("label",0,150,50,50);
         bar.setEnableTexture(true);
         button.setEnableTexture(true);
         ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/test.png")));
