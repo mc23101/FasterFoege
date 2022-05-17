@@ -60,6 +60,16 @@ public class Button extends BaseGui
      * */
     protected TexturePos2D hoveredTexturePos;
 
+    /**
+     * Gui边框的宽度
+     * */
+    protected int border=0;
+
+    /**
+     * Gui边框的颜色
+     * */
+    protected int brColor=0x00868B;
+
 
     /**
      *  使用原版自带大小按钮
@@ -124,14 +134,42 @@ public class Button extends BaseGui
                     ImageUtil.bindTexture(this.textureId);
                     this.drawCustomSizedTexture(this.x, this.y,texturePos );
                 }else{
-                    drawRect(x,y,x+width,y+height,0xFF000000+buttonColor);
+                    int BackWidth = this.width - this.border ;
+                    int BackHeight = this.height - this.border ;
+                    int BackX=this.x+this.border;
+                    int BackY=this.y+this.border;
+                    drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.buttonColor);
+
+                    //绘制水平边框
+                    drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
+
+                    drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
+                    //绘制垂直边框
+                    drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
+                    drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
                 }
             }else if(i==2){
                 if(textureId!=0&&enableTexture){
                     ImageUtil.bindTexture(this.textureId);
                     this.drawCustomSizedTexture(this.x, this.y,hoveredTexturePos);
                 }else{
-                    drawRect(x,y,x+width,y+height,0xFF000000+buttonHorveredColor);
+                    int BackWidth = this.width - this.border ;
+                    int BackHeight = this.height - this.border ;
+                    int BackX=this.x+this.border;
+                    int BackY=this.y+this.border;
+                    drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.buttonHorveredColor);
+
+                    //绘制水平边框
+                    drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
+
+                    drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
+                    //绘制垂直边框
+                    drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
+                    drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
                 }
             }
             this.mouseDragged(mouseX, mouseY,0);
@@ -200,6 +238,42 @@ public class Button extends BaseGui
      * */
     public void setHoveredTexturePos(TexturePos2D hoveredTexturePos) {
         this.hoveredTexturePos = hoveredTexturePos;
+    }
+
+    public void setDisplayString(String displayString) {
+        this.displayString = displayString;
+    }
+
+    /**
+     * 设置按钮未聚焦的颜色
+     * @param buttonColor RGB颜色
+     * */
+    public void setButtonColor(int buttonColor) {
+        this.buttonColor = buttonColor;
+    }
+
+    /**
+     * 设置按钮聚焦的颜色
+     * @param buttonHorveredColor RGB颜色
+     * */
+    public void setButtonHorveredColor(int buttonHorveredColor) {
+        this.buttonHorveredColor = buttonHorveredColor;
+    }
+
+    /**
+     * 设置Gui边框宽度
+     * @param width 宽度
+     * */
+    public void setBorder(int width) {
+        this.border = border;
+    }
+
+    /**
+     * 设置边框颜色
+     * @param brColor RGB颜色
+     * */
+    public void setBrColor(int brColor) {
+        this.brColor = brColor;
     }
 }
 

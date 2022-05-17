@@ -371,4 +371,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     public void setEnableTexture(boolean enableTexture) {
         this.enableTexture = enableTexture;
     }
+
+
 }

@@ -52,11 +52,6 @@ public class Label extends BaseGui {
     private int backColor=0xFFFFFF;
 
     /**
-     * Gui水平边框颜色
-     * */
-    private int ulColor=0x00868B;
-
-    /**
      * Gui竖直边框颜色
      * */
     private int brColor=0x00868B;
@@ -65,6 +60,8 @@ public class Label extends BaseGui {
      * Gui边框宽度
      * */
     private int border=1;
+
+    private boolean enableLines=true;
 
     public Label(String id,int x, int y,int width, int height) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
@@ -78,23 +75,46 @@ public class Label extends BaseGui {
 
 
     /**
-     * 在标签中添加文本
-     * @param value 添加的文本
+     * {@inheritDoc}
      * */
-    public void addLine(String value)
-    {
-        this.labels.add(I18n.format(value));
-    }
+    @Override
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+        if (this.visible)
+        {
+            int BackWidth = this.width - this.border ;
+            int BackHeight = this.height - this.border ;
+            int BackX=this.x+this.border;
+            int BackY=this.y+this.border;
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            this.drawLabelBackground();
+            if(enableLines){
+                int MaxLine=(this.height-2*border)/10;
+                int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
+                for (int k = 0; k < LineCount; ++k)
+                {
+                    if (this.centered)
+                    {
+                        this.drawCenteredString(this.fontRenderer, this.labels.get(k), BackX + (this.width-2*border) / 2, BackY+10*k, this.textColor);
+                    }
+                    else
+                    {
+                        this.drawString(this.fontRenderer, this.labels.get(k), BackX, BackY+10*k, 0xFF000000+this.textColor);
+                    }
+                }
+            }else{
+                if (this.centered)
+                {
+                    this.drawCenteredString(this.fontRenderer, this.labels.get(0), BackX + (this.width-2*border) / 2, (BackY+10*1)/2, this.textColor);
+                }
+                else
+                {
+                    this.drawString(this.fontRenderer, this.labels.get(0), BackX, (BackY+10*1)/2, 0xFF000000+this.textColor);
+                }
+            }
 
-    /**
-     * 设置Label文本居中
-     * @param value 是否居中
-     * */
-    public void setCentered(boolean value)
-    {
-        this.centered = value;
+        }
     }
-
     /**
      * 绘制Label背景
      * */
@@ -113,9 +133,9 @@ public class Label extends BaseGui {
                 drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.backColor);
 
                 //绘制水平边框
-                drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.ulColor);
+                drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
 
-                drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.ulColor);
+                drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
 
                 //绘制垂直边框
                 drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
@@ -146,11 +166,9 @@ public class Label extends BaseGui {
     /**
      * 设置背景边界颜色
      * @param brColor 竖直边界颜色
-     * @param ulColor 水平边界颜色
      * */
-    public void setBorderColor(int brColor,int ulColor){
+    public void setBorderColor(int brColor){
             this.brColor=brColor;
-            this.ulColor=ulColor;
     }
 
     /**
@@ -162,33 +180,25 @@ public class Label extends BaseGui {
     }
 
     /**
-     * {@inheritDoc}
+     * 在标签中添加文本
+     * @param value 添加的文本
      * */
-    @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-        if (this.visible)
-        {
-            int BackWidth = this.width - this.border ;
-            int BackHeight = this.height - this.border ;
-            int BackX=this.x+this.border;
-            int BackY=this.y+this.border;
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            this.drawLabelBackground();
-            int MaxLine=(this.height-2*border)/10;
-            int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
-            for (int k = 0; k < LineCount; ++k)
-            {
-                if (this.centered)
-                {
-                    this.drawCenteredString(this.fontRenderer, this.labels.get(k), BackX + (this.width-2*border) / 2, BackY+10*k, this.textColor);
-                }
-                else
-                {
-                    this.drawString(this.fontRenderer, this.labels.get(k), BackX, BackY+10*k, 0xFF000000+this.textColor);
-                }
-            }
-        }
+    public void addLine(String value)
+    {
+        this.labels.add(I18n.format(value));
     }
 
+    /**
+     * 设置Label文本居中
+     * @param value 是否居中
+     * */
+    public void setCentered(boolean value)
+    {
+        this.centered = value;
+    }
+
+
+    public void setEnableLines(boolean enableLines) {
+        this.enableLines = enableLines;
+    }
 }

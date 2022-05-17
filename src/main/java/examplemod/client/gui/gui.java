@@ -22,11 +22,15 @@ public class gui extends Frame {
         Button button=new Button("button",0,40,200,20,"sss");
         Label label=new Label("label",0,150,50,50);
         bar.setEnableTexture(true);
-        button.setEnableTexture(true);
-        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/Weight/Button/test.png")));
+        button.setEnableTexture(false);
+        button.setBorder(1);
+        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/gui/test.png")));
         Image image=new Image("image",0,0,400,200,imageLoader);
 
-        this.addGui(image);
+        CheckBox checkBox=new CheckBox("checkbox",0,0,20,10);
+
+        this.addGui(checkBox);
+        //this.addGui(image);
         //this.addGui(button);
         //this.addGui(bar);
         //this.addGui(label);
