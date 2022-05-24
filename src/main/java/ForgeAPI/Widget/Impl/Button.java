@@ -1,8 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
-import ForgeAPI.Utils.Image.ImageLoader;
-import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Utils.ResourcesUtil;
+import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Widget.BaseGui;
 import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
@@ -81,8 +80,8 @@ public class Button extends BaseGui
     public Button(String buttonId, int x, int y, String buttonText)
     {
         this(buttonId, x, y, 200, 20, buttonText);
-        ImageLoader imageLoader1 = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
-        this.textureId= ImageUtil.loadTexture(imageLoader1);
+        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
+        this.textureLoader=textureLoader;
         this.texturePos=new TexturePos2D(0,66,200,20,256,256);
         this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
     }
@@ -130,8 +129,8 @@ public class Button extends BaseGui
 
             //绘制按钮材质或按钮颜色
             if(i==1){
-                if(textureId!=0&&enableTexture){
-                    ImageUtil.bindTexture(this.textureId);
+                if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
+                    this.textureLoader.bindTexture();
                     this.drawCustomSizedTexture(this.x, this.y,texturePos );
                 }else{
                     int BackWidth = this.width - this.border ;
@@ -151,8 +150,8 @@ public class Button extends BaseGui
 
                 }
             }else if(i==2){
-                if(textureId!=0&&enableTexture){
-                    ImageUtil.bindTexture(this.textureId);
+                if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
+                    this.textureLoader.bindTexture();
                     this.drawCustomSizedTexture(this.x, this.y,hoveredTexturePos);
                 }else{
                     int BackWidth = this.width - this.border ;

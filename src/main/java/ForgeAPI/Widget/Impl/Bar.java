@@ -1,8 +1,7 @@
 package ForgeAPI.Widget.Impl;
 
-import ForgeAPI.Utils.Image.ImageLoader;
-import ForgeAPI.Utils.Image.ImageUtil;
 import ForgeAPI.Utils.ResourcesUtil;
+import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Widget.BaseGui;
 import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
@@ -66,10 +65,10 @@ public class Bar extends BaseGui {
      * */
     public Bar(String id,float curr, int x,int y) {
         this(id,curr,x,y,182,5);
-        ImageLoader imageLoader = new ImageLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
+        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
+        this.textureLoader=textureLoader;
         this.backTexture=new TexturePos2D(0,0,182,5,256,256);
         this.overlapTexture=new TexturePos2D(0,10,182,5,256,256);
-        this.textureId=ImageUtil.loadTexture(imageLoader);
     }
 
     /**
@@ -98,7 +97,7 @@ public class Bar extends BaseGui {
      * */
     private void renderOverlap()
     {
-        if(textureId!=-1&&enableTexture){
+        if(textureLoader.getGlTextureId()!=-1&&enableTexture){
             overlapTexture.setWidth((int) (width*(curr/max)));
             this.drawCustomSizedTexture(x,y,overlapTexture);
         }else{
@@ -114,8 +113,8 @@ public class Bar extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        if(textureId!=-1&&enableTexture){
-            ImageUtil.bindTexture(textureId);
+        if(textureLoader.getGlTextureId()!=-1&&enableTexture){
+            textureLoader.bindTexture();
             this.drawCustomSizedTexture(x, y,this.backTexture);
         }else{
             drawRect(x,y,x+width,y+height,0xFF000000+BackColor);

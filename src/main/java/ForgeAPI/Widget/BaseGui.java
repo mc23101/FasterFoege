@@ -1,7 +1,6 @@
 package ForgeAPI.Widget;
 
-import ForgeAPI.Utils.Image.ImageLoader;
-import ForgeAPI.Utils.Image.ImageUtil;
+import ForgeAPI.Utils.Texture.TextureLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -61,10 +60,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int height;
 
     /**
-     * Gui的材质id
-     * 由ImageUtil.loadTexture()方法获得
+     * Gui的材质TextureLoader
      * */
-    protected int textureId=-1;
+    protected TextureLoader textureLoader;
 
     /**
      * 是否启用绘制材质
@@ -147,9 +145,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 加载Gui的材质
      * */
-    public void setTexture(ImageLoader loader) {
-        ImageUtil.deleteTexture(this.textureId);
-        this.textureId= ImageUtil.loadTexture(loader);
+    public void setTexture(TextureLoader loader) {
+        this.textureLoader.deleteTexture();
+        this.textureLoader=loader;
     }
 
     /**
@@ -230,8 +228,10 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     @Override
     public void onGuiClosed() {
-        ImageUtil.deleteTexture(this.textureId);
-        this.textureId=-1;
+        if(this.textureLoader!=null){
+            this.textureLoader.deleteTexture();
+        }
+
     }
 
     /**
