@@ -56,20 +56,6 @@ public class Bar extends BaseGui {
      * 进度条进度材质位置
      * */
     protected TexturePos2D overlapTexture;
-    /**
-     * 使用原版自带大小的进度条（Boss血条）
-     * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
-     * @param curr 进度条的当前进度
-     * @param x 进度条在屏幕上的横坐标X
-     * @param y 进度条在屏幕上的纵坐标Y
-     * */
-    public Bar(String id,float curr, int x,int y) {
-        this(id,curr,x,y,182,5);
-        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
-        this.textureLoader=textureLoader;
-        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
-        this.overlapTexture=new TexturePos2D(0,10,182,5,256,256);
-    }
 
     /**
      * 自定义大小的进度条控件
@@ -90,20 +76,9 @@ public class Bar extends BaseGui {
         this.curr = curr;
         this.width = width;
         this.height = height;
-    }
-
-    /**
-     * 绘制进度条进度
-     * */
-    private void renderOverlap()
-    {
-        if(textureLoader.getGlTextureId()!=-1&&enableTexture){
-            overlapTexture.setWidth((int) (width*(curr/max)));
-            this.drawCustomSizedTexture(x,y,overlapTexture);
-        }else{
-            drawRect(x,y,x+(int) (width*(curr/max)),y+height,0xFF000000+OverlapColor);
-        }
-
+        this.textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
+        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
+        this.overlapTexture=new TexturePos2D(0,5,182,5,256,256);
     }
 
 
@@ -113,13 +88,39 @@ public class Bar extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        if(textureLoader.getGlTextureId()!=-1&&enableTexture){
+        if(enableTexture&&textureLoader!=null){
             textureLoader.bindTexture();
-            this.drawCustomSizedTexture(x, y,this.backTexture);
+            if(textureLoader.getGlTextureId()!=-1){
+                drawTexture();
+            }
         }else{
-            drawRect(x,y,x+width,y+height,0xFF000000+BackColor);
+            drawColor();
         }
-        this.renderOverlap();
+    }
+
+    /**
+     * 绘制仅颜色的Gui
+     * */
+    private void drawColor(){
+        drawRect(x,y,x+width,y+height,0xFF000000+BackColor);
+        drawRect(x,y,x+(int) (width*(curr/max)),y+height,0xFF000000+OverlapColor);
+    }
+
+    /**
+     * 绘制启用材质的Gui
+     * */
+    private void drawTexture(){
+        this.drawCustomSizedTexture(x, y,width,height,this.backTexture);
+        if(curr!=0){
+            TexturePos2D currOverlapTexture=new TexturePos2D(
+                    overlapTexture.getU(),
+                    overlapTexture.getV(),
+                    (int) (overlapTexture.getWidth()*(curr/max)),
+                    overlapTexture.getHeight(),
+                    overlapTexture.getMaxWidth(),
+                    overlapTexture.getMaxWidth());
+            this.drawCustomSizedTexture(x,y, (int) (width*(curr/max)),height,currOverlapTexture);
+        }
     }
 
     /**
@@ -160,10 +161,6 @@ public class Bar extends BaseGui {
     @Override
     public void updateGUI() {
         super.updateGUI();
-        curr++;
-        if(curr==100){
-            curr=1;
-        }
     }
 
     /**

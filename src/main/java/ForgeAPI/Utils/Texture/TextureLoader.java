@@ -45,7 +45,7 @@ public class TextureLoader extends AbstractTexture {
 
     @Override
     public void loadTexture(IResourceManager resourceManager) throws IOException {
-        this.deleteGlTexture();
+        this.deleteTexture();
         TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), imageBuffer, false, true);
     }
 
@@ -54,10 +54,6 @@ public class TextureLoader extends AbstractTexture {
         return imageBuffer;
     }
 
-    @Override
-    public int getGlTextureId() {
-        return this.glTextureId;
-    }
 
     public void bindTexture(){
         try {
@@ -67,13 +63,17 @@ public class TextureLoader extends AbstractTexture {
         }
     }
 
+    public int getTextureId(){
+        return this.glTextureId;
+    }
+
     /**
      * 删除textureId
      * 说明：删除textureId可以减少内存浪费，
      *      建议在onGuiClosed事件中调用，以便释放内存
      * */
     public  void deleteTexture() {
-        if(this.getGlTextureId()==-1){
+        if(this.getGlTextureId()!=-1){
             TextureUtil.deleteTexture(this.glTextureId);
         }
     }

@@ -89,56 +89,30 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * 绘制自定义材质
      * @param x Gui的横坐标x
      * @param y Gui的纵坐标y
-     * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
-     */
-    public static void drawCustomSizedTexture(int x, int y,TexturePos2D texturePos)
-    {
-        int width=texturePos.getWidth();
-        int height=texturePos.getHeight();
-        float f = 1F/ (float)texturePos.getMaxWidth();
-        float f1 = 1F /(float)texturePos.getMaxHeight();
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        float u= texturePos.getU();
-        float v=texturePos.getV();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        //矩形点左下
-        bufferbuilder.pos((double)x+0, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
-        //矩形点右下
-        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
-        //矩形点右上
-        bufferbuilder.pos((double)(x + width), (double)y+0, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
-        //矩形点左上
-        bufferbuilder.pos((double)x+0, (double)y+0, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
-        tessellator.draw();
-    }
-    /**
-     * 绘制自定义材质
-     * @param x Gui的横坐标x
-     * @param y Gui的纵坐标y
      * @param width Gui的宽度
      * @param height Gui的高度
      * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
      */
     public static void drawCustomSizedTexture(int x, int y,int width,int height,TexturePos2D texturePos)
     {
-        float w=(float)texturePos.getWidth()/width;
-        float h=(float)texturePos.getMaxHeight()/height;
-        float f = w/ (float)texturePos.getMaxWidth();
-        float f1 = h /(float)texturePos.getMaxHeight();
+        float f = 1.0F / texturePos.getMaxWidth();
+        float f1 = 1.0F / texturePos.getMaxHeight();
+        float u=texturePos.getU();
+        float v=texturePos.getV();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
-        float u= texturePos.getU();
-        float v=texturePos.getV();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        //矩形点左下
-        bufferbuilder.pos((double)x+0, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
-        //矩形点右下
-        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
-        //矩形点右上
-        bufferbuilder.pos((double)(x + width), (double)y+0, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
-        //矩形点左上
-        bufferbuilder.pos((double)x+0, (double)y+0, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        bufferbuilder.pos((double)x, (double)(y + height), 0.0D)
+                .tex((double)(u * f), (double)((v + (float)texturePos.getHeight()) * f1)).endVertex();
+
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D)
+                .tex((double)((u + (float)texturePos.getWidth()) * f), (double)((v + (float)texturePos.getHeight()) * f1)).endVertex();
+
+        bufferbuilder.pos((double)(x + width), (double)y, 0.0D)
+                .tex((double)((u + (float)texturePos.getWidth()) * f), (double)(v * f1)).endVertex();
+
+        bufferbuilder.pos((double)x, (double)y, 0.0D)
+                .tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
     }
 

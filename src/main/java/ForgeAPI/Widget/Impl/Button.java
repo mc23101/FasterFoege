@@ -70,21 +70,6 @@ public class Button extends BaseGui
     protected int brColor=0x00868B;
 
 
-    /**
-     *  使用原版自带大小按钮
-     * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
-     * @param x 按钮在屏幕上的横坐标X
-     * @param y 按钮在屏幕上的纵坐标Y
-     * @param buttonText 按钮上显示的文本
-     * */
-    public Button(String buttonId, int x, int y, String buttonText)
-    {
-        this(buttonId, x, y, 200, 20, buttonText);
-        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
-        this.textureLoader=textureLoader;
-        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
-        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
-    }
 
     /**
      * 使用自定义大小的按钮
@@ -109,6 +94,9 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
+        this.textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
+        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
+        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
 
     }
 
@@ -122,57 +110,19 @@ public class Button extends BaseGui
             FontRenderer fontrenderer = mc.fontRenderer;
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            int i = this.getHoverState();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
             //绘制按钮材质或按钮颜色
-            if(i==1){
-                if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
-                    this.textureLoader.bindTexture();
-                    this.drawCustomSizedTexture(this.x, this.y,texturePos );
-                }else{
-                    int BackWidth = this.width - this.border ;
-                    int BackHeight = this.height - this.border ;
-                    int BackX=this.x+this.border;
-                    int BackY=this.y+this.border;
-                    drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.buttonColor);
-
-                    //绘制水平边框
-                    drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
-
-                    drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
-                    //绘制垂直边框
-                    drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
-                    drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
-                }
-            }else if(i==2){
-                if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
-                    this.textureLoader.bindTexture();
-                    this.drawCustomSizedTexture(this.x, this.y,hoveredTexturePos);
-                }else{
-                    int BackWidth = this.width - this.border ;
-                    int BackHeight = this.height - this.border ;
-                    int BackX=this.x+this.border;
-                    int BackY=this.y+this.border;
-                    drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.buttonHorveredColor);
-
-                    //绘制水平边框
-                    drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
-
-                    drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
-                    //绘制垂直边框
-                    drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
-                    drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
-                }
+            if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
+                drawButtonTexture();
+            }else{
+                drawButtonColor();
             }
-            this.mouseDragged(mouseX, mouseY,0);
 
+
+            this.mouseDragged(mouseX, mouseY,0);
             //绘制字体颜色
             int j = 14737632;
 
@@ -192,6 +142,31 @@ public class Button extends BaseGui
             this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
         }
     }
+
+    private void drawButtonTexture(){
+        this.textureLoader.bindTexture();
+        TexturePos2D texturePos2D=(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
+        this.drawCustomSizedTexture(this.x, this.y,this.width,this.height,texturePos2D);
+    }
+
+    private  void drawButtonColor(){
+        int backWidth = this.width - this.border ;
+        int backHeight = this.height - this.border ;
+        int backX=this.x+this.border;
+        int backY=this.y+this.border;
+        int color=getHoverState()==1?this.buttonColor:this.buttonHorveredColor;
+        drawRect(backX, backY, this.x + backWidth, this.y + backHeight, 0xFF000000+color);
+
+        //绘制水平边框
+        drawRect(this.x,this.y,this.x+this.width,backY,0xFF000000+this.brColor);
+
+        drawRect(this.x,this.y+backHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
+        //绘制垂直边框
+        drawRect(this.x,this.y,backX,this.y+this.height,0xFF000000+this.brColor);
+        drawRect(this.x+backWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+    }
+
 
     /**
      * 获取鼠标聚焦状态
@@ -225,9 +200,11 @@ public class Button extends BaseGui
 
     /**
      * 设置未聚焦状态的按钮材质位置
+     * @param
      * @param texturePos 按钮材质的位置
      * */
-    public void setTexturePos(TexturePos2D texturePos) {
+    public void setTexturePos(TextureLoader textureLoader,TexturePos2D texturePos) {
+        this.textureLoader=textureLoader;
         this.texturePos = texturePos;
     }
 
@@ -245,18 +222,12 @@ public class Button extends BaseGui
 
     /**
      * 设置按钮未聚焦的颜色
-     * @param buttonColor RGB颜色
+     * @param buttonColor 未聚焦按钮的RGB颜色
+     * @param buttonHorveredColor 聚焦的按钮RGB颜色
      * */
-    public void setButtonColor(int buttonColor) {
+    public void setButtonColor(int buttonColor,int buttonHorveredColor) {
         this.buttonColor = buttonColor;
-    }
-
-    /**
-     * 设置按钮聚焦的颜色
-     * @param buttonHorveredColor RGB颜色
-     * */
-    public void setButtonHorveredColor(int buttonHorveredColor) {
-        this.buttonHorveredColor = buttonHorveredColor;
+        this.buttonHorveredColor=buttonHorveredColor;
     }
 
     /**

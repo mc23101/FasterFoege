@@ -48,7 +48,8 @@ public class Image extends BaseGui {
         this.drawCustomSizedTexture(x,y,width,height,imageTexture);
     }
 
-    public void setImageTexture(TexturePos2D imageTexture) {
+    public void setImageTexture(TextureLoader textureLoader,TexturePos2D imageTexture) {
+        this.imageTextureLoader=textureLoader;
         this.imageTexture = imageTexture;
     }
 
