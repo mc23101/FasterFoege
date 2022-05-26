@@ -1,8 +1,8 @@
 package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.Texture.TextureLoader;
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 /* =======================
 ||类名：Image
@@ -48,10 +48,17 @@ public class Image extends BaseGui {
      * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-        imageTextureLoader.bindTexture();
-        this.drawCustomSizedTexture(x,y,width,height,imageTexture);
+        if(this.visible){
+            imageTextureLoader.bindTexture();
+            this.drawCustomSizedTexture(x,y,width,height,imageTexture);
+        }
     }
 
+    /**
+     * 设置Image图片
+     * @param textureLoader 图片加载器
+     * @param imageTexture 图片位置
+     * */
     public void setImageTexture(TextureLoader textureLoader,TexturePos2D imageTexture) {
         this.imageTextureLoader=textureLoader;
         this.imageTexture = imageTexture;
@@ -62,6 +69,7 @@ public class Image extends BaseGui {
      * */
     @Override
     public void onGuiClosed() {
+        super.onGuiClosed();
         imageTextureLoader.deleteTexture();
         imageTextureLoader.stopGifTread();
     }

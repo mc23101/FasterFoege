@@ -1,6 +1,6 @@
 package ForgeAPI.Widget.Impl;
 
-import net.minecraft.client.gui.FontRenderer;
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -20,40 +20,13 @@ public class Slider extends Button {
         this.min = minIn;
         this.max = maxIn;
         this.sliderPosition = (defaultValue - minIn) / (maxIn - minIn);
+        this.texturePos=new TexturePos2D(0,46,200,20,256,256);
+        this.hoveredTexturePos=new TexturePos2D(0,46,200,20,256,256);
     }
 
     @Override
     public void drawGUI( int mouseX, int mouseY, float partialTicks){
-        long time=System.currentTimeMillis();
-        FontRenderer fontrenderer = mc.fontRenderer;
-        mc.getTextureManager().bindTexture(SLIDER_TEXTURES);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-        int i = this.getHoverState(this.hovered);
-        GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        //绘画滑条材质
-        this.drawTexturedModalRect(this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-        this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.mouseDragged(mouseX, mouseY,0);
-        int j = 14737632;
-
-        if (packedFGColour != 0)
-        {
-            j = packedFGColour;
-        }
-        else
-        if (!this.enabled)
-        {
-            j = 10526880;
-        }
-        else if (this.hovered)
-        {
-            j = 16777120;
-        }
-
-        this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+        super.drawGUI(mouseX,mouseY,partialTicks);
     }
 
 
@@ -109,8 +82,11 @@ public class Slider extends Button {
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             //绘画滑块材质
-            this.drawTexturedModalRect(this.x + (int)(this.sliderPosition * (float)(this.width - 8)), this.y, 0, 100, 4, this.height);
-            this.drawTexturedModalRect(this.x + (int)(this.sliderPosition * (float)(this.width - 8)) + 4, this.y, 196, 100, 4, this.height);
+
+
+            int w= (this.width*0.05)<4? 4: (int) (this.width * 0.05);
+            TexturePos2D texturePos2D = new TexturePos2D(20, 66, w, this.height, 256, 256);
+            this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-w)), this.y, w,this.height ,texturePos2D);
         }
     }
 

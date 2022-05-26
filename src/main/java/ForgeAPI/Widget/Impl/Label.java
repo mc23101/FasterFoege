@@ -1,8 +1,8 @@
 package ForgeAPI.Widget.Impl;
 
 
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
@@ -64,8 +64,7 @@ public class Label extends BaseGui {
      * 是否启用多行
      * */
     protected boolean enableLines=true;
-    
-    
+
     /**
      * 字体大小
      * */

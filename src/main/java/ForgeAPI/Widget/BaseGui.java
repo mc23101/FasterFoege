@@ -1,6 +1,7 @@
 package ForgeAPI.Widget;
 
 import ForgeAPI.Utils.Texture.TextureLoader;
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -8,7 +9,12 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-
+/* =======================
+||类名：BaseGui
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.26
+==========================*/
 /**
  * 所有Gui控件的父类，所有Gui都继承此类
  * */
@@ -93,7 +99,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * @param height Gui的高度
      * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
      */
-    public static void drawCustomSizedTexture(int x, int y,int width,int height,TexturePos2D texturePos)
+    public static void drawCustomSizedTexture(int x, int y, int width, int height, TexturePos2D texturePos)
     {
         float f = 1.0F / texturePos.getMaxWidth();
         float f1 = 1.0F / texturePos.getMaxHeight();
@@ -231,7 +237,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         this.frame = frame;
     }
 
-
     /**
      * Gui是否可视
      * */
@@ -335,7 +340,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     public void setHeight(int height) {
         this.height = height;
     }
-
 
     /**
      * 是否启用材质

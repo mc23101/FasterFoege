@@ -2,8 +2,8 @@ package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Utils.Texture.TextureLoader;
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +15,7 @@ import java.io.File;
 ||类名：Bar
 ||状态：已完成
 ||作者：mc23
-||最后一次修改时间：2022.5.15
+||最后一次修改时间：2022.5.26
 ==========================*/
 /**
  * Gui控件：进度条
@@ -86,14 +86,16 @@ public class Bar extends BaseGui {
      * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        if(enableTexture&&textureLoader!=null){
-            textureLoader.bindTexture();
-            if(textureLoader.getGlTextureId()!=-1){
-                drawTexture();
+        if(this.visible){
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            if(enableTexture&&textureLoader!=null){
+                textureLoader.bindTexture();
+                if(textureLoader.getGlTextureId()!=-1){
+                    drawTexture();
+                }
+            }else{
+                drawColor();
             }
-        }else{
-            drawColor();
         }
     }
 

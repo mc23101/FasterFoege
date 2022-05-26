@@ -2,7 +2,12 @@ package ForgeAPI.Widget;
 
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.Gui;
-
+/* =======================
+||接口：IBaseGUI
+||状态：已完成
+||作者：mc23
+||最后一次修改时间：2022.5.26
+==========================*/
 public interface IBaseGUI {
     /**
      *  绘制当前GUI到桌面
@@ -69,18 +74,15 @@ public interface IBaseGUI {
      * */
     public void setResolution(int width, int height);
 
-
     /**
      * Gui关闭事件
      * */
     public void onGuiClosed();
 
-
     /**
      * 获取Gui的id
      * */
     public String getGuiID();
-
 
     /**
      * 获取Gui的父窗口
@@ -92,7 +94,6 @@ public interface IBaseGUI {
      * @param frame 父窗口
      * */
     public void setFrame(Gui frame);
-
 
 }
 

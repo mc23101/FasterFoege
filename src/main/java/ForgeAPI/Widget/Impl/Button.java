@@ -2,8 +2,8 @@ package ForgeAPI.Widget.Impl;
 
 import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Utils.Texture.TextureLoader;
+import ForgeAPI.Utils.Texture.TexturePos2D;
 import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.TexturePos2D;
 import ForgeAPI.Widget.ex.GuiBaseException;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +15,7 @@ import java.io.File;
 ||类名：Bar
 ||状态：已完成
 ||作者：mc23
-||最后一次修改时间：2022.5.15
+||最后一次修改时间：2022.5.26
 ==========================*/
 /**
  * Gui控件：按钮
@@ -111,33 +111,13 @@ public class Button extends BaseGui
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
-            //绘制按钮材质或按钮颜色
             if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
                 drawButtonTexture();
             }else{
                 drawButtonColor();
             }
-
-
             this.mouseDragged(mouseX, mouseY,0);
-            //绘制字体颜色
-            int j = 14737632;
-
-            if (packedFGColour != 0)
-            {
-                j = packedFGColour;
-            }
-            else
-            if (!this.enabled)
-            {
-                j = 10526880;
-            }
-            else if (this.hovered)
-            {
-                j = 16777120;
-            }
-            this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+            drawText();
         }
     }
 
@@ -171,6 +151,27 @@ public class Button extends BaseGui
         drawRect(this.x+backWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
     }
 
+    /**
+     * 绘制按钮文本
+     * */
+    private void drawText(){
+        int j = 14737632;
+
+        if (packedFGColour != 0)
+        {
+            j = packedFGColour;
+        }
+        else
+        if (!this.enabled)
+        {
+            j = 10526880;
+        }
+        else if (this.hovered)
+        {
+            j = 16777120;
+        }
+        this.drawCenteredString(this.fontRenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+    }
 
     /**
      * 获取鼠标聚焦状态
@@ -211,7 +212,6 @@ public class Button extends BaseGui
         this.texturePos = texturePos;
         this.hoveredTexturePos = hoveredTexturePos;
     }
-
 
     /**
      * 设置按钮上显示的文本
