@@ -81,7 +81,6 @@ public class Bar extends BaseGui {
         this.overlapTexture=new TexturePos2D(0,5,182,5,256,256);
     }
 
-
     /**
      * {@inheritDoc}
      * */
@@ -142,16 +141,10 @@ public class Bar extends BaseGui {
     /**
      * 设置进度条背景位置
      * @param backTexture 进度条背景位置
-     * */
-    public void setBackTexture(TexturePos2D backTexture){
-       this.backTexture=backTexture;
-    }
-
-    /**
-     * 设置进度条进度位置
      * @param overlapTexture 进度条进度位置
      * */
-    public  void setOverlapTexture(TexturePos2D overlapTexture){
+    public void setTexture(TexturePos2D backTexture,TexturePos2D overlapTexture){
+       this.backTexture=backTexture;
         this.overlapTexture=overlapTexture;
     }
 

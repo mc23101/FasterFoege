@@ -204,8 +204,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     public void onGuiClosed() {
         if(this.textureLoader!=null){
             this.textureLoader.deleteTexture();
+            this.textureLoader.stopGifTread();
         }
-
     }
 
     /**

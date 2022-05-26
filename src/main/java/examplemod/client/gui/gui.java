@@ -1,7 +1,11 @@
 package examplemod.client.gui;
 
+import ForgeAPI.Utils.ResourcesUtil;
+import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Widget.Impl.*;
 import net.minecraft.util.TabCompleter;
+
+import java.io.File;
 
 public class gui extends Frame {
     private TabCompleter tabCompleter;
@@ -16,13 +20,15 @@ public class gui extends Frame {
         //Slider slider=new Slider(1,0,0,200,20,"",0,100,44);
         Bar bar=new Bar("bar",10,0,20,300,100);
         Button button=new Button("button",0,40,40,10,"sss");
-        Label label=new Label("label",0,0,50,50);
+        Label label=new Label("label",0,0,50,50,9);
         label.setTextColor(0xADFF2F);
+        label.setBackEnabled(true);
+        label.setEnableTexture(false);
         bar.setEnableTexture(true);
         button.setEnableTexture(true);
         //button.setBorder(1);
-//        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/mod/textures/gui/test.png")));
-//        Image image=new Image("image",0,0,400,200, textureLoader);
+        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/gifDebug.gif")));
+        Image image=new Image("image",0,0,400,200, textureLoader);
 //
 //        CheckBox checkBox=new CheckBox("checkbox",0,0,20,10);
 
@@ -31,9 +37,9 @@ public class gui extends Frame {
 
         //this.addGui(checkBox);
         //this.addGui(image);
-        this.addGui(button);
+        //this.addGui(button);
         //this.addGui(bar);
-        //this.addGui(label);
+        this.addGui(label);
     }
 
 

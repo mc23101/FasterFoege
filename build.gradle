@@ -73,13 +73,17 @@ dependencies {
     // compile "some.group:artifact:version"
 
     // https://mvnrepository.com/artifact/com.alibaba/fastjson
-    implementation 'com.alibaba:fastjson:1.2.75'
+    implementation 'com.alibaba:fastjson:2.0.3.graal'
 
     // https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-all
     implementation 'org.apache.xmlgraphics:batik-all:1.14'
 
     // https://mvnrepository.com/artifact/net.coobird/thumbnailator
     implementation 'net.coobird:thumbnailator:0.4.17'
+
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-all
+    implementation 'cn.hutool:hutool-all:5.8.0'
+
 
 
     // Real examples

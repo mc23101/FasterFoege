@@ -15,7 +15,12 @@ import ForgeAPI.Widget.ex.GuiBaseException;
  * */
 public class Image extends BaseGui {
 
+    /**
+     * 图片加载器
+     * */
     protected TextureLoader imageTextureLoader;
+
+    /**图片的位置*/
     protected TexturePos2D imageTexture;
 
     /**
@@ -38,7 +43,6 @@ public class Image extends BaseGui {
         imageTexture=new TexturePos2D(0,0, textureLoader.getImageBuffer().getWidth(), textureLoader.getImageBuffer().getHeight(), textureLoader.getImageBuffer().getWidth(), textureLoader.getImageBuffer().getHeight());
     }
 
-
     /**
      * {@inheritDoc}
      * */
@@ -59,6 +63,7 @@ public class Image extends BaseGui {
     @Override
     public void onGuiClosed() {
         imageTextureLoader.deleteTexture();
+        imageTextureLoader.stopGifTread();
     }
 
 }

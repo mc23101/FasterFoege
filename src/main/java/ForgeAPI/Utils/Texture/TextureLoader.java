@@ -12,12 +12,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class TextureLoader extends AbstractTexture {
 
     private BufferedImage imageBuffer;
+    private List<BufferedImage> gifFrames;
+    private List<Integer> gifTimes;
+    private Thread gifTread;
+    private int gifFrameIndex=0;
 
     public TextureLoader(File file)  {
+        if(TextureUtils.isGif(file)){
+            gifFrames=TextureUtils.getGifFrame(file);
+            gifTimes=TextureUtils.getGifTime(file);
+            startGifTread();
+        }
         try {
             this.imageBuffer = TextureUtil.readBufferedImage(new FileInputStream(file));
         } catch (IOException e) {
@@ -43,6 +53,8 @@ public class TextureLoader extends AbstractTexture {
         }
     }
 
+
+
     @Override
     public void loadTexture(IResourceManager resourceManager) throws IOException {
         this.deleteTexture();
@@ -60,6 +72,40 @@ public class TextureLoader extends AbstractTexture {
             this.loadTexture(Minecraft.getMinecraft().getResourceManager());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void startGifTread(){
+        long timeInterval = gifTimes.get(gifFrameIndex);
+        Runnable runnable = new Runnable() {
+            public void run() {
+                while (true) {
+                    imageBuffer=gifFrames.get(gifFrameIndex);
+                    gifFrameIndex++;
+                    if(gifFrameIndex==gifFrames.size()){
+                        gifFrameIndex=0;
+                    }
+                    try {
+                        // sleep()：同步延迟数据，并且会阻塞线程
+                        Thread.sleep(timeInterval);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        //创建定时器
+        gifTread = new Thread(runnable);
+        gifTread.setDaemon(true);
+        //开始执行
+        gifTread.start();
+    }
+
+    public void stopGifTread(){
+        if(gifTread!=null){
+            if(gifTread.isAlive()){
+                this.gifTread.interrupt();
+            }
         }
     }
 

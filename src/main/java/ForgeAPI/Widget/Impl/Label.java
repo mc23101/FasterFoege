@@ -23,46 +23,64 @@ public class Label extends BaseGui {
     /**
      * Label文本，每一个元素代表一行文本
      * */
-    private List<String> labels = Lists.<String>newArrayList();
+    protected List<String> labels = Lists.<String>newArrayList();
 
     /**
      * 是否启用文本居中
      * */
-    private boolean centered=false;
+    protected boolean centered=false;
 
     /**
      * 是否绘制Label背景
      * */
-    private boolean labelBgEnabled=true;
+    protected boolean labelBgEnabled=true;
 
     /**
      * Gui背景材质位置
      * */
-    private TexturePos2D backTexturePos;
+    protected TexturePos2D backTexturePos;
 
     /**
      * 文本字体颜色
      * */
-    private int textColor=0x000000;
+    protected int textColor=0x000000;
 
     /**
      * Gui背景颜色
      * */
-    private int backColor=0xFFFFFF;
+    protected int backColor=0xFFFFFF;
 
     /**
      * Gui竖直边框颜色
      * */
-    private int brColor=0x00868B;
+    protected int brColor=0x00868B;
 
     /**
      * Gui边框宽度
      * */
-    private int border=1;
+    protected int border=1;
 
-    private boolean enableLines=true;
+    /**
+     * 是否启用多行
+     * */
+    protected boolean enableLines=true;
+    
+    
+    /**
+     * 字体大小
+     * */
+    protected int fontSize=9;
 
-    public Label(String id,int x, int y,int width, int height) {
+    /**
+     * 使用自定义大小的Labal
+     * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
+     * @param x 在屏幕上的横坐标X
+     * @param y 在屏幕上的纵坐标Y
+     * @param width 宽度
+     * @param height 高度
+     * @param fontSize 文本大小
+     * */
+    public Label(String id,int x, int y,int width, int height,int fontSize) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = width;
@@ -70,8 +88,8 @@ public class Label extends BaseGui {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.fontSize=fontSize;
     }
-
 
     /**
      * {@inheritDoc}
@@ -80,40 +98,40 @@ public class Label extends BaseGui {
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if (this.visible)
         {
-            int BackWidth = this.width - this.border ;
-            int BackHeight = this.height - this.border ;
-            int BackX=this.x+this.border;
-            int BackY=this.y+this.border;
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             this.drawLabelBackground();
-            if(enableLines){
-                int MaxLine=(this.height-2*border)/10;
-                int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
-                for (int k = 0; k < LineCount; ++k)
-                {
-                    if (this.centered)
-                    {
-                        this.drawCenteredString(this.fontRenderer, this.labels.get(k), BackX + (this.width-2*border) / 2, BackY+10*k, this.textColor);
-                    }
-                    else
-                    {
-                        this.drawString(this.fontRenderer, this.labels.get(k), BackX, BackY+10*k, 0xFF000000+this.textColor);
-                    }
-                }
-            }else{
-                if (this.centered)
-                {
-                    this.drawCenteredString(this.fontRenderer, this.labels.get(0), BackX + (this.width-2*border) / 2, (BackY+10*1)/2, this.textColor);
-                }
-                else
-                {
-                    this.drawString(this.fontRenderer, this.labels.get(0), BackX, (BackY+10*1)/2, 0xFF000000+this.textColor);
-                }
-            }
-
+            this.drawLabelText();
         }
     }
+
+
+    /**
+     * 绘制Label文本
+     * */
+    protected  void drawLabelText(){
+        int BackWidth = this.width - this.border ;
+        int BackHeight = this.height - this.border ;
+        int BackX=this.x+this.border;
+        int BackY=this.y+this.border;
+        float OldfontSize=10;
+        GlStateManager.scale(fontSize/OldfontSize,fontSize/OldfontSize,0);
+        if(enableLines){
+            int MaxLine=(this.height-2*border)/fontSize;
+            int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
+            for (int k = 0; k < LineCount; ++k)
+            {
+                int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
+                this.drawString(this.fontRenderer, this.labels.get(k),X , BackY+fontSize*k, this.textColor);
+            }
+        }else{
+            int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
+            String str= this.labels.size()>0?this.labels.get(0):"";
+            this.drawString(this.fontRenderer, str, X, BackY, this.textColor);
+        }
+    }
+
+
     /**
      * 绘制Label背景
      * */
@@ -201,11 +219,27 @@ public class Label extends BaseGui {
     }
 
 
+    /**
+     * 是否启用多行
+     * @param enableLines 是否启用多行
+     * */
     public void setEnableLines(boolean enableLines) {
         this.enableLines = enableLines;
     }
 
+    /**
+     * 设置文本颜色
+     * @param textColor 文本颜色
+     * */
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+    }
+    
+    /**
+     * 设置文本大小
+     * @param value 字体大小
+     * */
+    public void setFontSize(int value){
+        this.fontSize=value;
     }
 }

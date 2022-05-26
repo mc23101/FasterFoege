@@ -69,8 +69,6 @@ public class Button extends BaseGui
      * */
     protected int brColor=0x00868B;
 
-
-
     /**
      * 使用自定义大小的按钮
      * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
@@ -143,12 +141,18 @@ public class Button extends BaseGui
         }
     }
 
+    /**
+     * 绘制按钮材质
+     * */
     private void drawButtonTexture(){
         this.textureLoader.bindTexture();
         TexturePos2D texturePos2D=(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
         this.drawCustomSizedTexture(this.x, this.y,this.width,this.height,texturePos2D);
     }
 
+    /**
+     * 绘制按钮颜色
+     * */
     private  void drawButtonColor(){
         int backWidth = this.width - this.border ;
         int backHeight = this.height - this.border ;
@@ -188,7 +192,6 @@ public class Button extends BaseGui
         return i;
     }
 
-
     /**
      * 判断Button是否为聚焦状态
      * @return Button聚焦状态
@@ -201,21 +204,19 @@ public class Button extends BaseGui
     /**
      * 设置未聚焦状态的按钮材质位置
      * @param
-     * @param texturePos 按钮材质的位置
+     * @param texturePos 按钮未聚焦材质的位置
+     * @param hoveredTexturePos 按钮聚焦材质的位置
      * */
-    public void setTexturePos(TextureLoader textureLoader,TexturePos2D texturePos) {
-        this.textureLoader=textureLoader;
+    public void setTexturePos(TexturePos2D texturePos,TexturePos2D hoveredTexturePos) {
         this.texturePos = texturePos;
-    }
-
-    /**
-     * 设置聚焦状态的按钮材质位置
-     * @param hoveredTexturePos 按钮材质位置
-     * */
-    public void setHoveredTexturePos(TexturePos2D hoveredTexturePos) {
         this.hoveredTexturePos = hoveredTexturePos;
     }
 
+
+    /**
+     * 设置按钮上显示的文本
+     * @param displayString  显示的文本
+     * */
     public void setDisplayString(String displayString) {
         this.displayString = displayString;
     }

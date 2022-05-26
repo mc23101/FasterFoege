@@ -19,11 +19,22 @@ import java.util.Map;
  * 作为父窗体加载其他Gui控件
  * */
 public abstract class Frame extends GuiScreen {
+
+    /**
+     * mc主类
+     * */
     public Minecraft mc=Minecraft.getMinecraft();
+
+    /**
+     * Gui容器，用于存放所有Gui
+     * */
     protected Map<String,IBaseGUI> Guis= new HashMap();
+
+    /**
+     * Gui的主窗口，用于响应Gui控件的事件
+     * */
     public Frame(){
     }
-
 
     /**
      * 设置窗口分辨率事件
@@ -49,7 +60,6 @@ public abstract class Frame extends GuiScreen {
             gui.onGuiClosed();
         }
     }
-
 
     /**
      * 在窗口中添加Gui
@@ -81,7 +91,6 @@ public abstract class Frame extends GuiScreen {
             gui.drawGUI(mouseX,mouseY,partialTicks);
         }
     }
-
 
     /**
      * 屏幕更新事件
@@ -124,7 +133,6 @@ public abstract class Frame extends GuiScreen {
         }
     }
 
-
     /**
      * 鼠标点击事件
      * 鼠标点击会调用此方法
@@ -140,7 +148,6 @@ public abstract class Frame extends GuiScreen {
        }
     }
 
-
     /**
      * 鼠标释放事件
      * @param mouseX 鼠标的X坐标
@@ -153,8 +160,6 @@ public abstract class Frame extends GuiScreen {
             gui.mouseReleased(mouseX,mouseY,mouseButton);
         }
     }
-
-
 
     /**
      * 窗口初始化事件
