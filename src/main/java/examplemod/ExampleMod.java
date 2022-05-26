@@ -1,5 +1,6 @@
 package examplemod;
 
+import ForgeAPI.NetWork.NetworkManager;
 import examplemod.client.event.KeyboardInputEvent;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,7 @@ public class ExampleMod
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
+        NetworkManager.registerChannel(this,"test");
     }
 
     @EventHandler

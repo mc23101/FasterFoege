@@ -15,10 +15,6 @@ import java.io.File;
  * Gui控件：选择框
  * */
 public class CheckBox extends Button{
-    /**
-     * CheckBox的文本框
-     * */
-    protected Label label;
 
     /**
      * CheckBox未选中的RGB颜色
@@ -33,7 +29,7 @@ public class CheckBox extends Button{
     /**
      * CheckBox的选中状态
      * */
-    protected boolean state=false;
+    protected boolean checked =false;
 
     /**
      * 自定义大小的CheckBox
@@ -53,10 +49,10 @@ public class CheckBox extends Button{
      * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-        this.texturePos= (!this.state)?
+        this.texturePos= (!this.checked)?
                 new TexturePos2D(0,0,20,20,64,64):
                 new TexturePos2D(0,20,20,20,64,64);
-        this.hoveredTexturePos=(!this.state)?
+        this.hoveredTexturePos=(!this.checked)?
                 new TexturePos2D(20,0,20,20,64,64):
                 new TexturePos2D(20,20,20,20,64,64);
         super.drawGUI(mouseX, mouseY, partialTicks);
@@ -67,39 +63,55 @@ public class CheckBox extends Button{
      * */
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        this.state=!this.state;
+        this.checked =!this.checked;
         return true;
     }
 
-    public Label getLabel() {
-        return label;
-    }
-
-    public void setLabel(Label label) {
-        this.label = label;
-    }
-
+    /**
+     * 获取未选中时，CheckBox的RGB颜色
+     * @return
+     * */
     public int getColor() {
         return color;
     }
 
+    /**
+     * 设置未选中时，CheckBox的RGB颜色
+     * @param color RGB颜色
+     * */
     public void setColor(int color) {
         this.color = color;
     }
 
+    /**
+     * 获取选中时，CheckBox的RGB颜色
+     * @return
+     * */
     public int getCheckedColor() {
         return checkedColor;
     }
 
+    /**
+     * 设置选中时，CheckBox的RGB颜色
+     * @param checkedColor RGB颜色
+     * */
     public void setCheckedColor(int checkedColor) {
         this.checkedColor = checkedColor;
     }
 
-    public boolean isState() {
-        return state;
+    /**
+     * CheckBox是否被选中
+     * @return
+     * */
+    public boolean isChecked() {
+        return checked;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    /**
+     * 设置CheckBox的选中状态
+     * @param checked CheckBox的选中状态
+     * */
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

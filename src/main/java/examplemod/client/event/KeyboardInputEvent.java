@@ -1,6 +1,8 @@
 package examplemod.client.event;
 
 
+import ForgeAPI.NetWork.NetworkManager;
+import ForgeAPI.NetWork.NetworkPack;
 import examplemod.client.gui.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -26,6 +28,7 @@ public class KeyboardInputEvent {
         if (MY_HOTKEY.isPressed()) {
             gui gaui= new gui();
             Minecraft.getMinecraft().displayGuiScreen(gaui);
+            NetworkManager.sendToServer("test",new NetworkPack("TEST","500",null));
 //            EntityPlayer player=com.zhang.ForgeAPI.Minecraft.getMinecraft().player;
 //            player.sendMessage(new TextComponentString("aaa"));
 //            if(player!=null){
