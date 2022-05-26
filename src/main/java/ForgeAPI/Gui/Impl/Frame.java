@@ -1,6 +1,6 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
-import ForgeAPI.Widget.IBaseGUI;
+import ForgeAPI.Gui.IBaseGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

@@ -1,9 +1,9 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
+import ForgeAPI.Gui.BaseGui;
+import ForgeAPI.Gui.ex.GuiBaseException;
 import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Utils.Texture.TexturePos2D;
-import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.ex.GuiBaseException;
 /* =======================
 ||类名：Image
 ||状态：已完成

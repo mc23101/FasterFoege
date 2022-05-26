@@ -1,4 +1,4 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
 import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,8 +1,8 @@
 package examplemod.client.gui;
 
+import ForgeAPI.Gui.Impl.*;
 import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Widget.Impl.*;
 import net.minecraft.util.TabCompleter;
 
 import java.io.File;

@@ -1,9 +1,9 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
 
+import ForgeAPI.Gui.BaseGui;
+import ForgeAPI.Gui.ex.GuiBaseException;
 import ForgeAPI.Utils.Texture.TexturePos2D;
-import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.ex.GuiBaseException;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;

@@ -1,4 +1,4 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
 import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Utils.Texture.TextureLoader;

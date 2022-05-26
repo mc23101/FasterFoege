@@ -1,4 +1,4 @@
-package ForgeAPI.Widget;
+package ForgeAPI.Gui;
 
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.Gui;

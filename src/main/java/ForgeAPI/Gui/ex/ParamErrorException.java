@@ -1,4 +1,4 @@
-package ForgeAPI.Widget.ex;
+package ForgeAPI.Gui.ex;
 
 public class ParamErrorException extends Error{
     public ParamErrorException() {

@@ -1,11 +1,11 @@
-package ForgeAPI.Widget.Impl;
+package ForgeAPI.Gui.Impl;
 
+import ForgeAPI.Gui.BaseGui;
+import ForgeAPI.Gui.ex.GuiBaseException;
+import ForgeAPI.Gui.ex.ParamErrorException;
 import ForgeAPI.Utils.ResourcesUtil;
 import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Utils.Texture.TexturePos2D;
-import ForgeAPI.Widget.BaseGui;
-import ForgeAPI.Widget.ex.GuiBaseException;
-import ForgeAPI.Widget.ex.ParamErrorException;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

@@ -1,4 +1,4 @@
-package ForgeAPI.Widget;
+package ForgeAPI.Gui;
 
 import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Utils.Texture.TexturePos2D;

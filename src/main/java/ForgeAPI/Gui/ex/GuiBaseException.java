@@ -1,4 +1,4 @@
-package ForgeAPI.Widget.ex;
+package ForgeAPI.Gui.ex;
 
 public class GuiBaseException extends RuntimeException{
     public GuiBaseException() {
