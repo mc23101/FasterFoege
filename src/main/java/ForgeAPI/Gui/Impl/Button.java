@@ -7,6 +7,7 @@ import ForgeAPI.Utils.Texture.TextureLoader;
 import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -170,7 +171,7 @@ public class Button extends BaseGui
         {
             j = 16777120;
         }
-        this.drawCenteredString(this.fontRenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+        this.drawCenteredString(this.fontRenderer, I18n.format(this.displayString), this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
     }
 
     /**

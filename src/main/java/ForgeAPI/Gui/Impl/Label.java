@@ -121,12 +121,12 @@ public class Label extends BaseGui {
             for (int k = 0; k < LineCount; ++k)
             {
                 int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
-                this.drawString(this.fontRenderer, this.labels.get(k),X , BackY+fontSize*k, this.textColor);
+                this.drawString(this.fontRenderer, I18n.format(this.labels.get(k)),X , BackY+fontSize*k, this.textColor);
             }
         }else{
             int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
             String str= this.labels.size()>0?this.labels.get(0):"";
-            this.drawString(this.fontRenderer, str, X, BackY, this.textColor);
+            this.drawString(this.fontRenderer, I18n.format(str), X, BackY, this.textColor);
         }
     }
 
