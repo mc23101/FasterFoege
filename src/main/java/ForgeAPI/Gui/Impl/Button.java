@@ -2,9 +2,9 @@ package ForgeAPI.Gui.Impl;
 
 import ForgeAPI.Gui.BaseGui;
 import ForgeAPI.Gui.ex.GuiBaseException;
+import ForgeAPI.Texture.GuiTextureLoader;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import ForgeAPI.Utils.ResourcesUtil;
-import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -53,12 +53,12 @@ public class Button extends BaseGui
     /**
      * 按钮未聚焦时的材质位置
      * */
-    protected TexturePos2D texturePos;
+    protected GuiTexturePos2D texturePos;
 
     /**
      * 按钮聚焦时的材质位置
      * */
-    protected TexturePos2D hoveredTexturePos;
+    protected GuiTexturePos2D hoveredTexturePos;
 
     /**
      * Gui边框的宽度
@@ -93,9 +93,9 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
-        this.textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
-        this.texturePos=new TexturePos2D(0,66,200,20,256,256);
-        this.hoveredTexturePos=new TexturePos2D(0,86,200,20,256,256);
+        this.guiTextureLoader = new GuiTextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Button/widgets.png")));
+        this.texturePos=new GuiTexturePos2D(0,66,200,20,256,256);
+        this.hoveredTexturePos=new GuiTexturePos2D(0,86,200,20,256,256);
 
     }
 
@@ -112,7 +112,7 @@ public class Button extends BaseGui
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            if(this.textureLoader.getGlTextureId()!=-1&&enableTexture){
+            if(this.guiTextureLoader.getGlTextureId()!=-1&&enableTexture){
                 drawButtonTexture();
             }else{
                 drawButtonColor();
@@ -126,9 +126,9 @@ public class Button extends BaseGui
      * 绘制按钮材质
      * */
     private void drawButtonTexture(){
-        this.textureLoader.bindTexture();
-        TexturePos2D texturePos2D=(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
-        this.drawCustomSizedTexture(this.x, this.y,this.width,this.height,texturePos2D);
+        this.guiTextureLoader.bindTexture();
+        GuiTexturePos2D guiTexturePos2D =(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
+        this.drawCustomSizedTexture(this.x, this.y,this.width,this.height, guiTexturePos2D);
     }
 
     /**
@@ -209,7 +209,7 @@ public class Button extends BaseGui
      * @param texturePos 按钮未聚焦材质的位置
      * @param hoveredTexturePos 按钮聚焦材质的位置
      * */
-    public void setTexturePos(TexturePos2D texturePos,TexturePos2D hoveredTexturePos) {
+    public void setTexturePos(GuiTexturePos2D texturePos, GuiTexturePos2D hoveredTexturePos) {
         this.texturePos = texturePos;
         this.hoveredTexturePos = hoveredTexturePos;
     }

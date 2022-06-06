@@ -1,6 +1,6 @@
 package ForgeAPI.Gui.Impl;
 
-import ForgeAPI.Utils.Texture.TexturePos2D;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 
 @SuppressWarnings("all")
@@ -58,8 +58,8 @@ public class Slider extends Button {
         this.min = minIn;
         this.max = maxIn;
         this.sliderPosition = (defaultValue - minIn) / (maxIn - minIn);
-        this.texturePos=new TexturePos2D(0,46,200,20,256,256);
-        this.hoveredTexturePos=new TexturePos2D(0,46,200,20,256,256);
+        this.texturePos=new GuiTexturePos2D(0,46,200,20,256,256);
+        this.hoveredTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
     }
 
     /**
@@ -134,8 +134,8 @@ public class Slider extends Button {
 
 
             int w= (this.width*0.05)<4? 4: (int) (this.width * 0.05);
-            TexturePos2D texturePos2D = new TexturePos2D(20, 66, w, this.height, 256, 256);
-            this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-w)), this.y, w,this.height ,texturePos2D);
+            GuiTexturePos2D guiTexturePos2D = new GuiTexturePos2D(20, 66, w, this.height, 256, 256);
+            this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-w)), this.y, w,this.height , guiTexturePos2D);
         }
     }
 

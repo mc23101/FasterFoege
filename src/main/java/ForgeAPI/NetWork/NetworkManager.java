@@ -15,8 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NetworkManager {
-    public static Map<String,FMLEventChannel> channels=new HashMap<>();
+    /**
+     * 用于储存所有注册过的通道
+     * */
+    private static Map<String,FMLEventChannel> channels=new HashMap<>();
 
+    /**
+     * 注册通道
+     * @param object 注册通道的类(this)
+     * @param name 通道名称
+     * */
     public static FMLEventChannel registerChannel(Object object,String name){
         MinecraftForge.EVENT_BUS.register(object);
         FMLCommonHandler.instance().bus().register(object);
@@ -27,19 +35,35 @@ public class NetworkManager {
         return channel;
     }
 
-
+    /**
+     * 发送数据包到服务器
+     * @param channelName 发送的通道
+     * @param pack 数据包
+     * */
     public static void sendToServer(String channelName,NetworkPack pack){
         byte[] array = JSON.toJSONString(pack).getBytes(StandardCharsets.UTF_8);
         ByteBuf buf = Unpooled.wrappedBuffer(array);
         FMLProxyPacket packet = new FMLProxyPacket(new PacketBuffer(buf), channelName);
-        channels.get(channelName).sendToServer(packet);
+        getChannel(channelName).sendToServer(packet);
     }
 
-
+    /**
+     * 解析数据包
+     * @return 解析的数据包结果
+     * */
     public static NetworkPack toNetworkPack(byte[] array){
         NetworkPack networkPack = JSON.parseObject(new String(array,StandardCharsets.UTF_8),NetworkPack.class);
         return networkPack;
     }
 
+    /**
+     * 获取已经注册的通道
+     * */
+    public static FMLEventChannel getChannel(String channelName){
+        if(channels.containsKey(channelName)){
+            return channels.get(channelName);
+        }
+        return  null;
+    }
 
 }

@@ -1,8 +1,8 @@
 package ForgeAPI.Gui.Impl;
 
+import ForgeAPI.Texture.GuiTextureLoader;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import ForgeAPI.Utils.ResourcesUtil;
-import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Utils.Texture.TexturePos2D;
 
 import java.io.File;
 /* =======================
@@ -41,7 +41,7 @@ public class CheckBox extends Button{
      * */
     public CheckBox(String id,int x,int y,int width,int height){
         super(id,x,y,width,height,"");
-        this.textureLoader=new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/CheckBox/checkbox.png")));
+        this.guiTextureLoader =new GuiTextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/CheckBox/checkbox.png")));
     }
 
     /**
@@ -50,11 +50,11 @@ public class CheckBox extends Button{
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         this.texturePos= (!this.checked)?
-                new TexturePos2D(0,0,20,20,64,64):
-                new TexturePos2D(0,20,20,20,64,64);
+                new GuiTexturePos2D(0,0,20,20,64,64):
+                new GuiTexturePos2D(0,20,20,20,64,64);
         this.hoveredTexturePos=(!this.checked)?
-                new TexturePos2D(20,0,20,20,64,64):
-                new TexturePos2D(20,20,20,20,64,64);
+                new GuiTexturePos2D(20,0,20,20,64,64):
+                new GuiTexturePos2D(20,20,20,20,64,64);
         super.drawGUI(mouseX, mouseY, partialTicks);
     }
 

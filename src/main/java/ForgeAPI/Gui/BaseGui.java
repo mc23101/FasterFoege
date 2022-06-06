@@ -1,7 +1,7 @@
 package ForgeAPI.Gui;
 
-import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Utils.Texture.TexturePos2D;
+import ForgeAPI.Texture.GuiTextureLoader;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
@@ -68,7 +68,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * Gui的材质TextureLoader
      * */
-    protected TextureLoader textureLoader;
+    protected GuiTextureLoader guiTextureLoader;
 
     /**
      * 是否启用绘制材质
@@ -99,7 +99,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * @param height Gui的高度
      * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
      */
-    public static void drawCustomSizedTexture(int x, int y, int width, int height, TexturePos2D texturePos)
+    public static void drawCustomSizedTexture(int x, int y, int width, int height, GuiTexturePos2D texturePos)
     {
         float f = 1.0F / texturePos.getMaxWidth();
         float f1 = 1.0F / texturePos.getMaxHeight();
@@ -125,9 +125,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 加载Gui的材质
      * */
-    public void setTexture(TextureLoader loader) {
-        this.textureLoader.deleteTexture();
-        this.textureLoader=loader;
+    public void setTexture(GuiTextureLoader loader) {
+        this.guiTextureLoader.deleteTexture();
+        this.guiTextureLoader =loader;
     }
 
     /**
@@ -208,9 +208,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     @Override
     public void onGuiClosed() {
-        if(this.textureLoader!=null){
-            this.textureLoader.deleteTexture();
-            this.textureLoader.stopGifTread();
+        if(this.guiTextureLoader !=null){
+            this.guiTextureLoader.deleteTexture();
+            this.guiTextureLoader.stopGifTread();
         }
     }
 

@@ -3,9 +3,9 @@ package ForgeAPI.Gui.Impl;
 import ForgeAPI.Gui.BaseGui;
 import ForgeAPI.Gui.ex.GuiBaseException;
 import ForgeAPI.Gui.ex.ParamErrorException;
+import ForgeAPI.Texture.GuiTextureLoader;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import ForgeAPI.Utils.ResourcesUtil;
-import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Utils.Texture.TexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,12 +50,12 @@ public class Bar extends BaseGui {
     /**
      * 进度条背景材质位置
      * */
-    protected TexturePos2D backTexture;
+    protected GuiTexturePos2D backTexture;
 
     /**
      * 进度条进度材质位置
      * */
-    protected TexturePos2D overlapTexture;
+    protected GuiTexturePos2D overlapTexture;
 
     /**
      * 自定义大小的进度条控件
@@ -76,9 +76,9 @@ public class Bar extends BaseGui {
         this.curr = curr;
         this.width = width;
         this.height = height;
-        this.textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
-        this.backTexture=new TexturePos2D(0,0,182,5,256,256);
-        this.overlapTexture=new TexturePos2D(0,5,182,5,256,256);
+        this.guiTextureLoader = new GuiTextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/Weight/Bar/bars.png")));
+        this.backTexture=new GuiTexturePos2D(0,0,182,5,256,256);
+        this.overlapTexture=new GuiTexturePos2D(0,5,182,5,256,256);
     }
 
     /**
@@ -88,9 +88,9 @@ public class Bar extends BaseGui {
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if(this.visible){
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            if(enableTexture&&textureLoader!=null){
-                textureLoader.bindTexture();
-                if(textureLoader.getGlTextureId()!=-1){
+            if(enableTexture&& guiTextureLoader !=null){
+                guiTextureLoader.bindTexture();
+                if(guiTextureLoader.getGlTextureId()!=-1){
                     drawTexture();
                 }
             }else{
@@ -113,7 +113,7 @@ public class Bar extends BaseGui {
     private void drawTexture(){
         this.drawCustomSizedTexture(x, y,width,height,this.backTexture);
         if(curr!=0){
-            TexturePos2D currOverlapTexture=new TexturePos2D(
+            GuiTexturePos2D currOverlapTexture=new GuiTexturePos2D(
                     overlapTexture.getU(),
                     overlapTexture.getV(),
                     (int) (overlapTexture.getWidth()*(curr/max)),
@@ -145,7 +145,7 @@ public class Bar extends BaseGui {
      * @param backTexture 进度条背景位置
      * @param overlapTexture 进度条进度位置
      * */
-    public void setTexture(TexturePos2D backTexture,TexturePos2D overlapTexture){
+    public void setTexture(GuiTexturePos2D backTexture, GuiTexturePos2D overlapTexture){
        this.backTexture=backTexture;
         this.overlapTexture=overlapTexture;
     }

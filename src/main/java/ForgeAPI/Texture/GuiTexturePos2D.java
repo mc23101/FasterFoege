@@ -1,4 +1,4 @@
-package ForgeAPI.Utils.Texture;
+package ForgeAPI.Texture;
 /* =======================
 ||类名：TexturePos2D
 ||状态：已完成
@@ -8,7 +8,7 @@ package ForgeAPI.Utils.Texture;
 /**
  * 平面材质位置类，用来表示材质的位置
  * */
-public class TexturePos2D {
+public class GuiTexturePos2D {
     /**
      * 材质UV坐标(横坐标)
      * */
@@ -47,7 +47,7 @@ public class TexturePos2D {
      * @param maxWidth 材质图片的宽度
      * @param maxHeight 材质图片的高度
      * */
-    public TexturePos2D(float u, float v, int width, int height, float maxWidth, float maxHeight) {
+    public GuiTexturePos2D(float u, float v, int width, int height, float maxWidth, float maxHeight) {
         U = u;
         V = v;
         this.width = width;

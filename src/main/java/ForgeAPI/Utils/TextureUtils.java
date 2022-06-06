@@ -1,15 +1,50 @@
-package ForgeAPI.Utils.Texture;
+package ForgeAPI.Utils;
 
 import cn.hutool.core.img.gif.GifDecoder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.ResourceLocation;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TextureUtils {
+
+    public static void registerTexture(ResourceLocation location, ITextureObject iTextureObject){
+        TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
+        textureManager.loadTexture(location,iTextureObject);
+        if(location!=null&&iTextureObject!=null){
+
+            Map<ResourceLocation, ITextureObject> textures = getTextures();
+            textures.put(location,iTextureObject);
+        }
+    }
+
+    public static Map<ResourceLocation, ITextureObject> getTextures(){
+        TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
+        Class c=TextureManager.class;
+        Field mapTextureObjects=null;
+        try {
+            mapTextureObjects= c.getDeclaredField("mapTextureObjects");
+            mapTextureObjects.setAccessible(true);
+            Map<ResourceLocation, ITextureObject> map = (Map<ResourceLocation, ITextureObject>)mapTextureObjects.get(textureManager);
+            return map;
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     /**
      * 判断文件是否为图片文件(GIF,PNG,JPG)
      * @param srcFilePath

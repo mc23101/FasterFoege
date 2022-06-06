@@ -1,10 +1,8 @@
-package examplemod.client.event;
+package test.client.event;
 
 
-import ForgeAPI.NetWork.NetworkManager;
-import ForgeAPI.NetWork.NetworkPack;
-import examplemod.client.gui.gui;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -14,6 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
+
+import java.util.Set;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT)
 public class KeyboardInputEvent {
@@ -26,16 +26,17 @@ public class KeyboardInputEvent {
     @SubscribeEvent
     public static void onKeyPressed(InputEvent.KeyInputEvent event) {
         if (MY_HOTKEY.isPressed()) {
-            gui gaui= new gui();
-            Minecraft.getMinecraft().displayGuiScreen(gaui);
-            NetworkManager.sendToServer("test",new NetworkPack("TEST","500",null));
-//            EntityPlayer player=com.zhang.ForgeAPI.Minecraft.getMinecraft().player;
-//            player.sendMessage(new TextComponentString("aaa"));
-//            if(player!=null){
-//                PlayerInventoryGui playerInventoryGui=new PlayerInventoryGui(player);
-//                playerInventoryGui.initGui();
-//                player.openGui(playerInventoryGui,5,player.world,player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ());
-//            }
+//            gui gaui= new gui();
+//            Minecraft.getMinecraft().displayGuiScreen(gaui);
+//            NetworkManager.sendToServer("test",new NetworkPack("TEST","500",null));
+            ///System.out.println(new ResourceLocation("aaaa").getResourceDomain());
+            //System.out.println(ModelLoaderRegistry.getActualLocation(new ResourceLocation("aaa")));
+//            System.out.println(Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("mymod:textures/example.png"));
+            SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+            Set<String> resourceDomains = resourceManager.getResourceDomains();
+            for (String s:resourceDomains){
+                System.out.println(s);
+            }
 
         }
     }

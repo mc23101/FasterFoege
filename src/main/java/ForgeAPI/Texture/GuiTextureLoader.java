@@ -1,5 +1,6 @@
-package ForgeAPI.Utils.Texture;
+package ForgeAPI.Texture;
 
+import ForgeAPI.Utils.TextureUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -14,15 +15,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class TextureLoader extends AbstractTexture {
-
+public class GuiTextureLoader extends AbstractTexture {
+    
     private BufferedImage imageBuffer;
     private List<BufferedImage> gifFrames;
     private List<Integer> gifTimes;
     private Thread gifTread;
     private int gifFrameIndex=0;
 
-    public TextureLoader(File file)  {
+    public GuiTextureLoader(File file)  {
         if(TextureUtils.isGif(file)){
             gifFrames=TextureUtils.getGifFrame(file);
             gifTimes=TextureUtils.getGifTime(file);
@@ -35,11 +36,11 @@ public class TextureLoader extends AbstractTexture {
         }
     }
 
-    public TextureLoader(BufferedImage image) {
+    public GuiTextureLoader(BufferedImage image) {
         this.imageBuffer = image;
     }
 
-    public TextureLoader(String urlValue)  {
+    public GuiTextureLoader(String urlValue)  {
         URL url= null;
         try {
             url = new URL(urlValue);

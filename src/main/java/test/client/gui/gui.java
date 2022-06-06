@@ -1,8 +1,8 @@
-package examplemod.client.gui;
+package test.client.gui;
 
 import ForgeAPI.Gui.Impl.*;
+import ForgeAPI.Texture.GuiTextureLoader;
 import ForgeAPI.Utils.ResourcesUtil;
-import ForgeAPI.Utils.Texture.TextureLoader;
 import net.minecraft.util.TabCompleter;
 
 import java.io.File;
@@ -27,8 +27,8 @@ public class gui extends Frame {
         bar.setEnableTexture(true);
         button.setEnableTexture(true);
         //button.setBorder(1);
-        TextureLoader textureLoader = new TextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/gifDebug.gif")));
-        Image image=new Image("image",0,0,400,200, textureLoader);
+        GuiTextureLoader guiTextureLoader = new GuiTextureLoader(new File(ResourcesUtil.getResourcesPath("assets/texture/gifDebug.gif")));
+        Image image=new Image("image",0,0,400,200, guiTextureLoader);
 //
         CheckBox checkBox=new CheckBox("checkbox",0,0,20,20);
         checkBox.setEnableTexture(true);

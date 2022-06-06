@@ -2,8 +2,8 @@ package ForgeAPI.Gui.Impl;
 
 import ForgeAPI.Gui.BaseGui;
 import ForgeAPI.Gui.ex.GuiBaseException;
-import ForgeAPI.Utils.Texture.TextureLoader;
-import ForgeAPI.Utils.Texture.TexturePos2D;
+import ForgeAPI.Texture.GuiTextureLoader;
+import ForgeAPI.Texture.GuiTexturePos2D;
 /* =======================
 ||类名：Image
 ||状态：已完成
@@ -18,10 +18,10 @@ public class Image extends BaseGui {
     /**
      * 图片加载器
      * */
-    protected TextureLoader imageTextureLoader;
+    protected GuiTextureLoader imageGuiTextureLoader;
 
     /**图片的位置*/
-    protected TexturePos2D imageTexture;
+    protected GuiTexturePos2D imageTexture;
 
     /**
      * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
@@ -30,17 +30,17 @@ public class Image extends BaseGui {
      * @param width 按钮的宽度
      * @param height 按钮的高度
      * */
-    public Image(String id, int x, int y, int width, int height, TextureLoader textureLoader) {
+    public Image(String id, int x, int y, int width, int height, GuiTextureLoader guiTextureLoader) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
-        if(textureLoader ==null) throw new NullPointerException("ImageLoader的值为null");
+        if(guiTextureLoader ==null) throw new NullPointerException("ImageLoader的值为null");
         this.id=id;
         this.x=x;
         this.y=y;
         this.width=width;
         this.height=height;
-        this.imageTextureLoader=textureLoader;
-        imageTexture=new TexturePos2D(0,0, textureLoader.getImageBuffer().getWidth(), textureLoader.getImageBuffer().getHeight(), textureLoader.getImageBuffer().getWidth(), textureLoader.getImageBuffer().getHeight());
+        this.imageGuiTextureLoader = guiTextureLoader;
+        imageTexture=new GuiTexturePos2D(0,0, guiTextureLoader.getImageBuffer().getWidth(), guiTextureLoader.getImageBuffer().getHeight(), guiTextureLoader.getImageBuffer().getWidth(), guiTextureLoader.getImageBuffer().getHeight());
     }
 
     /**
@@ -49,18 +49,18 @@ public class Image extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if(this.visible){
-            imageTextureLoader.bindTexture();
+            imageGuiTextureLoader.bindTexture();
             this.drawCustomSizedTexture(x,y,width,height,imageTexture);
         }
     }
 
     /**
      * 设置Image图片
-     * @param textureLoader 图片加载器
+     * @param guiTextureLoader 图片加载器
      * @param imageTexture 图片位置
      * */
-    public void setImageTexture(TextureLoader textureLoader,TexturePos2D imageTexture) {
-        this.imageTextureLoader=textureLoader;
+    public void setImageTexture(GuiTextureLoader guiTextureLoader, GuiTexturePos2D imageTexture) {
+        this.imageGuiTextureLoader = guiTextureLoader;
         this.imageTexture = imageTexture;
     }
 
@@ -70,8 +70,8 @@ public class Image extends BaseGui {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
-        imageTextureLoader.deleteTexture();
-        imageTextureLoader.stopGifTread();
+        imageGuiTextureLoader.deleteTexture();
+        imageGuiTextureLoader.stopGifTread();
     }
 
 }

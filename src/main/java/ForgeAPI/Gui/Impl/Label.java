@@ -3,7 +3,7 @@ package ForgeAPI.Gui.Impl;
 
 import ForgeAPI.Gui.BaseGui;
 import ForgeAPI.Gui.ex.GuiBaseException;
-import ForgeAPI.Utils.Texture.TexturePos2D;
+import ForgeAPI.Texture.GuiTexturePos2D;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -38,7 +38,7 @@ public class Label extends BaseGui {
     /**
      * Gui背景材质位置
      * */
-    protected TexturePos2D backTexturePos;
+    protected GuiTexturePos2D backTexturePos;
 
     /**
      * 文本字体颜色
@@ -139,9 +139,9 @@ public class Label extends BaseGui {
         if (this.labelBgEnabled)
         {
             if(enableTexture){
-                if(this.textureLoader!=null){
-                    if(this.textureLoader.getGlTextureId()!=-1){
-                        this.textureLoader.bindTexture();
+                if(this.guiTextureLoader !=null){
+                    if(this.guiTextureLoader.getGlTextureId()!=-1){
+                        this.guiTextureLoader.bindTexture();
                         this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
                     }
                 }

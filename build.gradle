@@ -3,27 +3,27 @@ buildscript {
         maven { url='http://maven.aliyun.com/nexus/content/groups/public/' }
         maven{ url='http://maven.aliyun.com/nexus/content/repositories/jcenter'}
         maven { url = 'https://maven.minecraftforge.net/' }
+        jcenter()
         mavenCentral()
+
 
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
-
     }
 }
 
 
 apply plugin: 'net.minecraftforge.gradle'
 // 只需编辑这一行下面的代码，上面的代码添加并启用了Forge设置所需的东西。
-apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.0'
-group = 'com.zhang.ForgeAPI' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'ForgeAPI'
+group='com.siyao.mymod'
+// http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'mymod'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-jar.enabled(true)
 
 minecraft {
     // 映射可以在任何时候更改，并且必须采用以下格式
@@ -61,13 +61,18 @@ minecraft {
         }
     }
 }
+repositories {
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+}
 
 dependencies {
     // Specify the version of ForgeAPI.Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
-
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"

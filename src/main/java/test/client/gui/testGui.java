@@ -1,4 +1,4 @@
-package examplemod.client.gui;
+package test.client.gui;
 
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.entity.player.EntityPlayer;
