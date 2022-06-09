@@ -1,7 +1,8 @@
 package test;
 
 
-import net.minecraft.client.Minecraft;
+import com.SiYao.ForgeAPI.Minecraft;
+import com.SiYao.ForgeAPI.NetWork.NetworkPack;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -28,11 +29,11 @@ public class KeyboardInputEvent {
         if (MY_HOTKEY.isPressed()) {
 //            gui gaui= new gui();
 //            Minecraft.getMinecraft().displayGuiScreen(gaui);
-//            NetworkManager.sendToServer("test",new NetworkPack("TEST","500",null));
+            Minecraft.sendToServer("test",new NetworkPack("TEST","500",null));
             ///System.out.println(new ResourceLocation("aaaa").getResourceDomain());
             //System.out.println(ModelLoaderRegistry.getActualLocation(new ResourceLocation("aaa")));
 //            System.out.println(Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("mymod:textures/example.png"));
-            SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+            SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) net.minecraft.client.Minecraft.getMinecraft().getResourceManager();
             Set<String> resourceDomains = resourceManager.getResourceDomains();
             for (String s:resourceDomains){
                 System.out.println(s);

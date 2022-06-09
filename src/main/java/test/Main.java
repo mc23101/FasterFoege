@@ -1,9 +1,8 @@
 package test;
 
+import com.SiYao.ForgeAPI.Minecraft;
 import com.SiYao.ForgeAPI.Model.CustomModelLoader;
-import com.SiYao.ForgeAPI.NetWork.NetworkManager;
 import com.SiYao.ForgeAPI.Resources.CustomResourceManger;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -27,8 +26,8 @@ public class Main
     {
         ModelLoaderRegistry.registerLoader(new CustomModelLoader());
         logger = event.getModLog();
-        NetworkManager.registerChannel(this,"test");
-        SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+        Minecraft.registerChannel(this,"test");
+        SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) net.minecraft.client.Minecraft.getMinecraft().getResourceManager();
         resourceManager.registerReloadListener(new CustomResourceManger());
 //        SimpleReloadableResourceManager Manager = (SimpleReloadableResourceManager) resourceManager;
 //        Manager.reloadResourcePack(CustomResourcePack.INSTANCE);

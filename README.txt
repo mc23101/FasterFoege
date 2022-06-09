@@ -1,17 +1,8 @@
 -------------------------------------------
-Source installation information for modders
+这是一个专注于简化Minecraft Mod开发的API
 -------------------------------------------
-This code follows the com.zhang.ForgeAPI.Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
-
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
-
-Source pack installation information:
-
-Standalone source installation
+Minecraft版本:1.12.2
+Forge版本:forge:1.12.2-14.23.5.2859
 ==============================
 
 See the Forge Documentation online for more detailed instructions:

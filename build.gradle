@@ -17,9 +17,11 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 // 只需编辑这一行下面的代码，上面的代码添加并启用了Forge设置所需的东西。
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'maven'
 
 version = '1.0'
-group='com.siyao.ForgeAPI'
+group='io.gitee.zhangsisiyao'
 // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ForgeAPI-1.12.2'
 
@@ -134,17 +136,82 @@ jar {
 //然而，如果您是在一个多项目构建中，开发时间需要未被发现的jar文件，因此您可以通过执行将混淆延迟到发布
 publish.dependsOn('reobfJar')
 
+jar {
+    enabled = true
+}
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            groupId = group
+            artifactId = archivesBaseName
+            version = version
+
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom{
+                // 构件名称
+                // 区别于artifactId，可以理解为artifactName
+                name = 'Minecraft ForgeAPI-1.12.2'
+                // 构件描述
+                description = 'Forge快速开发框架'
+                // 构件主页
+                url = 'https://gitee.com/zhangsisiyao/forge-api'
+                // 许可证名称和地址
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                // 开发者信息
+                developers {
+                    developer {
+                        name = 'zhangsiyao'
+                        email = '2963456487@qq.com'
+                    }
+                }
+                // 版本控制仓库地址
+                scm {
+                    url = 'https://gitee.com/zhangsisiyao/forge-api'
+                    connection = 'scm:git:https://gitee.com/zhangsisiyao/forge-api.git'
+                    developerConnection = 'scm:git:https://gitee.com/zhangsisiyao/forge-api.git'
+                }
+            }
         }
     }
+    // 定义发布到哪里
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            name 'newframeRepository'
+//                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                // 这里就是之前在issues.sonatype.org注册的账号
+                username = "${sonatypeUsername}"
+                password = "${sonatypePassword}"
+            }
         }
     }
+}
+
+
+javadoc {
+    // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    // 防止本地打开中文乱码
+//        options.addStringOption("charset", "UTF-8")
+    options.encoding = "UTF-8"
+    failOnError = false
 }
 
 
@@ -160,4 +227,8 @@ sourceSets {
     main {
         output.resourcesDir = java.outputDir
     }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }

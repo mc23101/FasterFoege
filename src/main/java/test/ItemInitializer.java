@@ -1,6 +1,6 @@
 package test;
 
-import com.SiYao.ForgeAPI.Item.ItemManager;
+import com.SiYao.ForgeAPI.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class ItemInitializer {
 
-    public static final CreativeTabs EXAMPLE_CREATIVE_TAB = ItemManager.registerCreativeTabs("advancements.story.upgrade_tools.description",new ItemStack(Items.DIAMOND));
+    public static final CreativeTabs EXAMPLE_CREATIVE_TAB = Minecraft.registerCreativeTabs("advancements.story.upgrade_tools.description",new ItemStack(Items.DIAMOND));
 
     public static Item firstItem;
 
