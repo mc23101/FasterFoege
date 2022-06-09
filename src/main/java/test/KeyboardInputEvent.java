@@ -1,7 +1,7 @@
 package test;
 
 
-import com.SiYao.ForgeAPI.Minecraft;
+import com.SiYao.ForgeAPI.MinecraftCore;
 import com.SiYao.ForgeAPI.NetWork.NetworkPack;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
@@ -29,7 +29,7 @@ public class KeyboardInputEvent {
         if (MY_HOTKEY.isPressed()) {
 //            gui gaui= new gui();
 //            Minecraft.getMinecraft().displayGuiScreen(gaui);
-            Minecraft.sendToServer("test",new NetworkPack("TEST","500",null));
+            MinecraftCore.sendToServer("test",new NetworkPack("TEST","500",null));
             ///System.out.println(new ResourceLocation("aaaa").getResourceDomain());
             //System.out.println(ModelLoaderRegistry.getActualLocation(new ResourceLocation("aaa")));
 //            System.out.println(Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("mymod:textures/example.png"));

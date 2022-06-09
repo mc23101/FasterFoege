@@ -30,9 +30,6 @@ public class CustomResourcePack implements IResourcePack {
     public Map<ResourceLocation, IResource> resources=new HashMap<>();
 
     public CustomResourcePack(){
-        ResourceLocation resourceLocation = new ResourceLocation("custom", "textures/example.png");
-        CustomResource customResource = new CustomResource(resourceLocation, ResourcesUtil.getResourcesPath("assets/example.png"));
-        resources.put(resourceLocation,customResource);
     }
 
     @Override

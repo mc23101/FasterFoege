@@ -1,10 +1,17 @@
 package test;
 
-import com.SiYao.ForgeAPI.Minecraft;
+import com.SiYao.ForgeAPI.MinecraftCore;
 import com.SiYao.ForgeAPI.Model.CustomModelLoader;
-import com.SiYao.ForgeAPI.Resources.CustomResourceManger;
-import net.minecraft.client.resources.SimpleReloadableResourceManager;
+import com.SiYao.ForgeAPI.Resources.ResourceType;
+import com.SiYao.ForgeAPI.Utils.ResourcesUtil;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -21,16 +28,21 @@ public class Main
 
     private static Logger logger;
 
+    public static final CreativeTabs EXAMPLE_CREATIVE_TAB = MinecraftCore.registerCreativeTabs("advancements.story.upgrade_tools.description",new ItemStack(Items.DIAMOND));
+    public static Item firstItem= MinecraftCore.registerItem(new Item()
+            .setCreativeTab(EXAMPLE_CREATIVE_TAB)
+            .setRegistryName(new ResourceLocation(Main.MODID,"example")));
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         ModelLoaderRegistry.registerLoader(new CustomModelLoader());
         logger = event.getModLog();
-        Minecraft.registerChannel(this,"test");
-        SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) net.minecraft.client.Minecraft.getMinecraft().getResourceManager();
-        resourceManager.registerReloadListener(new CustomResourceManger());
-//        SimpleReloadableResourceManager Manager = (SimpleReloadableResourceManager) resourceManager;
-//        Manager.reloadResourcePack(CustomResourcePack.INSTANCE);
+        MinecraftCore.registerChannel(this,"test");
+
+        MinecraftCore.preinit();
+        MinecraftCore.registerResource(new ResourceLocation("custom","textures/example.png"), ResourcesUtil.getResourcesPath("assets/example.png"), ResourceType.TEXTURE);
+
+        ModelLoader.setCustomModelResourceLocation(Main.firstItem, 0, new ModelResourceLocation(Main.firstItem.getRegistryName(), "inventory"));
 
     }
 
