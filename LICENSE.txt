@@ -1,4 +1,4 @@
-Unless noted below, com.zhang.ForgeAPI.Minecraft Forge, Forge Mod Loader, and all
+Unless noted below, com.zhang.io.gitee.zhangsisiyao.ForgeAPI.Minecraft Forge, Forge Mod Loader, and all
 parts herein are licensed under the terms of the LGPL 2.1 found
 here http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt and 
 copied below.
@@ -11,7 +11,7 @@ A note on authorship:
 All source artifacts are property of their original author, with
 the exclusion of the contents of the patches directory and others
 copied from it from time to time. Authorship of the contents of
-the patches directory is retained by the com.zhang.ForgeAPI.Minecraft Forge project.
+the patches directory is retained by the com.zhang.io.gitee.zhangsisiyao.ForgeAPI.Minecraft Forge project.
 This is because the patches are partially machine generated
 artifacts, and are changed heavily due to the way forge works.
 Individual attribution within them is impossible.
@@ -29,7 +29,7 @@ by Forge's license for the Mod code.
 
 
 === MCP Data ===
-This software includes data from the com.zhang.ForgeAPI.Minecraft Coder Pack (MCP), with kind permission
+This software includes data from the com.zhang.io.gitee.zhangsisiyao.ForgeAPI.Minecraft Coder Pack (MCP), with kind permission
 from them. The license to MCP data is not transitive - distribution of this data by
 third parties requires independent licensing from the MCP team. This data is not
 redistributable without permission from the MCP team.

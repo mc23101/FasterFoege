@@ -13,19 +13,19 @@ buildscript {
     }
 }
 
-
 apply plugin: 'net.minecraftforge.gradle'
 // 只需编辑这一行下面的代码，上面的代码添加并启用了Forge设置所需的东西。
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'maven'
 
-version = '1.0'
+version = '1.0.3'
 group='io.gitee.zhangsisiyao'
 // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ForgeAPI-1.12.2'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
 
 minecraft {
     // 映射可以在任何时候更改，并且必须采用以下格式
@@ -37,20 +37,19 @@ minecraft {
     mappings channel: 'snapshot', version: '20171003-1.12'
     // makeObfSourceJar = false // 默认情况下会创建一个名为sources jar的Srg。取消注释以禁用。
 
+
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // 默认运行配置。
     // 这些可以根据需要进行调整、删除或复制。
     runs {
         client {
-            workingDirectory project.file('run')
-
 
             // userdev环境的推荐日志数据
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // 控制台的推荐日志级别
-            property 'forge.logging.console.level', 'debug'
+            property 'forge.logging.console.level', 'info'
         }
 
         server {
@@ -63,6 +62,8 @@ minecraft {
         }
     }
 }
+
+
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven {
@@ -71,7 +72,7 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of ForgeAPI.Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // Specify the version of io.gitee.zhangsisiyao.ForgeAPI.Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
@@ -91,10 +92,13 @@ dependencies {
     // https://mvnrepository.com/artifact/cn.hutool/hutool-all
     implementation 'cn.hutool:hutool-all:5.8.0'
 
+    // https://mvnrepository.com/artifact/org.reflections/reflections
+    implementation 'org.reflections:reflections:0.10.2'
+
 
 
     // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
@@ -147,11 +151,11 @@ task javadocJar(type: Jar) {
     from javadoc
     classifier = 'javadoc'
 }
-sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]
-
+sourceSets.main.resources.srcDirs = ["src/main/java/","src/main/resources"]
 publishing {
     publications {
         mavenJava(MavenPublication) {
+
             groupId = group
             artifactId = archivesBaseName
             version = version
@@ -162,7 +166,7 @@ publishing {
             pom{
                 // 构件名称
                 // 区别于artifactId，可以理解为artifactName
-                name = 'Minecraft ForgeAPI-1.12.2'
+                name = 'Minecraft io.gitee.zhangsisiyao.ForgeAPI-1.12.2'
                 // 构件描述
                 description = 'Forge快速开发框架'
                 // 构件主页
@@ -193,9 +197,17 @@ publishing {
     // 定义发布到哪里
     repositories {
         maven {
-            name 'newframeRepository'
-//                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            name 'release'
             url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                // 这里就是之前在issues.sonatype.org注册的账号
+                username = "${sonatypeUsername}"
+                password = "${sonatypePassword}"
+            }
+        }
+        maven {
+            name 'snapshot'
+            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             credentials {
                 // 这里就是之前在issues.sonatype.org注册的账号
                 username = "${sonatypeUsername}"
@@ -223,12 +235,13 @@ allprojects {
 }
 compileJava.options.encoding("UTF-8")
 
-sourceSets {
-    main {
-        output.resourcesDir = java.outputDir
+sourceSets{
+    main{
+        output.resourcesDir = output.classesDir
     }
 }
 
 signing {
     sign publishing.publications.mavenJava
 }
+
