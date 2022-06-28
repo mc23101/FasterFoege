@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
 import com.alibaba.fastjson2.JSON;
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.ItemLoader;
+import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.AnnotationFactory;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.NetWork.NetworkPack;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResource;
@@ -40,9 +40,11 @@ public class MinecraftCore {
      * <p>API初始化工作</p>
      * <p>请在{@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}事件中调用此方法</p>
      * <p>以便确保MinecraftForgeAPI能够正常工作</p>
+     * @param o {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}的Class类
+     * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
     public static void preinit(Object o){
-        ItemLoader.ItemAnnotationLoader(o);
+        AnnotationFactory.AnnotationLoader(o);
         ResourceManger.registerCustomModelLoder(new CustomModelLoader());
         ResourceManger.registerCustomResourceManger(new CustomResourceListener());
     }
