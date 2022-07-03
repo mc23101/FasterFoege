@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.FIELD})
 public @interface MinecraftItem {
-    String modId() default "";
-    String name() default "";
+    String modId() ;
+    String name() ;
 }

@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,7 @@ import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nullable;
@@ -102,6 +104,22 @@ public class MinecraftCore {
          * */
         public static void registerBlocks(Block...blocks){
             GameRegistry.findRegistry(Block.class).registerAll(blocks);
+        }
+    }
+
+    /**
+     * 效果管理器
+     * */
+    public static class EffectManger{
+
+    }
+
+    /**
+     * 实体管理器
+     * */
+    public static class EntityManger{
+        public  static void registerEntity(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary){
+            EntityRegistry.registerModEntity(registryName,entityClass, entityName, id,mod,trackingRange, updateFrequency,sendsVelocityUpdates,eggPrimary, eggSecondary);
         }
     }
 
