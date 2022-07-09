@@ -5,5 +5,6 @@ public class AnnotationFactory {
         ItemLoader.ItemAnnotationLoader(o);
         BlockLoader.BlockAnnotationLoader(o);
         EntityLoader.EntityAnnotationLoader(o);
+        EntityLoader.EntityRenderAnnotationLoader(o);
     }
 }

@@ -12,6 +12,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,6 +26,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
@@ -31,6 +35,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,8 +123,48 @@ public class MinecraftCore {
      * 实体管理器
      * */
     public static class EntityManger{
+        /**
+         * 注册实体和怪物蛋
+         * @param registryName 实体注册名(modId+注册名)
+         * @param entityClass 实体的class类
+         * @param entityName 实体的名称(尽量和注册名一样)
+         * @param id 实体的自定义ID(请使用UUID)
+         * @param mod 模组的主类
+         * @param trackingRange 实体的追踪范围
+         * @param updateFrequency 实体更新频率
+         * @param sendsVelocityUpdates 是否发送速度数据包
+         * @param eggPrimary 怪物蛋颜色1
+         * @param eggSecondary 怪物蛋颜色2
+         * */
         public  static void registerEntity(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary){
             EntityRegistry.registerModEntity(registryName,entityClass, entityName, id,mod,trackingRange, updateFrequency,sendsVelocityUpdates,eggPrimary, eggSecondary);
+        }
+
+        /**
+         * 注册实体的渲染类
+         * @param EntityClass 实体的class类
+         * @param render 实体的渲染类
+         * */
+        public static  void registerEntityRender(Class<?extends Entity> EntityClass,Class<?extends Render> render){
+            RenderingRegistry.registerEntityRenderingHandler(EntityClass, new IRenderFactory()
+            {
+                @Override
+                public Render createRenderFor(RenderManager manager) {
+                    Render render1=null;
+                    try {
+                        render1 = render.getConstructor(RenderManager.class).newInstance(manager);
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    return render1;
+                }
+            });
         }
     }
 
@@ -163,6 +208,7 @@ public class MinecraftCore {
          * <p>例如:ResourceLocation location=new ResourceLocation("custom",你的自定义资源名字);</p>
          * @param location 资源在Minecraft中表示的位置
          * @param absolutaPath 资源在电脑上的绝对位置
+         * @param type 资源类型
          * */
         public static void registerResource(ResourceLocation location, String absolutaPath, ResourceType type){
             String prefix="";
@@ -193,6 +239,7 @@ public class MinecraftCore {
          * 注册通道
          * @param object 注册通道的类(this)
          * @param name 通道名称
+         * @return
          * */
         public static FMLEventChannel registerChannel(Object object,String name){
             // 注册通道

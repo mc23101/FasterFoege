@@ -11,7 +11,7 @@ public class TextureUtils {
 
     /**
      * 判断文件是否为图片文件(GIF,PNG,JPG)
-     * @param inputStream
+     * @param inputStream 图片输入流
      * @return
      */
     public static boolean isGif(InputStream inputStream) {
