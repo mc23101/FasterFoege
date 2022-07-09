@@ -24,9 +24,6 @@ public class BlockLoader {
                 String name=annotation.name();
                 BlockMaterial blockMaterial=annotation.material();
                 Material material=BlockLoader.getMaterial(blockMaterial);
-                if (modId==null||name==null){
-                    throw new NullPointerException("modId和name不能为空");
-                }
                 Block block = null;
                 block = (Block) c.getConstructor(Material.class).newInstance(material);
                 if(block!=null){

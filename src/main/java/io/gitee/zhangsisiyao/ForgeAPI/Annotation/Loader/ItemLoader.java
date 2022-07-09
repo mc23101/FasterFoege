@@ -18,9 +18,6 @@ public class ItemLoader {
                     MinecraftItem annotation = (MinecraftItem) c.getAnnotation(MinecraftItem.class);
                     String modId = annotation.modId();
                     String name=annotation.name();
-                    if (modId.equals("")||name.equals("")){
-                        throw new NullPointerException("modId和name不能为空");
-                    }
                     Item item = (Item) c.newInstance();
                     item.setRegistryName(new ResourceLocation(modId,name));
                     MinecraftCore.ItemManger.registerItems(item);
