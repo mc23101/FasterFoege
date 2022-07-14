@@ -22,6 +22,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -61,13 +62,24 @@ public class MinecraftCore {
     }
 
     /**
-     * 物品管理器
+     * 物品管理器,用于操作Item和Block
      * */
     public static class ItemManger{
         /**
          * 用于存放所有注册过的创造模式物品页
          * */
         private static Map<String, CreativeTabs> creativeTabsMap =new HashMap<>();
+
+        /**
+         * 用于存放此mod注册的所有物品
+         * */
+        private static Map<ResourceLocation,Item> itemMap=new HashMap<>();
+
+        /**
+         * 用于存放此mod注册的所有方块
+         * */
+        private static Map<ResourceLocation,Block> blockMap=new HashMap<>();
+
         /**
          * 注册创造模式物品栏
          * @param name 物品栏显示的名字
@@ -92,6 +104,7 @@ public class MinecraftCore {
          * */
         public static Item registerItem(Item item){
             GameRegistry.findRegistry(Item.class).registerAll(item);
+            itemMap.put(item.getRegistryName(),item);
             return item;
         }
 
@@ -101,6 +114,9 @@ public class MinecraftCore {
          * */
         public static void registerItems(Item...items){
             GameRegistry.findRegistry(Item.class).registerAll(items);
+            for(Item item:items){
+                itemMap.put(item.getRegistryName(),item);
+            }
         }
 
         /**
@@ -109,6 +125,33 @@ public class MinecraftCore {
          * */
         public static void registerBlocks(Block...blocks){
             GameRegistry.findRegistry(Block.class).registerAll(blocks);
+            for(Block block:blocks){
+                blockMap.put(block.getRegistryName(),block);
+            }
+        }
+
+        /**
+         * 获取mod已经注册过的物品
+         * @param location 物品的注册名
+         * @return 返回物品，如果物品未被注册，则返回null
+         * */
+        public static Item getItem(ResourceLocation location){
+            if(itemMap.containsKey(location)){
+                return itemMap.get(location);
+            }
+            return null;
+        }
+
+        /**
+         * 获取mod已经注册过的方块
+         * @param location 方块的注册名
+         * @return 返回方块,如果方块未被注册，则返回null
+         * */
+        public static Block getBlock(ResourceLocation location){
+            if(blockMap.containsKey(location)){
+                return  blockMap.get(location);
+            }
+            return null;
         }
     }
 
@@ -223,6 +266,20 @@ public class MinecraftCore {
             System.out.println(resourceLocation);
             CustomResourcePack.INSTANCE.resources.put(resourceLocation,new CustomResource(location,absolutaPath));
         }
+    }
+
+    public static class PotionManger{
+        public static void registerPotion(Potion...potions){
+            GameRegistry.findRegistry(Potion.class).registerAll(potions);
+        }
+    }
+
+    public static class EnchantmentManger{
+
+    }
+
+    public static class TileEntityManger{
+
     }
 
 
