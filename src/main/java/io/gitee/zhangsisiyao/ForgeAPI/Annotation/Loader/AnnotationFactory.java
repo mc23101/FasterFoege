@@ -1,10 +1,11 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 public class AnnotationFactory {
-    public static void AnnotationLoader(Object o){
-        ItemLoader.ItemAnnotationLoader(o);
-        BlockLoader.BlockAnnotationLoader(o);
-        EntityLoader.EntityAnnotationLoader(o);
-        EntityLoader.EntityRenderAnnotationLoader(o);
+    public static void AnnotationLoader(Object mod){
+        ItemLoader.ItemAnnotationLoader(mod);
+        BlockLoader.BlockAnnotationLoader(mod);
+        EntityLoader.EntityAnnotationLoader(mod);
+        EntityLoader.EntityRenderAnnotationLoader(mod);
+        PotionLoader.PotionAnnotationLoader(mod);
     }
 }

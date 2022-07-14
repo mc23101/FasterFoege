@@ -1,8 +1,10 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum.BlockMaterial;
+import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Exception.IllegalClassException;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock;
 import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
@@ -11,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
@@ -18,37 +21,48 @@ public class BlockLoader {
     private static Logger logger = LogManager.getLogger(BlockLoader.class);
 
     public static void BlockAnnotationLoader(Object o){
-        logger.debug("注册方块中.........");
+        logger.info("注册方块中.........");
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
         for(Class c:classes){
-            try {
-                MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
-                String modId = annotation.modId();
-                String name=annotation.name();
-                BlockMaterial blockMaterial=annotation.material();
-                Material material=BlockLoader.getMaterial(blockMaterial);
-                Block block = null;
-                block = (Block) c.getConstructor(Material.class).newInstance(material);
-                if(block!=null){
-                    block.setRegistryName(new ResourceLocation(modId,name));
-                    MinecraftCore.ItemManger.registerBlocks(block);
-                    MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(new ResourceLocation(modId,name)));
+            if(ReflectionUtil.isExtendFrom(c,Block.class)){
+                try {
+                    MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
+                    String modId = annotation.modId();
+                    String name=annotation.name();
+                    BlockMaterial blockMaterial=annotation.material();
+                    Material material=BlockLoader.getMaterial(blockMaterial);
+                    Block block = null;
+                    Constructor constructor = c.getConstructor(Material.class);
+                    constructor.setAccessible(true);
+                    block = (Block) constructor.newInstance(material);
+                    if(block!=null){
+                        block.setRegistryName(new ResourceLocation(modId,name));
+                        MinecraftCore.ItemManger.registerBlocks(block);
+                        MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(new ResourceLocation(modId,name)));
+                    }
+                    logger.info("方块:"+modId+":"+name+"注册成功!");
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
                 }
-                logger.debug("方块:"+modId+":"+name+"注册成功!");
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+            }else{
+                try {
+                    throw new IllegalClassException("MinecraftBlock注解使用错误,请将此注解作用在Block的子类上!");
+                } catch (IllegalClassException e) {
+                    e.printStackTrace();
+                }
             }
 
+
         }
-        logger.debug("一共注册"+classes.size()+"个方块。");
+        logger.info("一共注册"+classes.size()+"个方块。");
     }
 
     public static Material getMaterial(BlockMaterial blockMaterial){

@@ -17,7 +17,7 @@ public class EntityLoader {
     private static Logger logger= LogManager.getLogger(EntityLoader.class);
 
     public static void EntityAnnotationLoader(Object o){
-        logger.debug("注册实体中.........");
+        logger.info("注册实体中.........");
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
@@ -33,10 +33,10 @@ public class EntityLoader {
             int primary = annotation.eggPrimary();
             int secondary = annotation.eggSecondary();
             MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,o,range,frequency,updates,primary,secondary);
-            logger.debug("怪物:"+modId+":"+name+"注册成功!");
+            logger.info("怪物:"+modId+":"+name+"注册成功!");
         }
 
-        logger.debug("一共注册"+classes.size()+"个实体。");
+        logger.info("一共注册"+classes.size()+"个实体。");
     }
 
     public static void EntityRenderAnnotationLoader(Object o){

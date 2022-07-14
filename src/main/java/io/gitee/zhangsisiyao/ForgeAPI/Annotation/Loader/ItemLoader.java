@@ -16,7 +16,7 @@ public class ItemLoader {
 
     public static void ItemAnnotationLoader(Object o){
 
-        logger.debug("注册物品中.........");
+        logger.info("注册物品中.........");
 
         Package aPackage = o.getClass().getPackage();
         Reflections reflections=new Reflections(aPackage.getName());
@@ -29,7 +29,7 @@ public class ItemLoader {
                     Item item = (Item) c.newInstance();
                     item.setRegistryName(new ResourceLocation(modId,name));
                     MinecraftCore.ItemManger.registerItems(item);
-                    logger.debug("物品:"+modId+":"+name+"注册成功!");
+                    logger.info("物品:"+modId+":"+name+"注册成功!");
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
@@ -37,6 +37,6 @@ public class ItemLoader {
                 }
         }
 
-        logger.debug("一共注册"+classes.size()+"个物品。");
+        logger.info("一共注册"+classes.size()+"个物品。");
     }
 }
