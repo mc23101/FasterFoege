@@ -8,4 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.FIELD})
 public @interface MinecraftPotion {
+    String modId();
+    String name();
+    boolean isBadEffect() default false;
+    int liquidColor() default 0;
 }

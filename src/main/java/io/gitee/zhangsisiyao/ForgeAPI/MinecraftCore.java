@@ -63,6 +63,7 @@ public class MinecraftCore {
 
     /**
      * 物品管理器,用于操作Item和Block
+     * <p>例如:注册物品、注册方块</p>
      * */
     public static class ItemManger{
         /**
@@ -163,11 +164,16 @@ public class MinecraftCore {
     }
 
     /**
-     * 实体管理器
+     * 实体管理器,用于操作实体
+     * <p>例如:注册实体、注册实体渲染</p>
+     * <p>注意事项:一般情况下，注册实体和注册实体渲染是成对存在的</p>
+     * <p>注册实体，则此实体应该有对应的实体渲染</p>
      * */
     public static class EntityManger{
         /**
          * 注册实体和怪物蛋
+         * <p>注意事项:一般情况下，注册实体和注册实体渲染是成对存在的</p>
+         * <p>注册实体，则此实体应该有对应的实体渲染</p>
          * @param registryName 实体注册名(modId+注册名)
          * @param entityClass 实体的class类
          * @param entityName 实体的名称(尽量和注册名一样)
@@ -178,6 +184,7 @@ public class MinecraftCore {
          * @param sendsVelocityUpdates 是否发送速度数据包
          * @param eggPrimary 怪物蛋颜色1
          * @param eggSecondary 怪物蛋颜色2
+
          * */
         public  static void registerEntity(ResourceLocation registryName, Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary){
             EntityRegistry.registerModEntity(registryName,entityClass, entityName, id,mod,trackingRange, updateFrequency,sendsVelocityUpdates,eggPrimary, eggSecondary);
@@ -185,6 +192,8 @@ public class MinecraftCore {
 
         /**
          * 注册实体的渲染类
+         * <p>注意事项:一般情况下，注册实体和注册实体渲染是成对存在的</p>
+         * <p>注册实体，则此实体应该有对应的实体渲染</p>
          * @param EntityClass 实体的class类
          * @param render 实体的渲染类
          * */
@@ -248,7 +257,7 @@ public class MinecraftCore {
         /**
          * <p>注册自定义资源(纹理，模型等)</p>
          * <p>ResourcesLocation根目录必须是指定的custom</p>
-         * <p>例如:ResourceLocation location=new ResourceLocation("custom",你的自定义资源名字);</p>
+         * <p>例如:ResourceLocation location=new ResourceLocation(你的modID,你的自定义资源名字);</p>
          * @param location 资源在Minecraft中表示的位置
          * @param absolutaPath 资源在电脑上的绝对位置
          * @param type 资源类型
@@ -268,11 +277,18 @@ public class MinecraftCore {
         }
     }
 
+
+    /**
+     * <p>药水效果管理器,用于操作药水效果</p>
+     * <p>例如:注册药水效果</p>
+     * */
     public static class PotionManger{
         public static void registerPotion(Potion...potions){
             GameRegistry.findRegistry(Potion.class).registerAll(potions);
         }
     }
+
+
 
     public static class EnchantmentManger{
 
@@ -284,7 +300,7 @@ public class MinecraftCore {
 
 
     /**
-     * 网络管理器
+     * 网络管理器,用于与服务器通信
      * */
     public static class NetWorkManger{
         /**

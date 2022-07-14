@@ -12,7 +12,6 @@ import java.util.function.Predicate;
 
 public class CustomModelLoader implements ICustomModelLoader {
 
-
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager) {
 
