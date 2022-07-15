@@ -32,6 +32,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -154,6 +155,22 @@ public class MinecraftCore {
             }
             return null;
         }
+
+        /**
+         * 检查Item是否已经注册
+         * @param location Item的注册名
+         * */
+        public static boolean containItem(ResourceLocation location){
+            return GameRegistry.findRegistry(Item.class).containsKey(location);
+        }
+
+        /**
+         * 检查Block是否已经注册
+         * @param location Block的注册名
+         * */
+        public static boolean containBlock(ResourceLocation location){
+            return GameRegistry.findRegistry(Block.class).containsKey(location);
+        }
     }
 
     /**
@@ -170,6 +187,7 @@ public class MinecraftCore {
      * <p>注册实体，则此实体应该有对应的实体渲染</p>
      * */
     public static class EntityManger{
+
         /**
          * 注册实体和怪物蛋
          * <p>注意事项:一般情况下，注册实体和注册实体渲染是成对存在的</p>
@@ -218,6 +236,15 @@ public class MinecraftCore {
                 }
             });
         }
+
+        /**
+         * 检查Entity是否被注册
+         * @param location Entity的注册名
+         * */
+        public static boolean containEntity(ResourceLocation location){
+            return GameRegistry.findRegistry(EntityEntry.class).containsKey(location);
+        }
+
     }
 
     /**
@@ -283,8 +310,29 @@ public class MinecraftCore {
      * <p>例如:注册药水效果</p>
      * */
     public static class PotionManger{
+        /**
+         * 用于存放此mod注册的药水效果
+         * */
+        private static Map<ResourceLocation,Potion> PotionMap=new HashMap<>();
+
+
+        /**
+         * 注册药水效果
+         * @param potions 注册的药水
+         * */
         public static void registerPotion(Potion...potions){
             GameRegistry.findRegistry(Potion.class).registerAll(potions);
+            for(Potion p:potions){
+                PotionMap.put(p.getRegistryName(),p);
+            }
+        }
+
+        /**
+         * 检查Potion是否已经注册
+         * @param location Potion的注册名
+         * */
+        public static boolean containPotion(ResourceLocation location){
+            return GameRegistry.findRegistry(Potion.class).containsKey(location);
         }
     }
 
