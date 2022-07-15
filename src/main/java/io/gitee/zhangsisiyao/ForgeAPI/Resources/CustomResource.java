@@ -23,6 +23,7 @@ public class CustomResource implements IResource {
         this.file=new File(absolutePath);
     }
 
+
     @Override
     public ResourceLocation getResourceLocation() {
         return resourceLocation;

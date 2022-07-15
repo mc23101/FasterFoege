@@ -22,7 +22,7 @@ public class EntityLoader {
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
-        int sucess=0;
+        int success=0;
         int error=0;
         for(Class c:classes){
             MinecraftEntity annotation = (MinecraftEntity) c.getAnnotation(MinecraftEntity.class);
@@ -38,7 +38,7 @@ public class EntityLoader {
             if(ReflectionUtil.isExtendFrom(c,Entity.class)&&!MinecraftCore.EntityManger.containEntity(registerName)){
                 MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,o,range,frequency,updates,primary,secondary);
                 logger.debug("怪物:"+modId+":"+name+"注册成功!");
-                sucess++;
+                success++;
             }else if(!ReflectionUtil.isExtendFrom(c,Entity.class)){
                 error++;
                 logger.error("在"+c.getName()+"处的MinecraftEntity注解使用错误,请将此注解作用在net.minecraft.entity.Entity的子类上!");
@@ -48,7 +48,7 @@ public class EntityLoader {
             }
 
         }
-        logger.info("一共注册"+classes.size()+"个实体。成功:"+sucess+"  失败:"+error);
+        logger.info("一共注册"+classes.size()+"个实体。成功:"+success+"  失败:"+error);
     }
 
     public static void EntityRenderAnnotationLoader(Object o){

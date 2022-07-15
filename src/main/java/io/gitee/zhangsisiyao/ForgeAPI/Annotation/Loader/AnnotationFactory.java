@@ -7,5 +7,8 @@ public class AnnotationFactory {
         EntityLoader.EntityAnnotationLoader(mod);
         EntityLoader.EntityRenderAnnotationLoader(mod);
         PotionLoader.PotionAnnotationLoader(mod);
+        EnchantmentLoader.EnchantmentAnnotationLoader(mod);
+        ResourceLoader.ResourceAnnotationLoader(mod);
+        TileEntityLoader.TileEntityAnnotationLoader(mod);
     }
 }
