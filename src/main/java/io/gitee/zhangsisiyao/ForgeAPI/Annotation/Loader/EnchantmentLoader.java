@@ -61,4 +61,13 @@ public class EnchantmentLoader {
         }
         logger.info("一共注册"+classes.size()+"个附魔。成功:"+success+"  失败:"+error);
     }
+
+    private static void loadFromClass(Reflections reflections){
+
+    }
+
+    private static void loadFromField(Reflections reflections){
+
+    }
+
 }
