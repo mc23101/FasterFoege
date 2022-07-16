@@ -13,19 +13,32 @@ import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Set;
 
 public class BlockLoader {
     private static Logger logger = LogManager.getLogger(BlockLoader.class);
 
+    private static int success=0;
+    private static int error=0;
+
     public static void BlockAnnotationLoader(Object o){
         logger.info("注册方块中.........");
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
+
+        loadFromClass(reflections);
+
+        loadFromField(reflections);
+
+        logger.info("一共注册"+success+error+"个方块。成功:"+success+"  失败:"+error);
+    }
+
+    private static void loadFromClass(Reflections reflections){
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
-        int success=0;
-        int error=0;
+
         for(Class c:classes){
             MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
             String modId = annotation.modId();
@@ -64,8 +77,42 @@ public class BlockLoader {
 
 
         }
-        logger.info("一共注册"+classes.size()+"个方块。成功:"+success+"  失败:"+error);
     }
+
+    private static void loadFromField(Reflections reflections){
+        Set<Field> fieldsAnnotatedWith = reflections.getFieldsAnnotatedWith(MinecraftBlock.class);
+        for(Field field:fieldsAnnotatedWith){
+            field.setAccessible(true);
+            if(Modifier.isStatic(field.getModifiers())){
+                MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
+                String modId = annotation.modId();
+                String name=annotation.name();
+                ResourceLocation location = new ResourceLocation(modId, name);
+                if(ReflectionUtil.isExtendFrom(field.getType(),Block.class)&&!(MinecraftCore.ItemManger.containBlock(location))){
+                    try {
+                        Block block = (Block) field.get(field.getType());
+                        if(block!=null){
+                            block.setRegistryName(location);
+                            MinecraftCore.ItemManger.registerBlocks(block);
+                            MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                        }
+                        success++;
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }else if(!ReflectionUtil.isExtendFrom(field.getType(),Block.class)){
+                    error++;
+                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的对象上!");
+                }else if(MinecraftCore.ItemManger.containBlock(location)){
+                    error++;
+                    logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                }
+            }else{
+                logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftBlock注解使用错误，请作用在static字段上.");
+            }
+        }
+    }
+
 
     public static Material getMaterial(BlockMaterial blockMaterial){
         switch (blockMaterial){
