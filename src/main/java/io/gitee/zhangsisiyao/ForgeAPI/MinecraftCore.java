@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -361,7 +362,9 @@ public class MinecraftCore {
     }
 
     public static class TileEntityManger{
-
+        public static void registerTileEntity(Class<?extends TileEntity> tileEntity,ResourceLocation blockName){
+            GameRegistry.registerTileEntity(tileEntity,blockName);
+        }
     }
 
 
