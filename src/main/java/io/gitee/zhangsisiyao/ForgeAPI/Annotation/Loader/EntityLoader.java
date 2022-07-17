@@ -17,13 +17,15 @@ public class EntityLoader {
 
     private static Logger logger= LogManager.getLogger(EntityLoader.class);
 
+    private static int success=0;
+
+    private static int error=0;
+
     public static void EntityAnnotationLoader(Object o){
         logger.info("注册实体中.........");
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
-        int success=0;
-        int error=0;
         for(Class c:classes){
             MinecraftEntity annotation = (MinecraftEntity) c.getAnnotation(MinecraftEntity.class);
             String modId = annotation.modId();
@@ -61,4 +63,5 @@ public class EntityLoader {
             MinecraftCore.EntityManger.registerEntityRender(aClass,c);
         }
     }
+
 }

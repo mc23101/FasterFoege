@@ -95,8 +95,10 @@ public class BlockLoader {
                             block.setRegistryName(location);
                             MinecraftCore.ItemManger.registerBlocks(block);
                             MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                            success++;
+                        }else{
+                            logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
                         }
-                        success++;
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
