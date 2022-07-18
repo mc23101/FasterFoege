@@ -13,14 +13,16 @@ public class TileEntityLoader {
 
     private static Logger logger= LogManager.getLogger(TileEntityLoader.class);
 
+    private static int success=0;
+
+    private static int error=0;
+
     public static void TileEntityAnnotationLoader(Object o){
         logger.info("注册TileEntity中.........");
 
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftTileEntity.class);
-        int success=0;
-        int error=0;
         for(Class c:classes){
             MinecraftTileEntity annotation = (MinecraftTileEntity) c.getAnnotation(MinecraftTileEntity.class);
             String[] blocks = annotation.Blocks();
@@ -38,4 +40,5 @@ public class TileEntityLoader {
         }
         logger.info("一共绑定"+success+error+"个TileEntity。成功:"+success+" 失败:"+error);
     }
+
 }
