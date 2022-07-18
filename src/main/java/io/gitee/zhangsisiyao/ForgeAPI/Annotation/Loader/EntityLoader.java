@@ -37,14 +37,19 @@ public class EntityLoader {
             boolean updates = annotation.sendsVelocityUpdates();
             int primary = annotation.eggPrimary();
             int secondary = annotation.eggSecondary();
-            if(ReflectionUtil.isExtendFrom(c,Entity.class)&&!MinecraftCore.EntityManger.containEntity(registerName)){
+
+            boolean isRegistered=MinecraftCore.EntityManger.containEntity(registerName);
+            boolean isExtended=ReflectionUtil.isExtendFrom(c,Entity.class);
+            boolean canRegister=isExtended&&!isRegistered;
+
+            if(canRegister){
                 MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,o,range,frequency,updates,primary,secondary);
                 logger.debug("怪物:"+modId+":"+name+"注册成功!");
                 success++;
-            }else if(!ReflectionUtil.isExtendFrom(c,Entity.class)){
+            }else if(!isExtended){
                 error++;
                 logger.error("在"+c.getName()+"处的MinecraftEntity注解使用错误,请将此注解作用在net.minecraft.entity.Entity的子类上!");
-            }else if(MinecraftCore.EntityManger.containEntity(registerName)){
+            }else if(isRegistered){
                 error++;
                 logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
             }

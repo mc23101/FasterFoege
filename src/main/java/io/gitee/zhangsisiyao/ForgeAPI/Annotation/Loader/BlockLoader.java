@@ -18,8 +18,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 
+@SuppressWarnings("all")
 public class BlockLoader {
-    private static Logger logger = LogManager.getLogger(BlockLoader.class);
+    private static final Logger logger = LogManager.getLogger(BlockLoader.class);
 
     private static int success=0;
     private static int error=0;
@@ -37,81 +38,79 @@ public class BlockLoader {
     }
 
     private static void loadFromClass(Reflections reflections){
-        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
+        try {
+            Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
+            for(Class c:classes){
+                MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
+                String modId = annotation.modId();
+                String name=annotation.name();
+                BlockMaterial blockMaterial=annotation.material();
+                Material material=BlockLoader.getMaterial(blockMaterial);
+                ResourceLocation location = new ResourceLocation(modId, name);
 
-        for(Class c:classes){
-            MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
-            String modId = annotation.modId();
-            String name=annotation.name();
-            BlockMaterial blockMaterial=annotation.material();
-            Material material=BlockLoader.getMaterial(blockMaterial);
-            ResourceLocation location = new ResourceLocation(modId, name);
-            if(ReflectionUtil.isExtendFrom(c,Block.class)&&!(MinecraftCore.ItemManger.containBlock(location))){
-                try {
-                    Block block = null;
+                boolean isExtended=ReflectionUtil.isExtendFrom(c,Block.class);
+                boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
+                boolean canRegister=isExtended && !isRegistered;
+
+                if(canRegister){
+                    Block block;
                     Constructor constructor = c.getConstructor(Material.class);
                     constructor.setAccessible(true);
                     block = (Block) constructor.newInstance(material);
-                    if(block!=null){
-                        block.setRegistryName(location);
-                        MinecraftCore.ItemManger.registerBlocks(block);
-                        MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
-                    }
+                    block.setRegistryName(location);
+                    MinecraftCore.ItemManger.registerBlocks(block);
+                    MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
                     success++;
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                }else if(!isExtended){
+                    error++;
+                    logger.error("在"+c.getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的子类上!");
+                }else if(isRegistered){
+                    error++;
+                    logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
                 }
-            }else if(!ReflectionUtil.isExtendFrom(c,Block.class)){
-                error++;
-                logger.error("在"+c.getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的子类上!");
-            }else if(MinecraftCore.ItemManger.containBlock(location)){
-                error++;
-                logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
             }
-
-
+        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
     private static void loadFromField(Reflections reflections){
-        Set<Field> fieldsAnnotatedWith = reflections.getFieldsAnnotatedWith(MinecraftBlock.class);
-        for(Field field:fieldsAnnotatedWith){
-            field.setAccessible(true);
-            if(Modifier.isStatic(field.getModifiers())){
+        try {
+            Set<Field> fieldsAnnotatedWith = reflections.getFieldsAnnotatedWith(MinecraftBlock.class);
+            for(Field field:fieldsAnnotatedWith){
+                field.setAccessible(true);
                 MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
+                Object object = field.get(field.getDeclaringClass());
                 ResourceLocation location = new ResourceLocation(modId, name);
-                if(ReflectionUtil.isExtendFrom(field.getType(),Block.class)&&!(MinecraftCore.ItemManger.containBlock(location))){
-                    try {
-                        Block block = (Block) field.get(field.getType());
-                        if(block!=null){
-                            block.setRegistryName(location);
-                            MinecraftCore.ItemManger.registerBlocks(block);
-                            MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
-                            success++;
-                        }else{
-                            logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }else if(!ReflectionUtil.isExtendFrom(field.getType(),Block.class)){
+                boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Block.class);
+                boolean isStatic=Modifier.isStatic(field.getModifiers());
+                boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
+                boolean isNull=object==null;
+                boolean canRegister=isExtended && isStatic && !isRegistered && !isNull;
+                if(canRegister){
+                    Block block = (Block)object;
+                    block.setRegistryName(location);
+                    MinecraftCore.ItemManger.registerBlocks(block);
+                    MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                    success++;
+                }else if(!isExtended){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的对象上!");
-                }else if(MinecraftCore.ItemManger.containBlock(location)){
+                }else if(isRegistered){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                }else if(isNull){
+                    error++;
+                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                }else if(!isStatic){
+                    error++;
+                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftBlock注解使用错误，请作用在static字段上.");
                 }
-            }else{
-                logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftBlock注解使用错误，请作用在static字段上.");
             }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
