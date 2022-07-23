@@ -23,7 +23,7 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class BlockLoader {
-    private static final Logger logger = LogManager.getLogger(BlockLoader.class);
+    private static final Logger logger = LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
     private static int error=0;

@@ -25,11 +25,15 @@ import java.util.Set;
  * 自定义资源包，用于存放加载的所有{@link CustomResource}
  * */
 public class CustomResourcePack implements IResourcePack {
-    public static final CustomResourcePack  INSTANCE= new CustomResourcePack();
+
+    public static final CustomResourcePack  INSTANCE= new CustomResourcePack("ForgeFrame");
 
     public Map<ResourceLocation, IResource> resources=new HashMap<>();
 
-    public CustomResourcePack(){
+    private String packName;
+
+    public CustomResourcePack(String packName){
+        this.packName=packName;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class CustomResourcePack implements IResourcePack {
     @Override
     public Set<String> getResourceDomains() {
         HashSet<String> strings = new HashSet<>();
-        strings.add("custom");
+        strings.add(packName);
         return strings;
     }
 
@@ -85,6 +89,6 @@ public class CustomResourcePack implements IResourcePack {
 
     @Override
     public String getPackName() {
-        return "custom";
+        return packName;
     }
 }

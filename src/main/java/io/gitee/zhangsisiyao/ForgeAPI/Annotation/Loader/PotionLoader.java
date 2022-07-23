@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class PotionLoader {
 
-    private static Logger logger= LogManager.getLogger(PotionLoader.class);
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
 

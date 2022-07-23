@@ -24,7 +24,7 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class EnchantmentLoader {
 
-    private static Logger logger= LogManager.getLogger();
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
 

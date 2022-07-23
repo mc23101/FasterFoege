@@ -15,7 +15,7 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class TileEntityLoader {
 
-    private static Logger logger= LogManager.getLogger(TileEntityLoader.class);
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
 

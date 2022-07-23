@@ -18,7 +18,7 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class EntityLoader {
 
-    private static Logger logger= LogManager.getLogger(EntityLoader.class);
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
 
