@@ -58,7 +58,7 @@ public class PotionLoader {
                     Potion potion = (Potion) constructor.newInstance(badEffect, color);
                     potion.setRegistryName(location);
                     MinecraftCore.PotionManger.registerPotion(potion);
-                    logger.info("药水效果:"+id+":"+name+"注册成功");
+                    logger.debug("药水效果:"+id+":"+name+"注册成功");
                 }else if(!isExtended){
                     error++;
                     logger.error("在"+c.getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在net.minecraft.potion.Potion的子类上!");

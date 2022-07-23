@@ -51,7 +51,7 @@ public class EntityLoader {
 
             if(canRegister){
                 MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,o,range,frequency,updates,primary,secondary);
-                logger.debug("怪物:"+modId+":"+name+"注册成功!");
+                logger.debug("实体:"+modId+":"+name+"注册成功!");
                 success++;
             }else if(!isExtended){
                 error++;
@@ -63,9 +63,18 @@ public class EntityLoader {
 
         }
         logger.info("一共注册"+classes.size()+"个实体。成功:"+success+"  失败:"+error);
+
+        EntityRenderAnnotationLoader(o);
     }
 
-    public static void EntityRenderAnnotationLoader(Object o){
+    /**
+     * 绑定Entity的渲染类
+     * @param o mod主类
+     * */
+    private static void EntityRenderAnnotationLoader(Object o){
+
+        logger.info("绑定实体渲染中.....");
+
         Package pack = o.getClass().getPackage();
         Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntityRender.class);
@@ -74,6 +83,8 @@ public class EntityLoader {
             Class<? extends Entity> aClass = annotation.EntityClass();
             MinecraftCore.EntityManger.registerEntityRender(aClass,c);
         }
+
+        logger.info("一共绑定"+classes.size()+"个实体渲染");
     }
 
 }

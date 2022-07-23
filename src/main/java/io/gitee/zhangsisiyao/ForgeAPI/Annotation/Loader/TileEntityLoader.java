@@ -31,7 +31,6 @@ public class TileEntityLoader {
 
         loadFromClass(reflections);
 
-
         logger.info("一共绑定"+(success+error)+"个TileEntity。成功:"+success+" 失败:"+error);
     }
 

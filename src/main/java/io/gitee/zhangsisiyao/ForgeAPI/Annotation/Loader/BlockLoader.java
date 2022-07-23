@@ -111,6 +111,7 @@ public class BlockLoader {
                         block.setRegistryName(location);
                         MinecraftCore.ItemManger.registerBlocks(block);
                         MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                        logger.debug("方块:"+location+"注册成功!");
                         success++;
                     }else {
                         error++;
