@@ -29,7 +29,13 @@ public class TileEntityLoader {
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
         Reflections reflections = new Reflections(configuration);
 
+        loadFromClass(reflections);
 
+
+        logger.info("一共绑定"+(success+error)+"个TileEntity。成功:"+success+" 失败:"+error);
+    }
+
+    private static void loadFromClass(Reflections reflections){
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftTileEntity.class);
         for(Class c:classes){
             MinecraftTileEntity annotation = (MinecraftTileEntity) c.getAnnotation(MinecraftTileEntity.class);
@@ -46,7 +52,6 @@ public class TileEntityLoader {
                 }
             }
         }
-        logger.info("一共绑定"+(success+error)+"个TileEntity。成功:"+success+" 失败:"+error);
     }
 
 }
