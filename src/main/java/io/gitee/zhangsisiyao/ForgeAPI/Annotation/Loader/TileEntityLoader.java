@@ -6,9 +6,13 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.util.Set;
 
+@SuppressWarnings("all")
 public class TileEntityLoader {
 
     private static Logger logger= LogManager.getLogger(TileEntityLoader.class);
@@ -21,7 +25,11 @@ public class TileEntityLoader {
         logger.info("注册TileEntity中.........");
 
         Package pack = o.getClass().getPackage();
-        Reflections reflections=new Reflections(pack.getName());
+        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
+        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
+        Reflections reflections = new Reflections(configuration);
+
+
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftTileEntity.class);
         for(Class c:classes){
             MinecraftTileEntity annotation = (MinecraftTileEntity) c.getAnnotation(MinecraftTileEntity.class);
@@ -38,7 +46,7 @@ public class TileEntityLoader {
                 }
             }
         }
-        logger.info("一共绑定"+success+error+"个TileEntity。成功:"+success+" 失败:"+error);
+        logger.info("一共绑定"+(success+error)+"个TileEntity。成功:"+success+" 失败:"+error);
     }
 
 }

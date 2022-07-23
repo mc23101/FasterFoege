@@ -9,6 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.util.Set;
 
@@ -23,8 +26,12 @@ public class EntityLoader {
 
     public static void EntityAnnotationLoader(Object o){
         logger.info("注册实体中.........");
+
         Package pack = o.getClass().getPackage();
-        Reflections reflections=new Reflections(pack.getName());
+        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
+        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
+        Reflections reflections = new Reflections(configuration);
+
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
         for(Class c:classes){
             MinecraftEntity annotation = (MinecraftEntity) c.getAnnotation(MinecraftEntity.class);

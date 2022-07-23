@@ -11,6 +11,9 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -27,16 +30,23 @@ public class BlockLoader {
 
     public static void BlockAnnotationLoader(Object o){
         logger.info("注册方块中.........");
+
         Package pack = o.getClass().getPackage();
-        Reflections reflections=new Reflections(pack.getName());
+        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
+        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
+        Reflections reflections = new Reflections(configuration);
 
         loadFromClass(reflections);
 
         loadFromField(reflections);
 
-        logger.info("一共注册"+success+error+"个方块。成功:"+success+"  失败:"+error);
+        logger.info("一共注册"+(success+error)+"个方块。成功:"+success+"  失败:"+error);
     }
 
+    /**
+     *加载类上得{@link io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock} 注解
+     * @param reflections mod主类得反射包
+     * */
     private static void loadFromClass(Reflections reflections){
         try {
             Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
@@ -74,6 +84,10 @@ public class BlockLoader {
         }
     }
 
+    /**
+     * 加载静态变量的{@link io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock}注解
+     * @param reflections mod的主类反射包
+     * */
     private static void loadFromField(Reflections reflections){
         try {
             Set<Field> fieldsAnnotatedWith = reflections.getFieldsAnnotatedWith(MinecraftBlock.class);
@@ -82,28 +96,32 @@ public class BlockLoader {
                 MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
-                Object object = field.get(field.getDeclaringClass());
+
                 ResourceLocation location = new ResourceLocation(modId, name);
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Block.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
                 boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
-                boolean isNull=object==null;
-                boolean canRegister=isExtended && isStatic && !isRegistered && !isNull;
+                boolean canRegister=isExtended && isStatic && !isRegistered;
+
                 if(canRegister){
+                    Object object = field.get(field.getDeclaringClass());
                     Block block = (Block)object;
-                    block.setRegistryName(location);
-                    MinecraftCore.ItemManger.registerBlocks(block);
-                    MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
-                    success++;
+                    boolean isNull=object==null;
+                    if(!isNull){
+                        block.setRegistryName(location);
+                        MinecraftCore.ItemManger.registerBlocks(block);
+                        MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                        success++;
+                    }else {
+                        error++;
+                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                    }
                 }else if(!isExtended){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的对象上!");
                 }else if(isRegistered){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
-                }else if(isNull){
-                    error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
                 }else if(!isStatic){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftBlock注解使用错误，请作用在static字段上.");

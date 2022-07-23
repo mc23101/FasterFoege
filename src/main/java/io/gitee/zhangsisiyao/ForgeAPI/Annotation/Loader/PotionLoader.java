@@ -33,7 +33,7 @@ public class PotionLoader {
         loadFromClass(reflections);
         loadFromField(reflections);
 
-        logger.info("一共注册"+success+error+"个药水效果。成功:"+success+"  失败:"+error);
+        logger.info("一共注册"+(success+error)+"个药水效果。成功:"+success+"  失败:"+error);
     }
 
 
@@ -83,28 +83,32 @@ public class PotionLoader {
                 boolean badEffect = annotation.isBadEffect();
                 int color = annotation.liquidColor();
                 ResourceLocation location = new ResourceLocation(id, name);
-                Object object=field.get(field.getDeclaringClass());
+
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Potion.class);
                 boolean isRegistered=MinecraftCore.PotionManger.containPotion(location);
-                boolean isNull=(object==null);
+
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
-                boolean canRegister= isExtended && !isRegistered && isNull && isStatic;
+                boolean canRegister= isExtended && !isRegistered && isStatic;
 
                 if(canRegister){
-                    Potion potion = (Potion) object;
-                    potion.setRegistryName(location);
-                    MinecraftCore.PotionManger.registerPotion(potion);
-                    success++;
+                    Object object=field.get(field.getDeclaringClass());
+                    boolean isNull=(object==null);
+                    if(!isNull){
+                        Potion potion = (Potion) object;
+                        potion.setRegistryName(location);
+                        MinecraftCore.PotionManger.registerPotion(potion);
+                        success++;
+                    }else{
+                        error++;
+                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                    }
                 }else if(!isExtended){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在net.minecraft.potion.Potion的对象上!");
                 }else if(isRegistered){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+id+",name:"+name+"已经被注册!!!");
-                }else if(isNull){
-                    error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
                 }else if(!isStatic){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftPotion注解使用错误，请作用在static字段上.");
