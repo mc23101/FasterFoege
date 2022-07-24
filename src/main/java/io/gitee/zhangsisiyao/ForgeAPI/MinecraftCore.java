@@ -4,18 +4,17 @@ import com.alibaba.fastjson2.JSON;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.AnnotationFactory;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.NetWork.NetworkPack;
-import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResource;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourcePack;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.ResourceType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.SimpleReloadableResourceManager;
+import net.minecraft.client.resources.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -37,15 +36,22 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("all")
 public class MinecraftCore {
+
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
+
 
     /**
      * <p>API初始化工作</p>
@@ -275,6 +281,9 @@ public class MinecraftCore {
             resourceManager.registerReloadListener(loader);
         }
 
+
+
+
         /**
          * 注册自定义模型加载器
          * @param customModelLoader 实现{@link ICustomModelLoader}接口的类
@@ -285,24 +294,48 @@ public class MinecraftCore {
 
         /**
          * <p>注册自定义资源(纹理，模型等)</p>
-         * <p>ResourcesLocation根目录必须是指定的custom</p>
-         * <p>例如:ResourceLocation location=new ResourceLocation(你的modID,你的自定义资源名字);</p>
+         * @param modId modID
          * @param location 资源在Minecraft中表示的位置
-         * @param absolutaPath 资源在电脑上的绝对位置
+         * @param resource 资源
          * @param type 资源类型
          * */
-        public static void registerResource(ResourceLocation location, String absolutaPath, ResourceType type){
-            String prefix="";
-            String suffix="";
-            switch (type){
-                case TEXTURE:
-                    prefix="textures/";
-                    suffix=".png";
-                    break;
+        public static void registerResource( String modId,ResourceLocation location, IResource resource, ResourceType type){
+
+            try {
+                //获取Mod容器
+                Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
+                Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
+                domainResourceManagers.setAccessible(true);
+                Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
+                FallbackResourceManager fallbackResourceManager = resourcePackMap.get(modId);
+
+                //获取资源包
+                Class<FallbackResourceManager> fallbackResourceManagerClass = FallbackResourceManager.class;
+                Field resourcePacksField = fallbackResourceManagerClass.getDeclaredField("resourcePacks");
+                resourcePacksField.setAccessible(true);
+                List<IResourcePack> resourcePacks = (List<IResourcePack>) resourcePacksField.get(fallbackResourceManager);
+                CustomResourcePack pack=null;
+                for(IResourcePack resourcePack: resourcePacks){
+                    if(resourcePack.getPackName().equals("ForgeFrame")){
+                        pack= (CustomResourcePack) resourcePack;
+                        break;
+                    }
+                }
+
+                if(pack==null){
+                    pack=new CustomResourcePack("ForgeFrame");
+                    resourcePacks.add(pack);
+                }
+
+                //添加资源
+                if(!pack.resourceExists(location)){
+                    pack.resources.put(location,resource);
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
-            ResourceLocation resourceLocation = new ResourceLocation(location.getResourceDomain(), prefix + location.getResourcePath()+suffix);
-            System.out.println(resourceLocation);
-            CustomResourcePack.INSTANCE.resources.put(resourceLocation,new CustomResource(location,absolutaPath));
         }
     }
 

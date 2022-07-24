@@ -25,5 +25,5 @@ public @interface MinecraftBlock {
     /**
      * 方块材质
      * */
-    BlockMaterial material() default BlockMaterial.ROCK;
+    BlockMaterial material() default BlockMaterial.NULL;
 }

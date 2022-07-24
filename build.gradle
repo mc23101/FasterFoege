@@ -23,7 +23,7 @@ apply plugin: 'maven'
 version = '1.0.3'
 group='io.gitee.zhangsisiyao'
 // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'ForgeAPI-1.12.2'
+archivesBaseName = 'ForgeFrame-1.12.2'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

@@ -1,6 +1,9 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum;
 @SuppressWarnings("all")
 public enum BlockMaterial {
+
+    NULL,
+
     AIR,
     GRASS,
     GROUND,

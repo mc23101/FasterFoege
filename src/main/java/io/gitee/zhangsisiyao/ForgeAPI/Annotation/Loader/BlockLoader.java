@@ -55,7 +55,12 @@ public class BlockLoader {
                 String modId = annotation.modId();
                 String name=annotation.name();
                 BlockMaterial blockMaterial=annotation.material();
-                Material material=BlockLoader.getMaterial(blockMaterial);
+                Material material=null;
+                if(blockMaterial!=BlockMaterial.NULL){
+                    material=BlockLoader.getMaterial(blockMaterial);
+                }else {
+                    material=Material.ROCK;
+                }
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c,Block.class);
