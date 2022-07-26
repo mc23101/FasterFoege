@@ -9,9 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.util.Set;
 
@@ -24,13 +21,8 @@ public class EntityLoader {
 
     private static int error=0;
 
-    public static void EntityAnnotationLoader(Object o){
+    public static void EntityAnnotationLoader(Reflections reflections){
         logger.info("注册实体中.........");
-
-        Package pack = o.getClass().getPackage();
-        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
-        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
-        Reflections reflections = new Reflections(configuration);
 
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
         for(Class c:classes){
@@ -50,7 +42,7 @@ public class EntityLoader {
             boolean canRegister=isExtended&&!isRegistered;
 
             if(canRegister){
-                MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,o,range,frequency,updates,primary,secondary);
+                MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,MinecraftCore.mod,range,frequency,updates,primary,secondary);
                 logger.debug("实体:"+modId+":"+name+"注册成功!");
                 success++;
             }else if(!isExtended){
@@ -64,19 +56,16 @@ public class EntityLoader {
         }
         logger.info("一共注册"+classes.size()+"个实体。成功:"+success+"  失败:"+error);
 
-        EntityRenderAnnotationLoader(o);
+        EntityRenderAnnotationLoader(reflections);
     }
 
     /**
      * 绑定Entity的渲染类
      * @param o mod主类
      * */
-    private static void EntityRenderAnnotationLoader(Object o){
-
+    private static void EntityRenderAnnotationLoader(Reflections reflections){
         logger.info("绑定实体渲染中.....");
 
-        Package pack = o.getClass().getPackage();
-        Reflections reflections=new Reflections(pack.getName());
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntityRender.class);
         for(Class c:classes){
             MinecraftEntityRender annotation = (MinecraftEntityRender) c.getAnnotation(MinecraftEntityRender.class);

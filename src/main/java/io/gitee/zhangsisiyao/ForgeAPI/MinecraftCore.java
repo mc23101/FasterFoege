@@ -30,6 +30,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
@@ -38,6 +39,10 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ConfigurationBuilder;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -46,12 +51,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings("all")
 public class MinecraftCore {
 
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
+    public static String MODID="";
+
+    public static Class mod;
 
     /**
      * <p>API初始化工作</p>
@@ -61,6 +70,18 @@ public class MinecraftCore {
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
     public static void preinit(Object o){
+        Package pack = o.getClass().getPackage();
+        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
+        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
+        Reflections reflections = new Reflections(configuration);
+
+        Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Mod.class);
+
+        for (Class c :typesAnnotatedWith){
+            Mod annotation = (Mod) c.getAnnotation(Mod.class);
+            MinecraftCore.MODID=annotation.modid();
+            MinecraftCore.mod=c;
+        }
         AnnotationFactory.AnnotationLoader(o);
         ResourceManger.registerCustomModelLoder(new CustomModelLoader());
         ResourceManger.registerCustomResourceManger(new CustomResourceListener());
@@ -281,7 +302,30 @@ public class MinecraftCore {
             resourceManager.registerReloadListener(loader);
         }
 
+        public static boolean containResource(ResourceLocation location){
+            try {
+                Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
+                Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
+                domainResourceManagers.setAccessible(true);
+                Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
+                FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
 
+                Class<FallbackResourceManager> fallbackResourceManagerClass = FallbackResourceManager.class;
+                Field resourcePacksField = fallbackResourceManagerClass.getDeclaredField("resourcePacks");
+                resourcePacksField.setAccessible(true);
+                List<IResourcePack> resourcePacks = (List<IResourcePack>) resourcePacksField.get(fallbackResourceManager);
+                for(IResourcePack resourcePack:resourcePacks){
+                    if(resourcePack.resourceExists(location)){
+                        return true;
+                    }
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
 
 
         /**
@@ -299,7 +343,7 @@ public class MinecraftCore {
          * @param resource 资源
          * @param type 资源类型
          * */
-        public static void registerResource( String modId,ResourceLocation location, IResource resource, ResourceType type){
+        public static void registerResource(ResourceLocation location, IResource resource, ResourceType type){
 
             try {
                 //获取Mod容器
@@ -307,7 +351,7 @@ public class MinecraftCore {
                 Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
                 domainResourceManagers.setAccessible(true);
                 Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
-                FallbackResourceManager fallbackResourceManager = resourcePackMap.get(modId);
+                FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
 
                 //获取资源包
                 Class<FallbackResourceManager> fallbackResourceManagerClass = FallbackResourceManager.class;

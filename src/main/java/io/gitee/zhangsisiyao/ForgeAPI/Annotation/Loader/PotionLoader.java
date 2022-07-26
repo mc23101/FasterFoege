@@ -23,14 +23,12 @@ public class PotionLoader {
 
     private static int error=0;
 
-    public static void PotionAnnotationLoader(Object o){
+    public static void PotionAnnotationLoader(Reflections reflections){
 
         logger.info("注册药水效果中......");
 
-        Package pack = o.getClass().getPackage();
-        Reflections reflections=new Reflections(pack.getName());
-
         loadFromClass(reflections);
+
         loadFromField(reflections);
 
         logger.info("一共注册"+(success+error)+"个药水效果。成功:"+success+"  失败:"+error);

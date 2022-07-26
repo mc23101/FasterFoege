@@ -8,9 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -25,14 +22,10 @@ public class ItemLoader {
 
     private static int error=0;
 
-    public static void ItemAnnotationLoader(Object o){
+    public static void ItemAnnotationLoader(Reflections reflections){
 
         logger.info("注册物品中.........");
 
-        Package pack = o.getClass().getPackage();
-        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
-        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
-        Reflections reflections = new Reflections(configuration);
 
         loadFromClass(reflections);
         loadFromField(reflections);

@@ -11,9 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -28,13 +25,8 @@ public class BlockLoader {
     private static int success=0;
     private static int error=0;
 
-    public static void BlockAnnotationLoader(Object o){
+    public static void BlockAnnotationLoader(Reflections reflections){
         logger.info("注册方块中.........");
-
-        Package pack = o.getClass().getPackage();
-        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
-        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
-        Reflections reflections = new Reflections(configuration);
 
         loadFromClass(reflections);
 

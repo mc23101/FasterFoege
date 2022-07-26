@@ -6,9 +6,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.util.Set;
 
@@ -21,13 +18,8 @@ public class TileEntityLoader {
 
     private static int error=0;
 
-    public static void TileEntityAnnotationLoader(Object o){
+    public static void TileEntityAnnotationLoader(Reflections reflections){
         logger.info("注册TileEntity中.........");
-
-        Package pack = o.getClass().getPackage();
-        ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
-        configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
-        Reflections reflections = new Reflections(configuration);
 
         loadFromClass(reflections);
 
