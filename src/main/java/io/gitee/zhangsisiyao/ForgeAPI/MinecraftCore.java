@@ -60,7 +60,7 @@ public class MinecraftCore {
 
     public static String MODID="";
 
-    public static Class mod;
+    public static Object mod;
 
     /**
      * <p>API初始化工作</p>
@@ -70,6 +70,7 @@ public class MinecraftCore {
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
     public static void preinit(Object o){
+        mod=o;
         Package pack = o.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
@@ -80,7 +81,6 @@ public class MinecraftCore {
         for (Class c :typesAnnotatedWith){
             Mod annotation = (Mod) c.getAnnotation(Mod.class);
             MinecraftCore.MODID=annotation.modid();
-            MinecraftCore.mod=c;
         }
         AnnotationFactory.AnnotationLoader(o);
         ResourceManger.registerCustomModelLoder(new CustomModelLoader());
@@ -302,7 +302,7 @@ public class MinecraftCore {
             resourceManager.registerReloadListener(loader);
         }
 
-        public static boolean containResource(ResourceLocation location){
+        public static boolean containResource(ResourceLocation location,ResourceType type){
             try {
                 Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
                 Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
@@ -381,6 +381,7 @@ public class MinecraftCore {
                 e.printStackTrace();
             }
         }
+
     }
 
 

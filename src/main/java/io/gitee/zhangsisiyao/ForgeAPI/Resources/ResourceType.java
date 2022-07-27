@@ -24,5 +24,10 @@ public enum ResourceType {
     /**
      * 着色器
      * */
-    SHADER
+    SHADER,
+
+    /**
+     * 自定义
+     * */
+    CUSTOM
 }

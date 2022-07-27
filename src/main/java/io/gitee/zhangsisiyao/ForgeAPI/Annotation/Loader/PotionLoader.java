@@ -103,7 +103,7 @@ public class PotionLoader {
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在net.minecraft.potion.Potion的对象上!");
+                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在类型为net.minecraft.potion.Potion类或其子类的字段!");
                 }else if(isRegistered){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+id+",name:"+name+"已经被注册!!!");

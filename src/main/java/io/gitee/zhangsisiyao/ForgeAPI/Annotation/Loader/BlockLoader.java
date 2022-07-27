@@ -112,11 +112,11 @@ public class BlockLoader {
                         success++;
                     }else {
                         error++;
-                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"为null");
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的对象上!");
+                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在类型为 net.minecraft.block.Block或其子类 的字段上!");
                 }else if(isRegistered){
                     error++;
                     logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
