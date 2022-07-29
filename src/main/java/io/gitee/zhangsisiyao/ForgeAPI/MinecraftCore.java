@@ -45,6 +45,7 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ConfigurationBuilder;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -75,6 +76,7 @@ public class MinecraftCore {
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
         Reflections reflections = new Reflections(configuration);
+
 
         Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Mod.class);
 
@@ -302,7 +304,25 @@ public class MinecraftCore {
             resourceManager.registerReloadListener(loader);
         }
 
-        public static boolean containResource(ResourceLocation location,ResourceType type){
+        public static IResource getResource(ResourceLocation location){
+            try {
+                Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
+                Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
+                domainResourceManagers.setAccessible(true);
+                Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
+                FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
+
+                return fallbackResourceManager.getResource(location);
+            } catch (NoSuchFieldException | IOException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        public static boolean containResource(ResourceLocation location){
+            boolean bool=false;
             try {
                 Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
                 Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
@@ -316,7 +336,8 @@ public class MinecraftCore {
                 List<IResourcePack> resourcePacks = (List<IResourcePack>) resourcePacksField.get(fallbackResourceManager);
                 for(IResourcePack resourcePack:resourcePacks){
                     if(resourcePack.resourceExists(location)){
-                        return true;
+                        bool=true;
+                        break;
                     }
                 }
             } catch (NoSuchFieldException e) {
@@ -324,7 +345,7 @@ public class MinecraftCore {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            return false;
+            return bool;
         }
 
 

@@ -47,7 +47,7 @@ public class ResourceLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended= ReflectionUtil.isExtendFrom(c, IResource.class);
-                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location,type);
+                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
@@ -86,7 +86,7 @@ public class ResourceLoader {
                 boolean isIResource=ReflectionUtil.isExtendFrom(field.getType(), IResource.class);
 
                 boolean isExtended= isFile||isString||isURL||isIResource;
-                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location,type);
+                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location);
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
                 boolean canRegister= isExtended && !isRegistered && isStatic;
 
@@ -107,7 +107,7 @@ public class ResourceLoader {
                         if(resource!=null&&resource.getInputStream().read(check) != -1) {
                             success++;
                             MinecraftCore.ResourceManger.registerResource(location,resource,type);
-                            logger.debug("资源:"+location+"加载成功!!");
+                            logger.info("资源:"+location+"加载成功!!");
                         }else{
                             error++;
                             logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源不存在.");

@@ -7,6 +7,7 @@ import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /* =======================
@@ -90,7 +91,7 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
-        this.guiTextureLoader = new GuiTextureLoader("https://pic.imgdb.cn/item/62b474b1094754312944b30b.png");
+        this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
         this.texturePos=new GuiTexturePos2D(0,66,200,20,256,256);
         this.hoveredTexturePos=new GuiTexturePos2D(0,86,200,20,256,256);
 

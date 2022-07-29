@@ -1,84 +1,70 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Texture;
 
+import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.TextureUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class GuiTextureLoader extends AbstractTexture {
+
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
     
     private BufferedImage imageBuffer;
     private List<BufferedImage> gifFrames;
     private List<Integer> gifTimes;
     private Thread gifTread;
     private int gifFrameIndex=0;
+    private IResource resource;
+    private ResourceLocation location;
 
-    public GuiTextureLoader(File file)  {
-        InputStream stream = null;
-        try {
-            stream=new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(TextureUtils.isGif(stream)){
-            gifFrames=TextureUtils.getGifFrame(stream);
-            gifTimes=TextureUtils.getGifTime(stream);
-            startGifTread();
-        }
-        try {
-            //此方法会执行关闭Stream流
-            this.imageBuffer = TextureUtil.readBufferedImage(stream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
-
-    public GuiTextureLoader(InputStream stream){
-        if(TextureUtils.isGif(stream)){
-            gifFrames=TextureUtils.getGifFrame(stream);
-            gifTimes=TextureUtils.getGifTime(stream);
-            startGifTread();
-        }
+    public GuiTextureLoader(ResourceLocation location){
         try {
-            this.imageBuffer = TextureUtil.readBufferedImage(stream);
+            this.location=location;
+            logger.info(location);
+            if(MinecraftCore.ResourceManger.containResource(location)){
+                resource =Minecraft.getMinecraft().getResourceManager().getResource(location);
+                InputStream  stream=resource.getInputStream();
+                ByteArrayOutputStream byteArrayOutputStream = TextureUtils.cloneInputStream(stream);
+                InputStream inputStream1=new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+                InputStream inputStream2=new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+                InputStream inputStream3=new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+                InputStream inputStream4=new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+                if(TextureUtils.isGif(inputStream1)){
+                    gifFrames=TextureUtils.getGifFrame(inputStream2);
+                    gifTimes=TextureUtils.getGifTime(inputStream3);
+                    startGifTread();
+                }
+                this.imageBuffer = TextureUtil.readBufferedImage(inputStream4);
+
+                IOUtils.closeQuietly(inputStream1,inputStream2,inputStream3,inputStream4);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public GuiTextureLoader(BufferedImage image) {
-        this.imageBuffer = image;
-    }
-
-    public GuiTextureLoader(String urlValue)  {
-        URL url= null;
-        try {
-            url = new URL(urlValue);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.imageBuffer=ImageIO.read(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
     @Override
     public void loadTexture(IResourceManager resourceManager) throws IOException {
         this.deleteTexture();
-        TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), imageBuffer, false, true);
+        if(this.imageBuffer!=null){
+            TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), imageBuffer, false, true);
+        }
     }
 
 
@@ -128,6 +114,7 @@ public class GuiTextureLoader extends AbstractTexture {
             }
         }
     }
+
 
     public int getTextureId(){
         return this.glTextureId;

@@ -4,9 +4,14 @@ import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -16,8 +21,11 @@ import java.net.URL;
 public class CustomResource implements IResource {
     private InputStream inputStream;
     private ResourceLocation resourceLocation;
-    private File file;
-    private URL url;
+    private File file=null;
+    private URL url=null;
+
+    private static Logger logger= LogManager.getLogger("ForgeFrame");
+
     public CustomResource(ResourceLocation location,String absolutePath) {
         this.resourceLocation=location;
         this.file=new File(absolutePath);
@@ -45,16 +53,16 @@ public class CustomResource implements IResource {
             IOUtils.closeQuietly(inputStream);
             if(file!=null){
                 this.inputStream=new FileInputStream(this.file);
+                logger.info(file.getAbsolutePath());
+                return this.inputStream;
             }
             if(url!=null){
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();//利用HttpURLConnection对象,我们可以从网络中获取网页数据.
                 conn.setDoInput(true);
                 conn.connect();
                 this.inputStream = conn.getInputStream();
-
+                return this.inputStream;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +82,7 @@ public class CustomResource implements IResource {
 
     @Override
     public String getResourcePackName() {
-        return "custom";
+        return "ForgeFrame";
     }
 
     @Override

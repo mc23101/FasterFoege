@@ -2,6 +2,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
+import net.minecraft.util.ResourceLocation;
 /* =======================
 ||类名：CheckBox
 ||状态：已完成
@@ -38,7 +39,7 @@ public class CheckBox extends Button{
      * */
     public CheckBox(String id,int x,int y,int width,int height){
         super(id,x,y,width,height,"");
-        this.guiTextureLoader =new GuiTextureLoader("https://pic.imgdb.cn/item/62b474b1094754312944b2f5.png");
+        this.guiTextureLoader =new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
     }
 
     /**

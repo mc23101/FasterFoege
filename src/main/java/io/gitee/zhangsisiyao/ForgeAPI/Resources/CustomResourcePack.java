@@ -55,8 +55,6 @@ public class CustomResourcePack implements IResourcePack {
     @Nullable
     @Override
     public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer metadataSerializer, String metadataSectionName) throws IOException {
-
-
         return null;
     }
 

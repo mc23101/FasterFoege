@@ -7,6 +7,7 @@ import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.ParamErrorException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /* =======================
@@ -74,7 +75,7 @@ public class Bar extends BaseGui {
         this.curr = curr;
         this.width = width;
         this.height = height;
-        this.guiTextureLoader = new GuiTextureLoader("https://pic.imgdb.cn/item/62b474b1094754312944b2f0.png");
+        this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/bars.png"));
         this.backTexture=new GuiTexturePos2D(0,0,182,5,256,256);
         this.overlapTexture=new GuiTexturePos2D(0,5,182,5,256,256);
     }
