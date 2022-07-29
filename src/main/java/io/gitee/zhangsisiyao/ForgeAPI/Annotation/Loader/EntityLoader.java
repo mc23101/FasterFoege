@@ -50,7 +50,7 @@ public class EntityLoader {
                 logger.error("在"+c.getName()+"处的MinecraftEntity注解使用错误,请将此注解作用在net.minecraft.entity.Entity子类上!");
             }else if(isRegistered){
                 error++;
-                logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
             }
 
         }

@@ -8,7 +8,6 @@ import org.reflections.util.ConfigurationBuilder;
 @SuppressWarnings("all")
 public class AnnotationFactory {
     public static void AnnotationLoader(Object mod){
-
         Package pack = mod.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);

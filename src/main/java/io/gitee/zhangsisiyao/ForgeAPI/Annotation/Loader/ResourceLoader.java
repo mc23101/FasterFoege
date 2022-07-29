@@ -107,7 +107,7 @@ public class ResourceLoader {
                         if(resource!=null&&resource.getInputStream().read(check) != -1) {
                             success++;
                             MinecraftCore.ResourceManger.registerResource(location,resource,type);
-                            logger.info("资源:"+location+"加载成功!!");
+                            logger.debug("资源:"+location+"加载成功!!");
                         }else{
                             error++;
                             logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源不存在.");

@@ -66,7 +66,7 @@ public class EnchantmentLoader {
                     logger.error("在"+c.getName()+"处的MinecraftEnchantment注解使用错误,请将此注解作用在net.minecraft.enchantment.Enchantment子类上!");
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                    logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
@@ -107,7 +107,7 @@ public class EnchantmentLoader {
                     logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftEnchantment注解使用错误,请将此注解作用在类型为net.minecraft.enchantment.Enchantment类或其子类的字段上!");
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                    logger.error("在"+field.getDeclaringClass().getName()+"处的"+modId+":"+name+"已经被注册!!!");
                 }else if(!isStatic){
                     logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftEnchantment注解使用错误，请作用在static字段上.");
                 }

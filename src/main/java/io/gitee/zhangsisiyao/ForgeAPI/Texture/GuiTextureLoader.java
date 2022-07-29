@@ -35,7 +35,6 @@ public class GuiTextureLoader extends AbstractTexture {
     public GuiTextureLoader(ResourceLocation location){
         try {
             this.location=location;
-            logger.info(location);
             if(MinecraftCore.ResourceManger.containResource(location)){
                 resource =Minecraft.getMinecraft().getResourceManager().getResource(location);
                 InputStream  stream=resource.getInputStream();
@@ -51,7 +50,7 @@ public class GuiTextureLoader extends AbstractTexture {
                 }
                 this.imageBuffer = TextureUtil.readBufferedImage(inputStream4);
 
-                IOUtils.closeQuietly(inputStream1,inputStream2,inputStream3,inputStream4);
+                IOUtils.closeQuietly(stream,inputStream1,inputStream2,inputStream3,inputStream4);
             }
 
         } catch (IOException e) {
