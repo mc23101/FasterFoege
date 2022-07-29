@@ -1,7 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.GuiBaseException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.gui.FontRenderer;
@@ -79,8 +78,6 @@ public class Button extends BaseGui
      * */
     public Button(String buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
-        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
-        if(widthIn<0||heightIn<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = 200;
         this.height = 20;
         this.enabled = true;

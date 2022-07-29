@@ -3,7 +3,6 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import com.google.common.collect.Lists;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.GuiBaseException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -80,8 +79,6 @@ public class Label extends BaseGui {
      * @param fontSize 文本大小
      * */
     public Label(String id,int x, int y,int width, int height,int fontSize) {
-        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
-        if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.width = width;
         this.height = height;
         this.x = x;

@@ -2,8 +2,6 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.GuiBaseException;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.ParamErrorException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
@@ -66,9 +64,6 @@ public class Bar extends BaseGui {
      * @param height 进度条的高度
      * */
     public Bar(String id,float curr, int x,int y,int width, int height) {
-        if(curr>100||curr<0) throw new ParamErrorException("进度条进度值大于100或小于0");
-        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
-        if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         this.id=id;
         this.y=y;
         this.x=x;
