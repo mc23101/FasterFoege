@@ -37,8 +37,8 @@ public class CheckBox extends Button{
      * @param width 宽度
      * @param height 高度
      * */
-    public CheckBox(String id,int x,int y,int width,int height){
-        super(id,x,y,width,height,"");
+    public CheckBox(String id,Frame frame,int x,int y,int width,int height){
+        super(id,frame,x,y,width,height,"");
         this.guiTextureLoader =new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
     }
 

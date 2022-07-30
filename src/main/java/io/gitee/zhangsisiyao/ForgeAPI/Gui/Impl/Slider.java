@@ -52,8 +52,8 @@ public class Slider extends Button {
      * @param maxIn 滑动条的最大值
      * @param defaultValue 滑动条的初始值
      * */
-    public Slider( String idIn, int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
-        super(idIn, x, y, width, height, "");
+    public Slider( String idIn, Frame frame,int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
+        super(idIn, frame,x, y, width, height, "");
         this.displayString=displayString;
         this.min = minIn;
         this.max = maxIn;

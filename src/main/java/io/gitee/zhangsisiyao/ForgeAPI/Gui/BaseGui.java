@@ -7,6 +7,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 /* =======================
@@ -29,6 +30,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      *  Gui字体信息
      * */
     protected FontRenderer fontRenderer=Minecraft.getMinecraft().fontRenderer;
+
 
     /**
      * Gui是否可以被看见
@@ -59,6 +61,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * Gui的宽度
      * */
     protected int width;
+
+    protected int fontSize=9;
 
     /**
      * Gui的高度
@@ -99,7 +103,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * @param height Gui的高度
      * @param texturePos 材质位置(texturePos的width,height尽量与Gui一直，否则材质会变形)
      */
-    public static void drawCustomSizedTexture(int x, int y, int width, int height, GuiTexturePos2D texturePos)
+    public void drawCustomSizedTexture(int x, int y, int width, int height, GuiTexturePos2D texturePos)
     {
         float f = 1.0F / texturePos.getMaxWidth();
         float f1 = 1.0F / texturePos.getMaxHeight();
@@ -121,6 +125,39 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
                 .tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
     }
+
+    /**
+     * 绘制自定义大小的居中字符串
+     * @param text 字符串
+     * @param fontSize 字体大小
+     * @param x 横坐标
+     * @param y 纵坐标
+     * @param color 字体颜色
+     * */
+    public void drawCustomSizedCenterString(String text,float fontSize,int x,int y,int color){
+        float Scale=fontSize/Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
+        GlStateManager.scale(Scale,Scale,1);
+        x= (int) (x/Scale);
+        y=(int)(y/Scale);
+        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer,text,x,y,color);
+    }
+
+    /**
+     * 绘制自定义大小的字符串
+     * @param text 字符串
+     * @param fontSize 字体大小
+     * @param x 横坐标
+     * @param y 纵坐标
+     * @param color 字体颜色
+     * */
+    public void drawCustomSizedString(String text,float fontSize,int x,int y,int color){
+        float Scale=fontSize/Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
+        GlStateManager.scale(Scale,Scale,1);
+        x= (int) (x/Scale);
+        y=(int)(y/Scale);
+        this.drawString(Minecraft.getMinecraft().fontRenderer,text,x,y,color);
+    }
+
 
     /**
      * 加载Gui的材质
@@ -350,5 +387,11 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         this.enableTexture = enableTexture;
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
 
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
 }

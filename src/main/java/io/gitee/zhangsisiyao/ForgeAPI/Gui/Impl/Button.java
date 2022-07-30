@@ -76,8 +76,9 @@ public class Button extends BaseGui
      * @param heightIn 按钮的高度
      * @param buttonText 按钮上显示的文本
      * */
-    public Button(String buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
+    public Button(String buttonId,Frame frame, int x, int y, int widthIn, int heightIn, String buttonText)
     {
+        this.frame=frame;
         this.width = 200;
         this.height = 20;
         this.enabled = true;
@@ -91,7 +92,6 @@ public class Button extends BaseGui
         this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
         this.texturePos=new GuiTexturePos2D(0,66,200,20,256,256);
         this.hoveredTexturePos=new GuiTexturePos2D(0,86,200,20,256,256);
-
     }
 
     /**
@@ -166,7 +166,8 @@ public class Button extends BaseGui
         {
             j = 16777120;
         }
-        this.drawCenteredString(this.fontRenderer, I18n.format(this.displayString), this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+       // this.drawCenteredString(this.fontRenderer,I18n.format(this.displayString),this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+        this.drawCustomSizedCenterString(I18n.format(this.displayString), this.fontSize,this.x+ this.width / 2, this.y+(this.height-this.fontSize)/2 , j);
     }
 
     /**
