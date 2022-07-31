@@ -6,7 +6,6 @@ import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.NetWork.NetworkPack;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourcePack;
-import io.gitee.zhangsisiyao.ForgeAPI.Resources.ResourceType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
@@ -364,7 +363,7 @@ public class MinecraftCore {
          * @param resource 资源
          * @param type 资源类型
          * */
-        public static void registerResource(ResourceLocation location, IResource resource, ResourceType type){
+        public static void registerResource(ResourceLocation location, IResource resource){
 
             try {
                 //获取Mod容器

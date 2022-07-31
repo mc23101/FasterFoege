@@ -3,7 +3,6 @@ package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftResource;
 import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResource;
-import io.gitee.zhangsisiyao.ForgeAPI.Resources.ResourceType;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +42,6 @@ public class ResourceLoader {
                 MinecraftResource annotation = (MinecraftResource) c.getAnnotation(MinecraftResource.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
-                ResourceType type = annotation.type();
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended= ReflectionUtil.isExtendFrom(c, IResource.class);
@@ -52,7 +50,7 @@ public class ResourceLoader {
 
                 if(canRegister){
                     IResource resource = (IResource) c.newInstance();
-                    MinecraftCore.ResourceManger.registerResource(location,resource,type);
+                    MinecraftCore.ResourceManger.registerResource(location,resource);
                     logger.debug("资源:"+modId+":"+name+"注册成功!");
                     success++;
                 }else if(!isExtended){
@@ -76,9 +74,7 @@ public class ResourceLoader {
                 MinecraftResource annotation = field.getAnnotation(MinecraftResource.class);
                 String modId = annotation.modId();
                 String name = annotation.name();
-                ResourceType type = annotation.type();
                 ResourceLocation location = new ResourceLocation(modId, name);
-                location=getLocationFromType(location,type);
 
                 boolean isFile=ReflectionUtil.isExtendFrom(field.getType(), File.class);
                 boolean isString=ReflectionUtil.isExtendFrom(field.getType(), String.class);
@@ -106,7 +102,7 @@ public class ResourceLoader {
                         byte[] check = new byte[1024];
                         if(resource!=null&&resource.getInputStream().read(check) != -1) {
                             success++;
-                            MinecraftCore.ResourceManger.registerResource(location,resource,type);
+                            MinecraftCore.ResourceManger.registerResource(location,resource);
                             logger.debug("资源:"+location+"加载成功!!");
                         }else{
                             error++;
@@ -145,28 +141,5 @@ public class ResourceLoader {
                 return null;
             }
         }
-    }
-
-    private static ResourceLocation getLocationFromType(ResourceLocation location,ResourceType type){
-        String domain = location.getResourceDomain();
-        String path = location.getResourcePath();
-        switch (type){
-            case CUSTOM:
-                break;
-            case TEXTURE:
-                path="textures/"+path+".png";
-                break;
-            case MODEL:
-                path="models/"+path+".json";
-                break;
-            case SOUND:
-                break;
-            case SHADER:
-                path="shaders/"+path+".json";
-                break;
-            case LANGUAGE:
-                break;
-        }
-        return new ResourceLocation(domain,path);
     }
 }

@@ -31,7 +31,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     protected FontRenderer fontRenderer=Minecraft.getMinecraft().fontRenderer;
 
-
     /**
      * Gui是否可以被看见
      * */
@@ -62,6 +61,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     protected int width;
 
+    /**
+     * Gui字体大小
+     * */
     protected int fontSize=9;
 
     /**
