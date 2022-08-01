@@ -20,24 +20,24 @@ public class GuiTexturePos2D {
     private float V;
 
     /**
-     * 材质的宽度
+     * 显示的宽度
      * */
     private int width;
 
     /**
-     * 材质的高度
+     * 显示的高度
      * */
     private int height;
 
     /**
      * 材质图片的宽度
      * */
-    private float maxWidth;
+    private float textureWidth;
 
     /**
      * 材质图片的高度
      * */
-    private float maxHeight;
+    private float textureHeight;
 
     /**
      * @param u 材质UV坐标(横坐标)
@@ -52,8 +52,8 @@ public class GuiTexturePos2D {
         V = v;
         this.width = width;
         this.height = height;
-        this.maxWidth = maxWidth;
-        this.maxHeight = maxHeight;
+        this.textureWidth = maxWidth;
+        this.textureHeight = maxHeight;
     }
 
     public float getU() {
@@ -88,19 +88,19 @@ public class GuiTexturePos2D {
         this.height = height;
     }
 
-    public float getMaxWidth() {
-        return maxWidth;
+    public float getTextureWidth() {
+        return textureWidth;
     }
 
-    public void setMaxWidth(float maxWidth) {
-        this.maxWidth = maxWidth;
+    public void setTextureWidth(float textureWidth) {
+        this.textureWidth = textureWidth;
     }
 
-    public float getMaxHeight() {
-        return maxHeight;
+    public float getTextureHeight() {
+        return textureHeight;
     }
 
-    public void setMaxHeight(float maxHeight) {
-        this.maxHeight = maxHeight;
+    public void setTextureHeight(float textureHeight) {
+        this.textureHeight = textureHeight;
     }
 }

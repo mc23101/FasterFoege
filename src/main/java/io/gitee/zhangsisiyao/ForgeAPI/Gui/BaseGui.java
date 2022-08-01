@@ -112,8 +112,8 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      */
     public void drawCustomSizedTexture(int x, int y, int width, int height, GuiTexturePos2D texturePos)
     {
-        float f = 1.0F / texturePos.getMaxWidth();
-        float f1 = 1.0F / texturePos.getMaxHeight();
+        float f = 1.0F / texturePos.getTextureWidth();
+        float f1 = 1.0F / texturePos.getTextureHeight();
         float u=texturePos.getU();
         float v=texturePos.getV();
         Tessellator tessellator = Tessellator.getInstance();
