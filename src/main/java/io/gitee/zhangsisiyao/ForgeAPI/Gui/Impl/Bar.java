@@ -111,8 +111,8 @@ public class Bar extends BaseGui {
                     overlapTexture.getV(),
                     (int) (overlapTexture.getWidth()*(curr/max)),
                     overlapTexture.getHeight(),
-                    overlapTexture.getMaxWidth(),
-                    overlapTexture.getMaxWidth());
+                    overlapTexture.getTextureWidth(),
+                    overlapTexture.getTextureHeight());
             this.drawCustomSizedTexture(x,y, (int) (width*(curr/max)),height,currOverlapTexture);
         }
     }
