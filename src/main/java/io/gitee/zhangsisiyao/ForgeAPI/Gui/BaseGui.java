@@ -98,6 +98,11 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected int maxHeight;
 
     /**
+     * Gui文本颜色
+     * */
+    protected int textColor=16777120;
+
+    /**
      * 绘制自定义材质
      * @param x Gui的横坐标x
      * @param y Gui的纵坐标y
@@ -395,5 +400,14 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
+    }
+
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
     }
 }

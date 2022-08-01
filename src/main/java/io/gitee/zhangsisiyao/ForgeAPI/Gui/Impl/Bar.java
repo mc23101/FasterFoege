@@ -23,37 +23,34 @@ public class Bar extends BaseGui {
      * 进度条的最小值
      * */
     protected  final float min=0;
-
+    /**
+     * 进度条的显示文本
+     * */
+    protected  String displayName="";
     /**
      * 进度条的最大值
      * */
     protected final float max=100;
-
     /**
      * 进度条的进度
      * */
     protected float curr;
-
     /**
      * 进度条背景颜色
      * */
     protected int BackColor=0xFFFAFA;
-
     /**
      * 进度条进度颜色
      * */
     protected int OverlapColor=0x668B8B;
-
     /**
      * 进度条背景材质位置
      * */
     protected GuiTexturePos2D backTexture;
-
     /**
      * 进度条进度材质位置
      * */
     protected GuiTexturePos2D overlapTexture;
-
     /**
      * 自定义大小的进度条控件
      * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
@@ -74,7 +71,6 @@ public class Bar extends BaseGui {
         this.backTexture=new GuiTexturePos2D(0,0,182,5,256,256);
         this.overlapTexture=new GuiTexturePos2D(0,5,182,5,256,256);
     }
-
     /**
      * {@inheritDoc}
      * */
@@ -82,29 +78,32 @@ public class Bar extends BaseGui {
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if(this.visible){
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            if(enableTexture&& guiTextureLoader !=null){
-                guiTextureLoader.bindTexture();
-                if(guiTextureLoader.getGlTextureId()!=-1){
-                    drawTexture();
-                }
+            if(enableTexture&& guiTextureLoader !=null&&guiTextureLoader.getGlTextureId()!=-1){
+                drawTexture();
             }else{
                 drawColor();
             }
+            drawText();
         }
     }
-
     /**
-     * 绘制仅颜色的Gui
+     * 绘制Gui的文本
+     * */
+    private void drawText(){
+        this.drawCustomSizedCenterString(this.displayName,fontSize,this.x+this.width/2,this.y+(this.height-fontSize)/2,this.textColor);
+    }
+    /**
+     * 绘制启用颜色的Gui
      * */
     private void drawColor(){
         drawRect(x,y,x+width,y+height,0xFF000000+BackColor);
         drawRect(x,y,x+(int) (width*(curr/max)),y+height,0xFF000000+OverlapColor);
     }
-
     /**
      * 绘制启用材质的Gui
      * */
     private void drawTexture(){
+        guiTextureLoader.bindTexture();
         this.drawCustomSizedTexture(x, y,width,height,this.backTexture);
         if(curr!=0){
             GuiTexturePos2D currOverlapTexture=new GuiTexturePos2D(
@@ -117,7 +116,6 @@ public class Bar extends BaseGui {
             this.drawCustomSizedTexture(x,y, (int) (width*(curr/max)),height,currOverlapTexture);
         }
     }
-
     /**
      * 获取进度条进度
      * @return 返回进度条进度
@@ -125,7 +123,6 @@ public class Bar extends BaseGui {
     public float getCurr() {
         return curr;
     }
-
     /**
      * 设置进度条进度
      * @param curr 进度条的当前进度
@@ -133,7 +130,6 @@ public class Bar extends BaseGui {
     public void setCurr(float curr) {
         this.curr = curr;
     }
-
     /**
      * 设置进度条背景位置
      * @param backTexture 进度条背景位置
@@ -143,7 +139,6 @@ public class Bar extends BaseGui {
        this.backTexture=backTexture;
         this.overlapTexture=overlapTexture;
     }
-
     /**
      * {@inheritDoc}
      * */
@@ -151,7 +146,6 @@ public class Bar extends BaseGui {
     public void updateGUI() {
         super.updateGUI();
     }
-
     /**
      * {@inheritDoc}
      * */
@@ -159,7 +153,6 @@ public class Bar extends BaseGui {
     public void onGuiClosed() {
         super.onGuiClosed();
     }
-
     /**
      *  设置绘制背景的RGB颜色
      * @param backColor 背景的RGB颜色
@@ -167,7 +160,6 @@ public class Bar extends BaseGui {
     public void setBackColor(int backColor) {
         BackColor = backColor;
     }
-
     /**
      * 设置进度条进度的RGB颜色
      * @param overlapColor 进度条进度的RGB颜色
@@ -176,5 +168,7 @@ public class Bar extends BaseGui {
         OverlapColor = overlapColor;
     }
 
-
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

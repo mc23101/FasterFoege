@@ -65,11 +65,6 @@ public class Label extends BaseGui {
     protected boolean enableLines=true;
 
     /**
-     * 字体大小
-     * */
-    protected int fontSize=9;
-
-    /**
      * 使用自定义大小的Labal
      * @param Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
      * @param x 在屏幕上的横坐标X
@@ -106,27 +101,37 @@ public class Label extends BaseGui {
      * 绘制Label文本
      * */
     protected  void drawLabelText(){
+        if(enableLines){
+            drawLinesText();
+        }else{
+            drawNoLinesText();
+        }
+    }
+
+
+    private void drawLinesText(){
         int BackWidth = this.width - this.border ;
         int BackHeight = this.height - this.border ;
         int BackX=this.x+this.border;
         int BackY=this.y+this.border;
-        float OldfontSize=10;
-        GlStateManager.scale(fontSize/OldfontSize,fontSize/OldfontSize,0);
-        if(enableLines){
-            int MaxLine=(this.height-2*border)/fontSize;
-            int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
-            for (int k = 0; k < LineCount; ++k)
-            {
-                int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
-                this.drawString(this.fontRenderer, I18n.format(this.labels.get(k)),X , BackY+fontSize*k, this.textColor);
-            }
-        }else{
+        int MaxLine=(this.height-2*border)/fontSize;
+        int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
+        for (int k = 0; k < LineCount; ++k)
+        {
             int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
-            String str= this.labels.size()>0?this.labels.get(0):"";
-            this.drawString(this.fontRenderer, I18n.format(str), X, BackY, this.textColor);
+            this.drawString(this.fontRenderer, I18n.format(this.labels.get(k)),X , BackY+fontSize*k, this.textColor);
         }
     }
 
+    private void drawNoLinesText(){
+        int BackWidth = this.width - this.border ;
+        int BackHeight = this.height - this.border ;
+        int BackX=this.x+this.border;
+        int BackY=this.y+this.border;
+        int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
+        String str= this.labels.size()>0?this.labels.get(0):"";
+        this.drawString(this.fontRenderer, I18n.format(str), X, BackY, this.textColor);
+    }
 
     /**
      * 绘制Label背景
@@ -136,30 +141,43 @@ public class Label extends BaseGui {
         if (this.labelBgEnabled)
         {
             if(enableTexture){
-                if(this.guiTextureLoader !=null){
-                    if(this.guiTextureLoader.getGlTextureId()!=-1){
-                        this.guiTextureLoader.bindTexture();
-                        this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
-                    }
-                }
+                drawBackgroundTexture();
             }else{
-                int BackWidth = this.width - this.border ;
-                int BackHeight = this.height - this.border ;
-                int BackX=this.x+this.border;
-                int BackY=this.y+this.border;
-                drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.backColor);
-
-                //绘制水平边框
-                drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
-
-                drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
-                //绘制垂直边框
-                drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
-                drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
-
+                drawBackgroundColor();
             }
 
+        }
+    }
+
+    /**
+     * 绘制Label颜色背景板
+     * */
+    private void drawBackgroundColor(){
+        int BackWidth = this.width - this.border ;
+        int BackHeight = this.height - this.border ;
+        int BackX=this.x+this.border;
+        int BackY=this.y+this.border;
+        drawRect(BackX, BackY, this.x + BackWidth, this.y + BackHeight, 0xFF000000+this.backColor);
+
+        //绘制水平边框
+        drawRect(this.x,this.y,this.x+this.width,BackY,0xFF000000+this.brColor);
+
+        drawRect(this.x,this.y+BackHeight,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+
+        //绘制垂直边框
+        drawRect(this.x,this.y,BackX,this.y+this.height,0xFF000000+this.brColor);
+        drawRect(this.x+BackWidth,this.y,this.x+this.width,this.y+this.height,0xFF000000+this.brColor);
+    }
+
+    /**
+     * 绘制Label材质背景板
+     * */
+    private void drawBackgroundTexture(){
+        if(this.guiTextureLoader !=null){
+            if(this.guiTextureLoader.getGlTextureId()!=-1){
+                this.guiTextureLoader.bindTexture();
+                this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
+            }
         }
     }
 

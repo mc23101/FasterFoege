@@ -3,7 +3,6 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -26,46 +25,38 @@ public class Button extends BaseGui
      * 按钮显示的文本
      * */
     public String displayString;
-
     /**
      * 按钮是否启用，如果为false则按钮不能被操作
      * */
     public boolean enabled;
-
-    /**
-     * FML
-     * */
-    public int packedFGColour;
-
     /**
      * 按钮未聚焦时的颜色
      * */
     protected int buttonColor=0xBBFFFF;
-
     /**
      * 按钮聚焦时的颜色
      * */
     protected int buttonHorveredColor=0x96CDCD;
-
     /**
      * 按钮未聚焦时的材质位置
      * */
     protected GuiTexturePos2D texturePos;
-
     /**
      * 按钮聚焦时的材质位置
      * */
     protected GuiTexturePos2D hoveredTexturePos;
-
     /**
      * Gui边框的宽度
      * */
     protected int border=0;
-
     /**
      * Gui边框的颜色
      * */
     protected int brColor=0x00868B;
+    /**
+     * 按钮聚焦时的字体颜色
+     * */
+    protected int hoveredTextColor=16777120;
 
     /**
      * 使用自定义大小的按钮
@@ -101,18 +92,17 @@ public class Button extends BaseGui
     public void drawGUI(int mouseX, int mouseY, float partialTicks) {
         if (this.visible)
         {
-            FontRenderer fontrenderer = mc.fontRenderer;
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+            this.mouseDragged(mouseX, mouseY,0);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            if(this.guiTextureLoader.getGlTextureId()!=-1&&enableTexture){
+            if(enableTexture&&this.guiTextureLoader.getGlTextureId()!=-1){
                 drawButtonTexture();
             }else{
                 drawButtonColor();
             }
-            this.mouseDragged(mouseX, mouseY,0);
             drawText();
         }
     }
@@ -121,8 +111,8 @@ public class Button extends BaseGui
      * 绘制按钮材质
      * */
     private void drawButtonTexture(){
-        this.guiTextureLoader.bindTexture();
         GuiTexturePos2D guiTexturePos2D =(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
+        this.guiTextureLoader.bindTexture();
         this.drawCustomSizedTexture(this.x, this.y,this.width,this.height, guiTexturePos2D);
     }
 
@@ -135,6 +125,7 @@ public class Button extends BaseGui
         int backX=this.x+this.border;
         int backY=this.y+this.border;
         int color=getHoverState()==1?this.buttonColor:this.buttonHorveredColor;
+
         drawRect(backX, backY, this.x + backWidth, this.y + backHeight, 0xFF000000+color);
 
         //绘制水平边框
@@ -151,22 +142,16 @@ public class Button extends BaseGui
      * 绘制按钮文本
      * */
     private void drawText(){
-        int j = 14737632;
+        int j = textColor;
 
-        if (packedFGColour != 0)
-        {
-            j = packedFGColour;
-        }
-        else
         if (!this.enabled)
         {
             j = 10526880;
         }
         else if (this.hovered)
         {
-            j = 16777120;
+            j = hoveredTextColor;
         }
-       // this.drawCenteredString(this.fontRenderer,I18n.format(this.displayString),this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
         this.drawCustomSizedCenterString(I18n.format(this.displayString), this.fontSize,this.x+ this.width / 2, this.y+(this.height-this.fontSize)/2 , j);
     }
 
@@ -242,6 +227,14 @@ public class Button extends BaseGui
      * */
     public void setBrColor(int brColor) {
         this.brColor = brColor;
+    }
+
+    /**
+     * 设置按钮聚焦时的字体颜色
+     * @param hoveredTextColor 字体颜色
+     * */
+    public void setHoveredTextColor(int hoveredTextColor) {
+        this.hoveredTextColor = hoveredTextColor;
     }
 }
 
