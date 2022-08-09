@@ -22,14 +22,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Button extends BaseGui
 {
     /**
-     * 按钮显示的文本
-     * */
-    public String displayString;
-    /**
-     * 按钮是否启用，如果为false则按钮不能被操作
-     * */
-    public boolean enabled;
-    /**
      * 按钮未聚焦时的颜色
      * */
     protected int buttonColor=0xBBFFFF;
@@ -67,19 +59,18 @@ public class Button extends BaseGui
      * @param heightIn 按钮的高度
      * @param buttonText 按钮上显示的文本
      * */
-    public Button(String buttonId,Frame frame, int x, int y, int widthIn, int heightIn, String buttonText)
+    public Button(Frame frame, int x, int y, int widthIn, int heightIn, String buttonText)
     {
         this.frame=frame;
         this.width = 200;
         this.height = 20;
         this.enabled = true;
         this.visible = true;
-        this.id = buttonId;
         this.x = x;
         this.y = y;
         this.width = widthIn;
         this.height = heightIn;
-        this.displayString = buttonText;
+        this.displayName = buttonText;
         this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
         this.texturePos=new GuiTexturePos2D(0,66,200,20,256,256);
         this.hoveredTexturePos=new GuiTexturePos2D(0,86,200,20,256,256);
@@ -152,7 +143,7 @@ public class Button extends BaseGui
         {
             j = hoveredTextColor;
         }
-        this.drawCustomSizedCenterString(I18n.format(this.displayString), this.fontSize,this.x+ this.width / 2, this.y+(this.height-this.fontSize)/2 , j);
+        this.drawCustomSizedCenterString(I18n.format(this.displayName), this.fontSize,this.x+ this.width / 2, this.y+(this.height-this.fontSize)/2 , j);
     }
 
     /**
@@ -195,13 +186,6 @@ public class Button extends BaseGui
         this.hoveredTexturePos = hoveredTexturePos;
     }
 
-    /**
-     * 设置按钮上显示的文本
-     * @param displayString  显示的文本
-     * */
-    public void setDisplayString(String displayString) {
-        this.displayString = displayString;
-    }
 
     /**
      * 设置按钮未聚焦的颜色

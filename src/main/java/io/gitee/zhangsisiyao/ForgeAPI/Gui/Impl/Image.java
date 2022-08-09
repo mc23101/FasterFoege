@@ -24,17 +24,15 @@ public class Image extends BaseGui {
     protected GuiTexturePos2D imageTexture;
 
     /**
-     * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
      * @param x 进度条在屏幕上的横坐标X
      * @param y 进度条在屏幕上的纵坐标Y
      * @param width 按钮的宽度
      * @param height 按钮的高度
      * */
-    public Image(String id, int x, int y, int width, int height, GuiTextureLoader guiTextureLoader) {
+    public Image( int x, int y, int width, int height, GuiTextureLoader guiTextureLoader) {
         if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
         if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
         if(guiTextureLoader ==null) throw new NullPointerException("ImageLoader的值为null");
-        this.id=id;
         this.x=x;
         this.y=y;
         this.width=width;

@@ -1,44 +1,53 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 
-@SuppressWarnings("all")
-/* =======================
-||类名：Slider
-||状态：已完成
-||作者：mc23
-||最后一次修改时间：2022.5.26
-==========================*/
 /**
  * Gui控件：滑动条
  * */
-public class Slider extends Button {
+public class Slider extends BaseGui {
 
     /**
      * 滑块的位置
      * */
-    private float sliderPosition = 1.0F;
+    protected float sliderPosition = 1.0F;
 
     /**
      * 鼠标是否按下
      * */
-    public boolean isMouseDown;
+    protected boolean isMouseDown;
 
     /**
      * 滑动条的最大值
      * */
-    private final float min;
+    private float min = 0;
 
     /**
      * 滑动条的最小值
      * */
-    private final float max;
+    private  float max = 0;
 
     /**
      * 滑动条显示的文本
      * */
     protected String displayString;
+
+    protected int buttonColor=0;
+
+    protected int buttonHoveredColor=0;
+
+    protected int backgroundColor=0;
+
+
+    protected GuiTexturePos2D buttonTexturePos;
+
+    protected GuiTexturePos2D buttonHoveredTexturePos;
+
+    protected GuiTexturePos2D backgroundTexturePos;
+
+
 
     /**
      * 自定义大小的滑动条
@@ -52,14 +61,13 @@ public class Slider extends Button {
      * @param maxIn 滑动条的最大值
      * @param defaultValue 滑动条的初始值
      * */
-    public Slider( String idIn, Frame frame,int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
-        super(idIn, frame,x, y, width, height, "");
+    public Slider(Frame frame,int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
         this.displayString=displayString;
         this.min = minIn;
         this.max = maxIn;
         this.sliderPosition = (defaultValue - minIn) / (maxIn - minIn);
-        this.texturePos=new GuiTexturePos2D(0,46,200,20,256,256);
-        this.hoveredTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
+        this.buttonTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
+        this.buttonHoveredTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
     }
 
     /**
@@ -68,6 +76,14 @@ public class Slider extends Button {
     @Override
     public void drawGUI( int mouseX, int mouseY, float partialTicks){
         super.drawGUI(mouseX,mouseY,partialTicks);
+    }
+
+    private void drawColor(){
+
+    }
+
+    private void drawTexture(){
+
     }
 
     /**
@@ -86,7 +102,6 @@ public class Slider extends Button {
     public void setSliderValue(float value)
     {
         this.sliderPosition = (value - this.min) / (this.max - this.min);
-
     }
 
     /**

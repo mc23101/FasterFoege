@@ -31,14 +31,13 @@ public class CheckBox extends Button{
 
     /**
      * 自定义大小的CheckBox
-     * @param id Gui的ID(可填写任意值，但不建议与其他Gui的值相同)
      * @param x 在屏幕上的横坐标X
      * @param y 在屏幕上的纵坐标Y
      * @param width 宽度
      * @param height 高度
      * */
-    public CheckBox(String id,Frame frame,int x,int y,int width,int height){
-        super(id,frame,x,y,width,height,"");
+    public CheckBox(Frame frame,int x,int y,int width,int height){
+        super(frame,x,y,width,height,"");
         this.guiTextureLoader =new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
     }
 

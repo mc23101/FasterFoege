@@ -80,11 +80,6 @@ public interface IBaseGUI {
     public void onGuiClosed();
 
     /**
-     * 获取Gui的id
-     * */
-    public String getGuiID();
-
-    /**
      * 获取Gui的父窗口
      * */
     public Gui getFrame();

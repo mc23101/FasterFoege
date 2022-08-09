@@ -42,11 +42,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected boolean hovered;
 
     /**
-     * Gui的id信息
-     * */
-    protected String id;
-
-    /**
      * Gui的横坐标X
      * */
     protected int x;
@@ -101,6 +96,17 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * Gui文本颜色
      * */
     protected int textColor=16777120;
+
+
+    /**
+     * Gui是否启用，如果为false则按钮不能被操作
+     * */
+    protected boolean enabled;
+
+    /**
+     * 按钮显示的文本
+     * */
+    protected String displayName;
 
     /**
      * 绘制自定义材质
@@ -261,13 +267,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * {@inheritDoc}
      * */
-    public String getGuiID(){
-        return  id;
-    }
-
-    /**
-     * {@inheritDoc}
-     * */
     @Override
     public Gui getFrame() {
         return frame;
@@ -309,20 +308,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     public void setHovered(boolean hovered) {
         this.hovered = hovered;
-    }
-
-    /**
-     * 获取Gui的ID
-     * */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * 设置Gui的ID
-     * */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -409,5 +394,13 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+    }
+
+    /**
+     * 设置Gui上显示的文本
+     * @param displayString  显示的文本
+     * */
+    public void setDisplayString(String displayString) {
+        this.displayName = displayString;
     }
 }
