@@ -59,9 +59,9 @@ public class Button extends BaseGui
      * @param heightIn 按钮的高度
      * @param buttonText 按钮上显示的文本
      * */
-    public Button(Frame frame, int x, int y, int widthIn, int heightIn, String buttonText)
+    public Button(String id, int x, int y, int widthIn, int heightIn, String buttonText)
     {
-        this.frame=frame;
+        this.id=id;
         this.width = 200;
         this.height = 20;
         this.enabled = true;

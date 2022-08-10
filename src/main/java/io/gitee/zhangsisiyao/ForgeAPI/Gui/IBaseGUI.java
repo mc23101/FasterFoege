@@ -90,5 +90,6 @@ public interface IBaseGUI {
      * */
     public void setFrame(Gui frame);
 
+    public String getId();
 }
 

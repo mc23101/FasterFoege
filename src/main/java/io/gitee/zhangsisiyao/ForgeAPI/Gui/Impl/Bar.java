@@ -62,9 +62,10 @@ public class Bar extends BaseGui {
      * @param width 进度条的宽度
      * @param height 进度条的高度
      * */
-    public Bar(float curr, int x,int y,int width, int height) {
+    public Bar(String id,float curr, int x,int y,int width, int height) {
         this.y=y;
         this.x=x;
+        this.id=id;
         this.curr = curr;
         this.width = width;
         this.height = height;

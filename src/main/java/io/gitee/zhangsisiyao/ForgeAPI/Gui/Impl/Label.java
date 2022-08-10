@@ -73,7 +73,8 @@ public class Label extends BaseGui {
      * @param height 高度
      * @param fontSize 文本大小
      * */
-    public Label(int x, int y,int width, int height,int fontSize) {
+    public Label(String id,int x, int y,int width, int height,int fontSize) {
+        this.id=id;
         this.width = width;
         this.height = height;
         this.x = x;

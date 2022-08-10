@@ -7,8 +7,8 @@ import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 /* =======================
 ||类名：Frame
 ||状态：已完成
@@ -28,7 +28,7 @@ public abstract class Frame extends GuiScreen {
     /**
      * Gui容器，用于存放所有Gui
      * */
-    protected List<IBaseGUI> Guis= new ArrayList<>();
+    protected Map<String,IBaseGUI> Guis= new HashMap<>();
 
     /**
      * Gui的主窗口，用于响应Gui控件的事件
@@ -45,7 +45,7 @@ public abstract class Frame extends GuiScreen {
     @Override
     public void setWorldAndResolution(Minecraft mc, int width, int height) {
         super.setWorldAndResolution(mc, width, height);
-        for(IBaseGUI gui: Guis){
+        for(IBaseGUI gui: Guis.values()){
             gui.setResolution(width,height);
         }
     }
@@ -56,7 +56,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     public void onGuiClosed() {
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.onGuiClosed();
         }
     }
@@ -66,7 +66,7 @@ public abstract class Frame extends GuiScreen {
      * @param Gui 要添加的Gui
      * */
     public <T extends IBaseGUI> T addGui(T Gui) {
-        Guis.add(Gui);
+        Guis.put(Gui.getId(),Gui);
         Gui.setFrame(this);
         return Gui;
     }
@@ -87,7 +87,7 @@ public abstract class Frame extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         GL11.glColor4f(1, 1, 1, 1);
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.drawGUI(mouseX,mouseY,partialTicks);
         }
     }
@@ -99,7 +99,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     public void updateScreen() {
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.updateGUI();
         }
     }
@@ -112,7 +112,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        for(IBaseGUI gui:Guis) {
+        for(IBaseGUI gui:Guis.values()) {
             gui.KeyInput(typedChar,keyCode);
         }
         super.keyTyped(typedChar,keyCode);
@@ -128,7 +128,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-        for(IBaseGUI gui:Guis){
+        for(IBaseGUI gui:Guis.values()){
             gui.mouseDragged(mouseX,mouseY,clickedMouseButton);
         }
     }
@@ -142,7 +142,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-       for(IBaseGUI gui:Guis){
+       for(IBaseGUI gui:Guis.values()){
            gui.mousePressed(mouseX,mouseY,mouseButton);
            gui.mouseClicked(mouseX, mouseY,mouseButton);
        }
@@ -156,7 +156,7 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     protected void mouseReleased(int mouseX, int mouseY,int mouseButton) {
-        for (IBaseGUI gui:Guis){
+        for (IBaseGUI gui:Guis.values()){
             gui.mouseReleased(mouseX,mouseY,mouseButton);
         }
     }

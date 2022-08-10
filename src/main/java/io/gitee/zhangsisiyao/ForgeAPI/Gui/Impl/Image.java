@@ -1,7 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.GuiBaseException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 /* =======================
@@ -29,10 +28,8 @@ public class Image extends BaseGui {
      * @param width 按钮的宽度
      * @param height 按钮的高度
      * */
-    public Image( int x, int y, int width, int height, GuiTextureLoader guiTextureLoader) {
-        if(x<0||y<0) throw new GuiBaseException("x坐标或y坐标值小于0");
-        if(width<0||height<0) throw new GuiBaseException("宽度width或高度height小于0");
-        if(guiTextureLoader ==null) throw new NullPointerException("ImageLoader的值为null");
+    public Image( String id,int x, int y, int width, int height, GuiTextureLoader guiTextureLoader) {
+        this.id=id; 
         this.x=x;
         this.y=y;
         this.width=width;

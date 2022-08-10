@@ -32,6 +32,11 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     protected FontRenderer fontRenderer=Minecraft.getMinecraft().fontRenderer;
 
     /**
+     * Gui的唯一id
+     * */
+    protected String id;
+
+    /**
      * Gui是否可以被看见
      * */
     protected boolean visible = true;
@@ -402,5 +407,10 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * */
     public void setDisplayString(String displayString) {
         this.displayName = displayString;
+    }
+
+    @Override
+    public String getId() {
+        return  id;
     }
 }
