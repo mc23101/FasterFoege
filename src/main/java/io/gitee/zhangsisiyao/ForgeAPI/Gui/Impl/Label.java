@@ -3,6 +3,9 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import com.google.common.collect.Lists;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -86,7 +89,7 @@ public class Label extends BaseGui {
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
         if (this.visible)
         {
             GlStateManager.enableBlend();
@@ -136,8 +139,7 @@ public class Label extends BaseGui {
     /**
      * 绘制Label背景
      * */
-    protected void drawLabelBackground()
-    {
+    protected void drawLabelBackground() throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
         if (this.labelBgEnabled)
         {
             if(enableTexture){
@@ -172,12 +174,20 @@ public class Label extends BaseGui {
     /**
      * 绘制Label材质背景板
      * */
-    private void drawBackgroundTexture(){
+    private void drawBackgroundTexture() throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
         if(this.guiTextureLoader !=null){
             if(this.guiTextureLoader.getGlTextureId()!=-1){
-                this.guiTextureLoader.bindTexture();
-                this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
+                if(this.backTexturePos!=null){
+                    this.guiTextureLoader.bindTexture();
+                    this.drawCustomSizedTexture(x,y,width,height,backTexturePos);
+                }else {
+                    throw new NullTexturePositionException();
+                }
+            }else {
+                throw new TextureNotFoundException(this.guiTextureLoader.getResourceLocation());
             }
+        }else {
+            throw new NullTextureException();
         }
     }
 

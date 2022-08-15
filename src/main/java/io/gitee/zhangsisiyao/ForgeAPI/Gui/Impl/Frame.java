@@ -1,9 +1,14 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.IBaseGUI;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -19,6 +24,8 @@ import java.util.Map;
  * 作为父窗体加载其他Gui控件
  * */
 public abstract class Frame extends GuiScreen {
+
+    private static final Logger logger= LogManager.getLogger("ForgeFrame");
 
     /**
      * mc主类
@@ -86,10 +93,18 @@ public abstract class Frame extends GuiScreen {
      * */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        GL11.glColor4f(1, 1, 1, 1);
-        for(IBaseGUI gui:Guis.values()){
-            gui.drawGUI(mouseX,mouseY,partialTicks);
-        }
+            GL11.glColor4f(1, 1, 1, 1);
+            for(IBaseGUI gui:Guis.values()){
+                try {
+                    gui.drawGUI(mouseX,mouseY,partialTicks);
+                } catch (NullTextureException e) {
+                    logger.error("ID为:"+gui.getId()+"的Gui,未设置材质,请使用setGuiTextureLoader(GuiTextureLoader guiTextureLoader)方法设置材质");
+                } catch (NullTexturePositionException e) {
+                    logger.error("ID为:"+gui.getId()+"的Gui,未设置材质的位置,请重新设置材质位置");
+                } catch (TextureNotFoundException e) {
+                    logger.error("ID为:"+gui.getId()+"的Gui,无法找到:"+e.getLocation()+"材质,请使用setGuiTextureLoader(GuiTextureLoader guiTextureLoader)方法设置材质");
+                }
+            }
     }
 
     /**

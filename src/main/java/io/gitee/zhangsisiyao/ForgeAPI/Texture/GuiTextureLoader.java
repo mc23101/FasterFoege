@@ -129,4 +129,8 @@ public class GuiTextureLoader extends AbstractTexture {
             TextureUtil.deleteTexture(this.glTextureId);
         }
     }
+
+    public ResourceLocation getResourceLocation() {
+        return location;
+    }
 }

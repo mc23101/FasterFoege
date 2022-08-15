@@ -1,14 +1,16 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
-import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
-import net.minecraft.util.ResourceLocation;
 /* =======================
 ||类名：CheckBox
 ||状态：已完成
 ||作者：mc23
 ||最后一次修改时间：2022.5.26
 ==========================*/
+
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
+
 /**
  * Gui控件：选择框
  * */
@@ -38,20 +40,13 @@ public class CheckBox extends Button{
      * */
     public CheckBox(String id,int x,int y,int width,int height){
         super(id,x,y,width,height,"");
-        this.guiTextureLoader =new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
     }
 
     /**
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
-        this.texturePos= (!this.checked)?
-                new GuiTexturePos2D(0,0,20,20,64,64):
-                new GuiTexturePos2D(0,20,20,20,64,64);
-        this.hoveredTexturePos=(!this.checked)?
-                new GuiTexturePos2D(20,0,20,20,64,64):
-                new GuiTexturePos2D(20,20,20,20,64,64);
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
         super.drawGUI(mouseX, mouseY, partialTicks);
     }
 

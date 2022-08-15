@@ -1,5 +1,8 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui;
 
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.Minecraft;
@@ -10,6 +13,8 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /* =======================
 ||类名：BaseGui
 ||状态：已完成
@@ -21,6 +26,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
  * */
 @SuppressWarnings("all")
 public abstract class BaseGui extends Gui implements IBaseGUI {
+    public static final Logger logger= LogManager.getLogger("ForgeFrame");
+
     /**
      * Mc主类
      * */
@@ -189,7 +196,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException,TextureNotFoundException {
 
     }
 
@@ -267,6 +274,10 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
             this.guiTextureLoader.deleteTexture();
             this.guiTextureLoader.stopGifTread();
         }
+    }
+
+    public void setGuiTextureLoader(GuiTextureLoader guiTextureLoader) {
+        this.guiTextureLoader = guiTextureLoader;
     }
 
     /**
@@ -413,4 +424,5 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     public String getId() {
         return  id;
     }
+
 }

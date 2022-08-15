@@ -1,5 +1,8 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui;
 
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.Gui;
 /* =======================
@@ -15,7 +18,7 @@ public interface IBaseGUI {
      * @param mouseY 鼠标Y坐标
      * @param partialTicks 时间帧率
      * */
-    public void drawGUI(int mouseX, int mouseY, float partialTicks);
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException;
 
     /**
      * 鼠标点击事件

@@ -1,6 +1,8 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 /* =======================
@@ -42,10 +44,18 @@ public class Image extends BaseGui {
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException {
         if(this.visible){
-            imageGuiTextureLoader.bindTexture();
-            this.drawCustomSizedTexture(x,y,width,height,imageTexture);
+            if(imageGuiTextureLoader!=null){
+                if(imageGuiTextureLoader.getTextureId()!=-1){
+                    imageGuiTextureLoader.bindTexture();
+                    this.drawCustomSizedTexture(x,y,width,height,imageTexture);
+                }else {
+                    throw new TextureNotFoundException(imageGuiTextureLoader.getResourceLocation());
+                }
+            }else{
+                throw new NullTextureException();
+            }
         }
     }
 

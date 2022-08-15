@@ -2,10 +2,11 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /* =======================
@@ -69,19 +70,16 @@ public class Bar extends BaseGui {
         this.curr = curr;
         this.width = width;
         this.height = height;
-        this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/bars.png"));
-        this.backTexture=new GuiTexturePos2D(0,0,182,5,256,256);
-        this.overlapTexture=new GuiTexturePos2D(0,5,182,5,256,256);
     }
 
     /**
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
         if(this.visible){
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            if(enableTexture&& guiTextureLoader !=null&&guiTextureLoader.getGlTextureId()!=-1){
+            if(enableTexture){
                 drawTexture();
             }else{
                 drawColor();
@@ -108,18 +106,30 @@ public class Bar extends BaseGui {
     /**
      * 绘制启用材质的Gui
      * */
-    private void drawTexture(){
-        guiTextureLoader.bindTexture();
-        this.drawCustomSizedTexture(x, y,width,height,this.backTexture);
-        if(curr!=0){
-            GuiTexturePos2D currOverlapTexture=new GuiTexturePos2D(
-                    overlapTexture.getU(),
-                    overlapTexture.getV(),
-                    (int) (overlapTexture.getWidth()*(curr/max)),
-                    overlapTexture.getHeight(),
-                    overlapTexture.getTextureWidth(),
-                    overlapTexture.getTextureHeight());
-            this.drawCustomSizedTexture(x,y, (int) (width*(curr/max)),height,currOverlapTexture);
+    private void drawTexture() throws NullTexturePositionException, NullTextureException, TextureNotFoundException {
+        if (this.guiTextureLoader != null ) {
+            if(this.guiTextureLoader.getGlTextureId() != -1){
+                if (this.backTexture != null && this.overlapTexture != null) {
+                    guiTextureLoader.bindTexture();
+                    this.drawCustomSizedTexture(x, y, width, height, this.backTexture);
+                    if (curr != 0) {
+                        GuiTexturePos2D currOverlapTexture = new GuiTexturePos2D(
+                                overlapTexture.getU(),
+                                overlapTexture.getV(),
+                                (int) (overlapTexture.getWidth() * (curr / max)),
+                                overlapTexture.getHeight(),
+                                overlapTexture.getTextureWidth(),
+                                overlapTexture.getTextureHeight());
+                        this.drawCustomSizedTexture(x, y, (int) (width * (curr / max)), height, currOverlapTexture);
+                    }
+                }else {
+                    throw new NullTexturePositionException();
+                }
+            }else {
+                throw new TextureNotFoundException(this.guiTextureLoader.getResourceLocation());
+            }
+        }else {
+            throw new NullTextureException();
         }
     }
 

@@ -1,6 +1,9 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -74,7 +77,7 @@ public class Slider extends BaseGui {
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI( int mouseX, int mouseY, float partialTicks){
+    public void drawGUI( int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
         super.drawGUI(mouseX,mouseY,partialTicks);
     }
 

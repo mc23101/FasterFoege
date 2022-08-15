@@ -1,11 +1,12 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.BaseGui;
-import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /* =======================
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class Button extends BaseGui
 {
+
     /**
      * 按钮未聚焦时的颜色
      * */
@@ -71,16 +73,13 @@ public class Button extends BaseGui
         this.width = widthIn;
         this.height = heightIn;
         this.displayName = buttonText;
-        this.guiTextureLoader = new GuiTextureLoader(new ResourceLocation("textures/gui/widgets.png"));
-        this.texturePos=new GuiTexturePos2D(0,66,200,20,256,256);
-        this.hoveredTexturePos=new GuiTexturePos2D(0,86,200,20,256,256);
     }
 
     /**
      * {@inheritDoc}
      * */
     @Override
-    public void drawGUI(int mouseX, int mouseY, float partialTicks) {
+    public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
         if (this.visible)
         {
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
@@ -89,7 +88,7 @@ public class Button extends BaseGui
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            if(enableTexture&&this.guiTextureLoader.getGlTextureId()!=-1){
+            if(enableTexture){
                 drawButtonTexture();
             }else{
                 drawButtonColor();
@@ -101,11 +100,24 @@ public class Button extends BaseGui
     /**
      * 绘制按钮材质
      * */
-    private void drawButtonTexture(){
-        GuiTexturePos2D guiTexturePos2D =(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
-        this.guiTextureLoader.bindTexture();
-        this.drawCustomSizedTexture(this.x, this.y,this.width,this.height, guiTexturePos2D);
+    private void drawButtonTexture() throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
+        if(this.guiTextureLoader!=null){
+            if(this.guiTextureLoader.getGlTextureId()!=-1){
+                if(this.texturePos!=null&&this.hoveredTexturePos!=null){
+                    GuiTexturePos2D guiTexturePos2D =(getHoverState()==1)?this.texturePos:this.hoveredTexturePos;
+                    this.guiTextureLoader.bindTexture();
+                    this.drawCustomSizedTexture(this.x, this.y,this.width,this.height, guiTexturePos2D);
+                }else {
+                    throw new NullTexturePositionException();
+                }
+            }else {
+                throw new TextureNotFoundException(guiTextureLoader.getResourceLocation());
+            }
+        }else {
+            throw new NullTextureException();
+        }
     }
+
 
     /**
      * 绘制按钮颜色
