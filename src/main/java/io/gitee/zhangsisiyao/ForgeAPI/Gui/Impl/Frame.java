@@ -25,6 +25,8 @@ import java.util.Map;
  * */
 public abstract class Frame extends GuiScreen {
 
+    private boolean isPrintfError=false;
+
     private static final Logger logger= LogManager.getLogger("ForgeFrame");
 
     /**
@@ -98,13 +100,32 @@ public abstract class Frame extends GuiScreen {
                 try {
                     gui.drawGUI(mouseX,mouseY,partialTicks);
                 } catch (NullTextureException e) {
-                    logger.error("ID为:"+gui.getId()+"的Gui,未设置材质,请使用setGuiTextureLoader(GuiTextureLoader guiTextureLoader)方法设置材质");
+                    if(!isPrintfError){
+                        logger.error("================================================================");
+                        logger.error("     Gui的ID为:"+gui.getId());
+                        logger.error("     错误位置:"+gui.getFrame().getClass().getName()+"类");
+                        logger.error("     错误原因:未设置材质.请使用setTexture()方法设置材质");
+                        logger.error("================================================================");
+                    }
                 } catch (NullTexturePositionException e) {
-                    logger.error("ID为:"+gui.getId()+"的Gui,未设置材质的位置,请重新设置材质位置");
+                    if(!isPrintfError){
+                        logger.error("================================================================");
+                        logger.error("     Gui的ID为:"+gui.getId());
+                        logger.error("     错误位置:"+gui.getFrame().getClass().getName()+"类");
+                        logger.error("     错误原因:未设置材质位置.请使用setTexturePos()方法设置材质位置");
+                        logger.error("================================================================");
+                    }
                 } catch (TextureNotFoundException e) {
-                    logger.error("ID为:"+gui.getId()+"的Gui,无法找到:"+e.getLocation()+"材质,请使用setGuiTextureLoader(GuiTextureLoader guiTextureLoader)方法设置材质");
+                    if (!isPrintfError){
+                        logger.error("================================================================");
+                        logger.error("     Gui的ID为:"+gui.getId());
+                        logger.error("     错误位置:"+gui.getFrame().getClass().getName()+"类");
+                        logger.error("     错误原因:材质"+e.getLocation()+"未找到.请使用setTexture()方法重新设置材质");
+                        logger.error("================================================================");
+                    }
                 }
             }
+            isPrintfError=true;
     }
 
     /**

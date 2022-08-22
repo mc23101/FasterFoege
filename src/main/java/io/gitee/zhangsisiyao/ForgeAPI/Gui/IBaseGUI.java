@@ -94,5 +94,13 @@ public interface IBaseGUI {
     public void setFrame(Gui frame);
 
     public String getId();
+
+    public int getWidth();
+
+    public int getHeight();
+
+    public int getX();
+
+    public int getY();
 }
 

@@ -10,6 +10,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
+import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 
 /**
  * Gui控件：选择框
@@ -31,6 +32,10 @@ public class CheckBox extends Button{
      * */
     protected boolean checked =false;
 
+    protected GuiTexturePos2D pos;
+
+    protected GuiTexturePos2D checkedPos;
+
     /**
      * 自定义大小的CheckBox
      * @param x 在屏幕上的横坐标X
@@ -47,6 +52,17 @@ public class CheckBox extends Button{
      * */
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
+        if(this.checked){
+            this.buttonColor=checkedColor;
+            this.buttonHorveredColor=checkedColor;
+            this.texturePos=checkedPos;
+            this.hoveredTexturePos=checkedPos;
+        }else{
+            this.buttonColor=color;
+            this.buttonHorveredColor=color;
+            this.texturePos=pos;
+            this.hoveredTexturePos=pos;
+        }
         super.drawGUI(mouseX, mouseY, partialTicks);
     }
 
@@ -55,8 +71,10 @@ public class CheckBox extends Button{
      * */
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        this.checked =!this.checked;
-        return true;
+        if(this.isMouseInRange(mouseX,mouseY)){
+            this.checked =!this.checked;
+        }
+        return false;
     }
 
     /**
@@ -105,5 +123,11 @@ public class CheckBox extends Button{
      * */
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    @Override
+    public void setTexturePos(GuiTexturePos2D texturePos, GuiTexturePos2D hoveredTexturePos) {
+        this.pos=texturePos;
+        this.checkedPos=hoveredTexturePos;
     }
 }

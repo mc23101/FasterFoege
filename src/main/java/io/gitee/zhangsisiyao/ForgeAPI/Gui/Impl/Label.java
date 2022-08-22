@@ -9,6 +9,8 @@ import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 /* =======================
@@ -22,6 +24,9 @@ import java.util.List;
  * */
 @SuppressWarnings("all")
 public class Label extends BaseGui {
+
+    private final Logger logger= LogManager.getLogger("ForgeFrame");
+
     /**
      * Label文本，每一个元素代表一行文本
      * */
@@ -92,6 +97,7 @@ public class Label extends BaseGui {
     public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
         if (this.visible)
         {
+
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             this.drawLabelBackground();
@@ -121,8 +127,12 @@ public class Label extends BaseGui {
         int LineCount=this.labels.size()<=MaxLine?this.labels.size():MaxLine;
         for (int k = 0; k < LineCount; ++k)
         {
-            int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
-            this.drawString(this.fontRenderer, I18n.format(this.labels.get(k)),X , BackY+fontSize*k, this.textColor);
+            if(this.centered){
+                this.drawCustomSizedCenterString(I18n.format(this.labels.get(k)),fontSize,BackX+BackWidth/2 , BackY+fontSize*k+1, this.textColor);
+            }else {
+                this.drawCustomSizedString(I18n.format(this.labels.get(k)),fontSize,BackX , BackY+fontSize*k+1, this.textColor);
+            }
+
         }
     }
 
@@ -133,7 +143,7 @@ public class Label extends BaseGui {
         int BackY=this.y+this.border;
         int X=this.centered?BackX + (this.width-2*border) / 2: BackX;
         String str= this.labels.size()>0?this.labels.get(0):"";
-        this.drawString(this.fontRenderer, I18n.format(str), X, BackY, this.textColor);
+        //this.drawString(this.fontRenderer, I18n.format(str), X, BackY, this.textColor);
     }
 
     /**

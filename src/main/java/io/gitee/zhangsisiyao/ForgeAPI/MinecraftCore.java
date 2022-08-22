@@ -2,6 +2,7 @@ package io.gitee.zhangsisiyao.ForgeAPI;
 
 import com.alibaba.fastjson2.JSON;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.AnnotationFactory;
+import io.gitee.zhangsisiyao.ForgeAPI.Font.FontRender;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.NetWork.NetworkPack;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
@@ -70,6 +71,7 @@ public class MinecraftCore {
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
     public static void preinit(Object o){
+
         mod=o;
         Package pack = o.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
@@ -89,7 +91,7 @@ public class MinecraftCore {
     }
 
     public static void init(){
-
+        FontRender fontRender = FontRender.fontRender;
     }
 
     /**

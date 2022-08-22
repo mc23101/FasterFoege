@@ -1,5 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui;
 
+import io.gitee.zhangsisiyao.ForgeAPI.Font.FontRender;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
@@ -7,10 +8,8 @@ import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +35,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      *  Gui字体信息
      * */
-    protected FontRenderer fontRenderer=Minecraft.getMinecraft().fontRenderer;
+    protected FontRender fontRenderer= FontRender.fontRender;
 
     /**
      * Gui的唯一id
@@ -160,11 +159,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * @param color 字体颜色
      * */
     public void drawCustomSizedCenterString(String text,float fontSize,int x,int y,int color){
-        float Scale=fontSize/Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
-        GlStateManager.scale(Scale,Scale,1);
-        x= (int) (x/Scale);
-        y=(int)(y/Scale);
-        this.drawCenteredString(Minecraft.getMinecraft().fontRenderer,text,x,y,color);
+        if(text!=null){
+            this.fontRenderer.drawString(text, this.fontSize,(float)x-this.fontRenderer.getStringWidth(text)/2, (float)y, color);
+        }
     }
 
     /**
@@ -176,11 +173,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * @param color 字体颜色
      * */
     public void drawCustomSizedString(String text,float fontSize,int x,int y,int color){
-        float Scale=fontSize/Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
-        GlStateManager.scale(Scale,Scale,1);
-        x= (int) (x/Scale);
-        y=(int)(y/Scale);
-        this.drawString(Minecraft.getMinecraft().fontRenderer,text,x,y,color);
+        if(text!=null){
+            fontRenderer.drawString(text, this.fontSize,(float)x, (float)y, color);
+        }
     }
 
 
@@ -188,7 +183,9 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
      * 加载Gui的材质
      * */
     public void setTexture(GuiTextureLoader loader) {
-        this.guiTextureLoader.deleteTexture();
+        if(this.guiTextureLoader!=null){
+            this.guiTextureLoader.deleteTexture();
+        }
         this.guiTextureLoader =loader;
     }
 
@@ -276,10 +273,6 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         }
     }
 
-    public void setGuiTextureLoader(GuiTextureLoader guiTextureLoader) {
-        this.guiTextureLoader = guiTextureLoader;
-    }
-
     /**
      * {@inheritDoc}
      * */
@@ -329,6 +322,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 获取Gui的横坐标x
      * */
+    @Override
     public int getX() {
         return x;
     }
@@ -344,6 +338,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 获取Gui的纵坐标y
      * */
+    @Override
     public int getY() {
         return y;
     }
@@ -359,6 +354,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 获取Gui的宽度
      * */
+    @Override
     public int getWidth() {
         return width;
     }
@@ -374,6 +370,7 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
     /**
      * 获取Gui的高度
      * */
+    @Override
     public int getHeight() {
         return height;
     }
@@ -425,4 +422,11 @@ public abstract class BaseGui extends Gui implements IBaseGUI {
         return  id;
     }
 
+    public boolean isMouseInRange(int mouseX,int mouseY){
+        if(mouseX>=this.x&&mouseX<=this.x+this.width&&mouseY>=this.y&&mouseY<=this.y+this.height){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

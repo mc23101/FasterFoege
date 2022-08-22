@@ -5,6 +5,7 @@ import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
+import net.minecraft.client.renderer.GlStateManager;
 /* =======================
 ||类名：Image
 ||状态：已完成
@@ -46,9 +47,10 @@ public class Image extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException {
         if(this.visible){
+            GlStateManager.scale(1.0,1.0,1.0);
             if(imageGuiTextureLoader!=null){
+                imageGuiTextureLoader.bindTexture();
                 if(imageGuiTextureLoader.getTextureId()!=-1){
-                    imageGuiTextureLoader.bindTexture();
                     this.drawCustomSizedTexture(x,y,width,height,imageTexture);
                 }else {
                     throw new TextureNotFoundException(imageGuiTextureLoader.getResourceLocation());

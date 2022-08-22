@@ -6,11 +6,16 @@ import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Gui控件：滑动条
  * */
+@SuppressWarnings("all")
 public class Slider extends BaseGui {
+
+    private final Logger logger= LogManager.getLogger();
 
     /**
      * 滑块的位置
@@ -22,6 +27,8 @@ public class Slider extends BaseGui {
      * */
     protected boolean isMouseDown;
 
+    protected boolean isHovered;
+
     /**
      * 滑动条的最大值
      * */
@@ -32,14 +39,19 @@ public class Slider extends BaseGui {
      * */
     private  float max = 0;
 
+    private int buttonWidth=0;
+
+    private int buttonHeight=0;
+
+
     /**
      * 滑动条显示的文本
      * */
     protected String displayString;
 
-    protected int buttonColor=0;
+    protected int buttonColor=0xBBFFFF;
 
-    protected int buttonHoveredColor=0;
+    protected int buttonHoveredColor=0x96CDCD;
 
     protected int backgroundColor=0;
 
@@ -64,13 +76,18 @@ public class Slider extends BaseGui {
      * @param maxIn 滑动条的最大值
      * @param defaultValue 滑动条的初始值
      * */
-    public Slider(Frame frame,int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
+    public Slider(String id,int x, int y, int width,int height,String displayString, float minIn, float maxIn, float defaultValue) {
         this.displayString=displayString;
+        this.x=x;
+        this.y=y;
+        this.id=id;
         this.min = minIn;
         this.max = maxIn;
+        this.width=width;
+        this.height=height;
+        this.buttonWidth= (int) (width*0.05);
+        this.buttonHeight=height;
         this.sliderPosition = (defaultValue - minIn) / (maxIn - minIn);
-        this.buttonTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
-        this.buttonHoveredTexturePos=new GuiTexturePos2D(0,46,200,20,256,256);
     }
 
     /**
@@ -78,14 +95,50 @@ public class Slider extends BaseGui {
      * */
     @Override
     public void drawGUI( int mouseX, int mouseY, float partialTicks) throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
-        super.drawGUI(mouseX,mouseY,partialTicks);
+        if(visible){
+            this.hovered=mouseX>=this.x&&mouseX<=this.x+this.width&&mouseY>=this.y&&mouseY<=this.y+this.height;
+            if(enableTexture){
+                drawTexture();
+            }else {
+                drawColor();
+            }
+        }
     }
 
     private void drawColor(){
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.drawRect(this.x,this.y,this.x+this.width,this.y+this.height,0xFF000000+backgroundColor);
+        int left=this.x + (int)(this.sliderPosition * (float)(this.width-this.buttonWidth));
+        if(this.hovered){
+            this.drawRect(left, this.y, left+this.buttonWidth,this.y+this.height , 0xFF000000+buttonHoveredColor);
+        }else{
+            this.drawRect(left, this.y, left+this.buttonWidth,this.y+this.height , 0xFF000000+buttonColor);
+        }
 
     }
 
-    private void drawTexture(){
+    private void drawTexture() throws NullTextureException, TextureNotFoundException, NullTexturePositionException {
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        if(guiTextureLoader!=null){
+            if(guiTextureLoader.getGlTextureId()!=-1){
+                if(buttonTexturePos!=null&&buttonHoveredTexturePos!=null&&backgroundTexturePos!=null){
+                    this.guiTextureLoader.bindTexture();
+                    this.drawCustomSizedTexture(this.x,this.y,this.width,this.height,this.backgroundTexturePos);
+                    if(this.hovered){
+                        this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-this.buttonWidth)), this.y, this.buttonWidth,this.height , buttonHoveredTexturePos);
+                    }else{
+                        this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-this.buttonWidth)), this.y, this.buttonWidth,this.height , buttonTexturePos);
+                    }
+                }else {
+                    throw new NullTexturePositionException();
+                }
+            }else {
+                throw new TextureNotFoundException(guiTextureLoader.getResourceLocation());
+            }
+        }else{
+            throw new NullTextureException();
+        }
+
 
     }
 
@@ -132,7 +185,7 @@ public class Slider extends BaseGui {
         {
             if (this.isMouseDown)
             {
-                this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
+                this.sliderPosition = (float)(mouseX - (this.x + this.buttonWidth/2)) / (float)(this.width-this.buttonWidth);
 
                 if (this.sliderPosition < 0.0F)
                 {
@@ -145,15 +198,8 @@ public class Slider extends BaseGui {
                 }
 
                 this.displayString = this.getDisplayString();
+
             }
-
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            //绘画滑块材质
-
-
-            int w= (this.width*0.05)<4? 4: (int) (this.width * 0.05);
-            GuiTexturePos2D guiTexturePos2D = new GuiTexturePos2D(20, 66, w, this.height, 256, 256);
-            this.drawCustomSizedTexture(this.x + (int)(this.sliderPosition * (float)(this.width-w)), this.y, w,this.height , guiTexturePos2D);
         }
     }
 
@@ -172,22 +218,24 @@ public class Slider extends BaseGui {
      * */
     @Override
     public boolean mousePressed(int mouseX, int mouseY,int mouseButton) {
-        this.sliderPosition = (float)(mouseX - (this.x + 4)) / (float)(this.width - 8);
+        if(mouseX>=this.x&&mouseX<=this.x+this.width&&mouseY>=this.y&&mouseY<=this.y+this.height){
+            this.sliderPosition = (float)(mouseX - (this.x + this.buttonWidth/2)) / (float)(this.width-this.buttonWidth);
 
-        if (this.sliderPosition < 0.0F)
-        {
-            this.sliderPosition = 0.0F;
+            if (this.sliderPosition < 0.0F)
+            {
+                this.sliderPosition = 0.0F;
+            }
+
+            if (this.sliderPosition > 1.0F)
+            {
+                this.sliderPosition = 1.0F;
+            }
+
+            this.displayString = this.getDisplayString();
+            this.isMouseDown = true;
+            return true;
         }
-
-        if (this.sliderPosition > 1.0F)
-        {
-            this.sliderPosition = 1.0F;
-        }
-
-        this.displayString = this.getDisplayString();
-        this.isMouseDown = true;
-        return true;
-
+        return false;
     }
 
     /**

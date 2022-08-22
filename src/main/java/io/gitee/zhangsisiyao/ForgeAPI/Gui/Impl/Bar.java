@@ -78,6 +78,7 @@ public class Bar extends BaseGui {
     @Override
     public void drawGUI(int mouseX, int mouseY, float partialTicks) throws NullTextureException, NullTexturePositionException, TextureNotFoundException {
         if(this.visible){
+            GlStateManager.scale(1.0,1.0,1.0);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             if(enableTexture){
                 drawTexture();
@@ -154,7 +155,7 @@ public class Bar extends BaseGui {
      * @param backTexture 进度条背景位置
      * @param overlapTexture 进度条进度位置
      * */
-    public void setTexture(GuiTexturePos2D backTexture, GuiTexturePos2D overlapTexture){
+    public void setTexturePos(GuiTexturePos2D backTexture, GuiTexturePos2D overlapTexture){
        this.backTexture=backTexture;
         this.overlapTexture=overlapTexture;
     }
