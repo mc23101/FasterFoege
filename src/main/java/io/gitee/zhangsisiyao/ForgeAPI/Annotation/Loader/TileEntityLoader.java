@@ -19,10 +19,7 @@ public class TileEntityLoader {
     private static int error=0;
 
     public static void TileEntityAnnotationLoader(Reflections reflections){
-        logger.info("注册TileEntity中.........");
-
         loadFromClass(reflections);
-
         logger.info("一共绑定"+(success+error)+"个TileEntity。成功:"+success+" 失败:"+error);
     }
 

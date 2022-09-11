@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftItem;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManger;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -23,13 +23,8 @@ public class ItemLoader {
     private static int error=0;
 
     public static void ItemAnnotationLoader(Reflections reflections){
-
-        logger.info("注册物品中.........");
-
         loadFromClass(reflections);
-
         loadFromField(reflections);
-
         logger.info(("一共注册"+(success+error)+"个物品。成功:"+success+"  失败:"+error));
     }
 
@@ -43,13 +38,13 @@ public class ItemLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c,Item.class);
-                boolean isRegistered=MinecraftCore.ItemManger.containItem(location);
+                boolean isRegistered= ItemManger.containItem(location);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
                     Item item = (Item) c.newInstance();
                     item.setRegistryName(location);
-                    MinecraftCore.ItemManger.registerItems(item);
+                    ItemManger.registerItems(item);
                     logger.debug("物品:"+modId+":"+name+"注册成功!");
                     success++;
                 }else if(!isExtended){
@@ -76,7 +71,7 @@ public class ItemLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(), Item.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
-                boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
+                boolean isRegistered=ItemManger.containBlock(location);
 
                 boolean canRegister=isExtended && isStatic && !isRegistered;
 
@@ -86,7 +81,7 @@ public class ItemLoader {
                     if(!isNull){
                         Item item = (Item) object;
                         item.setRegistryName(location);
-                        MinecraftCore.ItemManger.registerItems(item);
+                        ItemManger.registerItems(item);
                         success++;
                     }else{
                         error++;

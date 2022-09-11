@@ -28,11 +28,9 @@ public class ResourceLoader {
     private static int error=0;
 
     public static void ResourceAnnotationLoader(Reflections reflections){
-        logger.info("注册资源中.....");
-
         loadFromClass(reflections);
-
         loadFromField(reflections);
+        logger.info("一共注册"+(success+error)+"个资源文件.成功:"+success+" 失败:"+error);
     }
 
     private static void loadFromClass(Reflections reflections){

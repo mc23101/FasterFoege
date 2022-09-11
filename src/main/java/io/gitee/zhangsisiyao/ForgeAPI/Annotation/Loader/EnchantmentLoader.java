@@ -28,13 +28,8 @@ public class EnchantmentLoader {
     private static int error=0;
 
     public static void EnchantmentAnnotationLoader(Reflections reflections){
-        logger.info("注册附魔属性中.........");
-
-
         loadFromClass(reflections);
-
         loadFromField(reflections);
-
         logger.info("一共注册"+(success+error)+"个附魔。成功:"+success+"  失败:"+error);
     }
 

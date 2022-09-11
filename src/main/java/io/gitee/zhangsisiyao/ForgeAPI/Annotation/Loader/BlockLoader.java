@@ -27,11 +27,8 @@ public class BlockLoader {
     private static int error=0;
 
     public static void BlockAnnotationLoader(Reflections reflections) {
-        logger.info("注册方块中.........");
-
         loadFromClass(reflections);
         loadFromField(reflections);
-
         logger.info("一共注册"+(success+error)+"个方块。成功:"+success+"  失败:"+error);
     }
 

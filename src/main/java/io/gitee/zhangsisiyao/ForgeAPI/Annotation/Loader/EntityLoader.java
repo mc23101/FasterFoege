@@ -22,8 +22,13 @@ public class EntityLoader {
     private static int error=0;
 
     public static void EntityAnnotationLoader(Reflections reflections){
-        logger.info("注册实体中.........");
+        loadEntityFromClass(reflections);
+        loadEntityRender(reflections);
+        logger.info("一共注册"+(success+error)+"个实体。成功:"+success+"  失败:"+error);
 
+    }
+
+    private static void loadEntityFromClass(Reflections reflections){
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntity.class);
         for(Class c:classes){
             MinecraftEntity annotation = (MinecraftEntity) c.getAnnotation(MinecraftEntity.class);
@@ -54,25 +59,19 @@ public class EntityLoader {
             }
 
         }
-        logger.info("一共注册"+classes.size()+"个实体。成功:"+success+"  失败:"+error);
-
-        EntityRenderAnnotationLoader(reflections);
     }
 
     /**
      * 绑定Entity的渲染类
      * @param o mod主类
      * */
-    private static void EntityRenderAnnotationLoader(Reflections reflections){
-        logger.info("绑定实体渲染中.....");
-
+    private static void loadEntityRender(Reflections reflections){
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftEntityRender.class);
         for(Class c:classes){
             MinecraftEntityRender annotation = (MinecraftEntityRender) c.getAnnotation(MinecraftEntityRender.class);
             Class<? extends Entity> aClass = annotation.EntityClass();
             MinecraftCore.EntityManger.registerEntityRender(aClass,c);
         }
-
         logger.info("一共绑定"+classes.size()+"个实体渲染");
     }
 
