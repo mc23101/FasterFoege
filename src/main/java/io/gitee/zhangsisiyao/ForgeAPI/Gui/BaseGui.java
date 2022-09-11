@@ -1,9 +1,9 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Gui;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Font.FontRender;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTextureLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.Minecraft;

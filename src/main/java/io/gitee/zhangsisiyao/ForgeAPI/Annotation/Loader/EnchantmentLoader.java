@@ -35,7 +35,6 @@ public class EnchantmentLoader {
 
         loadFromField(reflections);
 
-
         logger.info("一共注册"+(success+error)+"个附魔。成功:"+success+"  失败:"+error);
     }
 

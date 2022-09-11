@@ -7,9 +7,9 @@ package io.gitee.zhangsisiyao.ForgeAPI.Gui.Impl;
 ||最后一次修改时间：2022.5.26
 ==========================*/
 
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTextureException;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.NullTexturePositionException;
-import io.gitee.zhangsisiyao.ForgeAPI.Gui.ex.TextureNotFoundException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.NullTextureException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.NullTexturePositionException;
+import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 
 /**

@@ -1,5 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
+import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
@@ -18,8 +20,23 @@ public class AnnotationFactory {
         EntityLoader.EntityAnnotationLoader(reflections);
         PotionLoader.PotionAnnotationLoader(reflections);
         EnchantmentLoader.EnchantmentAnnotationLoader(reflections);
-        ResourceLoader.ResourceAnnotationLoader(reflections);
         TileEntityLoader.TileEntityAnnotationLoader(reflections);
     }
 
+
+    public static void throwException(Logger logger, String errorType, ResourceLocation location, String reason, Class aClass){
+        logger.error("=================================================================================");
+        logger.error(errorType+":"+location+"注册失败");
+        logger.error("失败原因:"+reason);
+        logger.error("错误位置:"+aClass.getName()+"类");
+        logger.error("=================================================================================");
+    }
+
+    public static void throwException(Logger logger, String errorType,ResourceLocation location, String reason,Class aClass,String fieldName){
+        logger.error("=================================================================================");
+        logger.error(errorType+":"+location+"注册失败");
+        logger.error("失败原因:"+reason);
+        logger.error("错误位置:"+aClass+"类中的"+fieldName+"字段");
+        logger.error("=================================================================================");
+    }
 }

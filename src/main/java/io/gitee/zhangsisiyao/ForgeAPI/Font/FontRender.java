@@ -228,7 +228,7 @@ public class FontRender {
                 this.posX += f1;
                 this.renderChar(c0, this.italicStyle);
                 this.posX -= f1;
-                f+=fontSize*0.1;
+                f+=fontSize*0.15;
             }
             this.posX += (float)((int)f);
         }

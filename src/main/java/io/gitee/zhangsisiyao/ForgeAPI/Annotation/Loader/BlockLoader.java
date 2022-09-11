@@ -20,16 +20,16 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class BlockLoader {
-    private static final Logger logger = LogManager.getLogger("ForgeFrame");
+    public static final Logger logger = LogManager.getLogger("ForgeFrame/BlockLoader");
 
+    private static final String errorType="方块";
     private static int success=0;
     private static int error=0;
 
-    public static void BlockAnnotationLoader(Reflections reflections){
+    public static void BlockAnnotationLoader(Reflections reflections) {
         logger.info("注册方块中.........");
 
         loadFromClass(reflections);
-
         loadFromField(reflections);
 
         logger.info("一共注册"+(success+error)+"个方块。成功:"+success+"  失败:"+error);
@@ -39,7 +39,7 @@ public class BlockLoader {
      *加载类上得{@link io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock} 注解
      * @param reflections mod主类得反射包
      * */
-    private static void loadFromClass(Reflections reflections){
+    private static void loadFromClass(Reflections reflections)  {
         try {
             Set<Class<?>> classes = reflections.getTypesAnnotatedWith(MinecraftBlock.class);
             for(Class c:classes){
@@ -70,10 +70,10 @@ public class BlockLoader {
                     success++;
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+c.getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在net.minecraft.block.Block的子类上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"方块应为"+Block.class.getName()+"的子类",c);
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",c);
                 }
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
@@ -93,7 +93,7 @@ public class BlockLoader {
                 MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
-
+                Class DeclaringClass=field.getDeclaringClass();
                 ResourceLocation location = new ResourceLocation(modId, name);
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Block.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
@@ -101,7 +101,7 @@ public class BlockLoader {
                 boolean canRegister=isExtended && isStatic && !isRegistered;
 
                 if(canRegister){
-                    Object object = field.get(field.getDeclaringClass());
+                    Object object = field.get(DeclaringClass);
                     Block block = (Block)object;
                     boolean isNull=object==null;
                     if(!isNull){
@@ -112,17 +112,17 @@ public class BlockLoader {
                         success++;
                     }else {
                         error++;
-                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"为null");
+                        AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为Null",DeclaringClass,field.getName());
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftBlock注解使用错误,请将此注解作用在类型为 net.minecraft.block.Block或其子类 的字段上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"方块应为"+Block.class.getName()+"的子类",DeclaringClass,field.getName());
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",DeclaringClass,field.getName());
                 }else if(!isStatic){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftBlock注解使用错误，请作用在static字段上.");
+                    AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为非static",DeclaringClass,field.getName());
                 }
             }
         } catch (IllegalAccessException e) {

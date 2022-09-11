@@ -1,4 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Gui.ex;
+package io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception;
 
 import net.minecraft.util.ResourceLocation;
 
