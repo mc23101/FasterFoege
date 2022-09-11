@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftResource;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResource;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.client.resources.IResource;
@@ -43,12 +43,12 @@ public class ResourceLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended= ReflectionUtil.isExtendFrom(c, IResource.class);
-                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location);
+                boolean isRegistered= ResourceManager.containResource(location);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
                     IResource resource = (IResource) c.newInstance();
-                    MinecraftCore.ResourceManger.registerResource(location,resource);
+                    ResourceManager.registerResource(location,resource);
                     logger.debug("资源:"+modId+":"+name+"注册成功!");
                     success++;
                 }else if(!isExtended){
@@ -80,7 +80,7 @@ public class ResourceLoader {
                 boolean isIResource=ReflectionUtil.isExtendFrom(field.getType(), IResource.class);
 
                 boolean isExtended= isFile||isString||isURL||isIResource;
-                boolean isRegistered= MinecraftCore.ResourceManger.containResource(location);
+                boolean isRegistered= ResourceManager.containResource(location);
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
                 boolean canRegister= isExtended && !isRegistered && isStatic;
 
@@ -100,7 +100,7 @@ public class ResourceLoader {
                         byte[] check = new byte[1024];
                         if(resource!=null&&resource.getInputStream().read(check) != -1) {
                             success++;
-                            MinecraftCore.ResourceManger.registerResource(location,resource);
+                            ResourceManager.registerResource(location,resource);
                             logger.debug("资源:"+location+"加载成功!!");
                         }else{
                             error++;

@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftPotion;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.PotionManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +42,7 @@ public class PotionLoader {
                 ResourceLocation location = new ResourceLocation(id, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c,Potion.class);
-                boolean isRegistered=MinecraftCore.PotionManger.containPotion(location);
+                boolean isRegistered= PotionManager.containPotion(location);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
@@ -50,7 +50,7 @@ public class PotionLoader {
                     constructor.setAccessible(true);
                     Potion potion = (Potion) constructor.newInstance(badEffect, color);
                     potion.setRegistryName(location);
-                    MinecraftCore.PotionManger.registerPotion(potion);
+                    PotionManager.registerPotion(potion);
                     logger.debug("药水效果:"+id+":"+name+"注册成功");
                 }else if(!isExtended){
                     error++;
@@ -79,7 +79,7 @@ public class PotionLoader {
 
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Potion.class);
-                boolean isRegistered=MinecraftCore.PotionManger.containPotion(location);
+                boolean isRegistered=PotionManager.containPotion(location);
 
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
                 boolean canRegister= isExtended && !isRegistered && isStatic;
@@ -90,7 +90,7 @@ public class PotionLoader {
                     if(!isNull){
                         Potion potion = (Potion) object;
                         potion.setRegistryName(location);
-                        MinecraftCore.PotionManger.registerPotion(potion);
+                        PotionManager.registerPotion(potion);
                         success++;
                     }else{
                         error++;

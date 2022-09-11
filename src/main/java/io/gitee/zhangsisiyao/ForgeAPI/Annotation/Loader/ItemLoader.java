@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftItem;
-import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManger;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -38,13 +38,13 @@ public class ItemLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c,Item.class);
-                boolean isRegistered= ItemManger.containItem(location);
+                boolean isRegistered= ItemManager.containItem(location);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
                     Item item = (Item) c.newInstance();
                     item.setRegistryName(location);
-                    ItemManger.registerItems(item);
+                    ItemManager.registerItems(item);
                     logger.debug("物品:"+modId+":"+name+"注册成功!");
                     success++;
                 }else if(!isExtended){
@@ -71,7 +71,7 @@ public class ItemLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(), Item.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
-                boolean isRegistered=ItemManger.containBlock(location);
+                boolean isRegistered= ItemManager.containBlock(location);
 
                 boolean canRegister=isExtended && isStatic && !isRegistered;
 
@@ -81,7 +81,7 @@ public class ItemLoader {
                     if(!isNull){
                         Item item = (Item) object;
                         item.setRegistryName(location);
-                        ItemManger.registerItems(item);
+                        ItemManager.registerItems(item);
                         success++;
                     }else{
                         error++;

@@ -15,7 +15,7 @@ import java.util.Map;
  * 物品管理器,用于操作Item和Block
  * <p>例如:注册物品、注册方块</p>
  * */
-public class ItemManger {
+public class ItemManager {
     /**
      * 用于存放所有注册过的创造模式物品页
      * */

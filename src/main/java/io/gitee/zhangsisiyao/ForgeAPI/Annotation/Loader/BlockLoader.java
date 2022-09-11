@@ -2,7 +2,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum.BlockMaterial;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -53,7 +53,7 @@ public class BlockLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c,Block.class);
-                boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
+                boolean isRegistered= ItemManager.containBlock(location);
                 boolean canRegister=isExtended && !isRegistered;
 
                 if(canRegister){
@@ -62,8 +62,8 @@ public class BlockLoader {
                     constructor.setAccessible(true);
                     block = (Block) constructor.newInstance(material);
                     block.setRegistryName(location);
-                    MinecraftCore.ItemManger.registerBlocks(block);
-                    MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                    ItemManager.registerBlocks(block);
+                    ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
                     success++;
                 }else if(!isExtended){
                     error++;
@@ -94,7 +94,7 @@ public class BlockLoader {
                 ResourceLocation location = new ResourceLocation(modId, name);
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(),Block.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
-                boolean isRegistered=MinecraftCore.ItemManger.containBlock(location);
+                boolean isRegistered=ItemManager.containBlock(location);
                 boolean canRegister=isExtended && isStatic && !isRegistered;
 
                 if(canRegister){
@@ -103,8 +103,8 @@ public class BlockLoader {
                     boolean isNull=object==null;
                     if(!isNull){
                         block.setRegistryName(location);
-                        MinecraftCore.ItemManger.registerBlocks(block);
-                        MinecraftCore.ItemManger.registerItems(new ItemBlock(block).setRegistryName(location));
+                        ItemManager.registerBlocks(block);
+                        ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
                         logger.debug("方块:"+location+"注册成功!");
                         success++;
                     }else {

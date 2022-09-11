@@ -1,7 +1,8 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftTileEntity;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.TileEntityManager;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,8 +31,8 @@ public class TileEntityLoader {
             String[] blocks = annotation.Blocks();
             for(String block:blocks){
                 ResourceLocation location = new ResourceLocation(block);
-                if(MinecraftCore.ItemManger.containBlock(location)){
-                    MinecraftCore.TileEntityManger.registerTileEntity(c,location);
+                if(ItemManager.containBlock(location)){
+                    TileEntityManager.registerTileEntity(c,location);
                     logger.debug("方块"+block+"绑定TileEntity成功");
                     success++;
                 }else{

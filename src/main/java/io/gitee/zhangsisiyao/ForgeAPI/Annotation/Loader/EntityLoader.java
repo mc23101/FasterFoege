@@ -2,6 +2,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftEntity;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftEntityRender;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.EntityManager;
 import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.entity.Entity;
@@ -42,12 +43,12 @@ public class EntityLoader {
             int primary = annotation.eggPrimary();
             int secondary = annotation.eggSecondary();
 
-            boolean isRegistered=MinecraftCore.EntityManger.containEntity(registerName);
+            boolean isRegistered= EntityManager.containEntity(registerName);
             boolean isExtended=ReflectionUtil.isExtendFrom(c,Entity.class);
             boolean canRegister=isExtended&&!isRegistered;
 
             if(canRegister){
-                MinecraftCore.EntityManger.registerEntity(registerName,c,name,id,MinecraftCore.mod,range,frequency,updates,primary,secondary);
+                EntityManager.registerEntity(registerName,c,name,id,MinecraftCore.mod,range,frequency,updates,primary,secondary);
                 logger.debug("实体:"+modId+":"+name+"注册成功!");
                 success++;
             }else if(!isExtended){
@@ -70,7 +71,7 @@ public class EntityLoader {
         for(Class c:classes){
             MinecraftEntityRender annotation = (MinecraftEntityRender) c.getAnnotation(MinecraftEntityRender.class);
             Class<? extends Entity> aClass = annotation.EntityClass();
-            MinecraftCore.EntityManger.registerEntityRender(aClass,c);
+            EntityManager.registerEntityRender(aClass,c);
         }
         logger.info("一共绑定"+classes.size()+"个实体渲染");
     }
