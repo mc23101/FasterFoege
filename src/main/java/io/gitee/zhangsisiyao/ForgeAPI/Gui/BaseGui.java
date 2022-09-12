@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  * */
 @SuppressWarnings("all")
 public abstract class BaseGui extends Gui implements IBaseGUI {
-    public static final Logger logger= LogManager.getLogger("ForgeFrame");
+    public static final Logger logger= LogManager.getLogger("FasterForge");
 
     /**
      * Mc主类

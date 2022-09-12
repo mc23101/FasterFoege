@@ -23,7 +23,7 @@ public class ResourceLoader {
 
     private static final String errorType="资源";
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 

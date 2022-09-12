@@ -20,7 +20,7 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class BlockLoader {
-    public static final Logger logger = LogManager.getLogger("ForgeFrame/BlockLoader");
+    public static final Logger logger = LogManager.getLogger("FasterForge");
 
     private static final String errorType="方块";
     private static int success=0;

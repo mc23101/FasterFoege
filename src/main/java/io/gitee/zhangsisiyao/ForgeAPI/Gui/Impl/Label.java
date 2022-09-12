@@ -25,7 +25,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class Label extends BaseGui {
 
-    private final Logger logger= LogManager.getLogger("ForgeFrame");
+    private final Logger logger= LogManager.getLogger("FasterForge");
 
     /**
      * Label文本，每一个元素代表一行文本

@@ -19,7 +19,7 @@ import java.util.Set;
 public class PotionLoader {
 
     private static final String errorType="药水效果";
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 

@@ -5,8 +5,6 @@ buildscript {
         maven { url = 'https://maven.minecraftforge.net/' }
         jcenter()
         mavenCentral()
-
-
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
@@ -20,10 +18,10 @@ apply plugin: 'signing'
 apply plugin: 'maven'
 
 
-version = '1.0.3'
+version = '1.0.1'
 group='io.gitee.zhangsisiyao'
 // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'ForgeFrame-1.12.2'
+archivesBaseName = 'FasterForge-1.12.2'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

@@ -19,7 +19,7 @@ public class ItemLoader {
 
     private static final String errorType="物品";
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 

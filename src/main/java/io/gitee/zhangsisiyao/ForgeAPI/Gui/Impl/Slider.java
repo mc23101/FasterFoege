@@ -6,8 +6,6 @@ import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.NullTexturePositionException
 import io.gitee.zhangsisiyao.ForgeAPI.Gui.Exception.TextureNotFoundException;
 import io.gitee.zhangsisiyao.ForgeAPI.Texture.GuiTexturePos2D;
 import net.minecraft.client.renderer.GlStateManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Gui控件：滑动条
@@ -15,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("all")
 public class Slider extends BaseGui {
 
-    private final Logger logger= LogManager.getLogger();
 
     /**
      * 滑块的位置

@@ -26,7 +26,6 @@ public class TextureUtils {
         } catch (Exception e) {
             return false;
         }
-
         if (l == 10) {
             byte b0 = b[0];
             byte b1 = b[1];

@@ -15,7 +15,7 @@ public class TileEntityLoader {
 
     private static final String errorType="TileEntity";
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 

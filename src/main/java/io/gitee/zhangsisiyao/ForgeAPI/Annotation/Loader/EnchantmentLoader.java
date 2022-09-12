@@ -23,7 +23,7 @@ public class EnchantmentLoader {
 
     private static final String errorType="附魔";
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 

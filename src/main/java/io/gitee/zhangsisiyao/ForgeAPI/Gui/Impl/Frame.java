@@ -27,7 +27,7 @@ public abstract class Frame extends GuiScreen {
 
     private boolean isPrintfError=false;
 
-    private static final Logger logger= LogManager.getLogger("ForgeFrame");
+    private static final Logger logger= LogManager.getLogger("FasterForge");
 
     /**
      * mc主类

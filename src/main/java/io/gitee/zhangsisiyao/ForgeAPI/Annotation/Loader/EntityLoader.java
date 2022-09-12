@@ -18,7 +18,7 @@ public class EntityLoader {
 
     private static final String errorType="实体";
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     private static int success=0;
 
