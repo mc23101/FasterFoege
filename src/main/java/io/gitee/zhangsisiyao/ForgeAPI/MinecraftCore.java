@@ -1,7 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.AnnotationFactory;
-import io.gitee.zhangsisiyao.ForgeAPI.Font.FontRender;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
@@ -52,6 +51,6 @@ public class MinecraftCore {
     }
 
     public static void init(){
-        FontRender fontRender = FontRender.fontRender;
+
     }
 }
