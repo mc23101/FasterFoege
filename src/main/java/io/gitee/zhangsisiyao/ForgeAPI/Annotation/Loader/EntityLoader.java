@@ -16,6 +16,8 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class EntityLoader {
 
+    private static final String errorType="实体";
+
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
@@ -53,10 +55,10 @@ public class EntityLoader {
                 success++;
             }else if(!isExtended){
                 error++;
-                logger.error("在"+c.getName()+"处的MinecraftEntity注解使用错误,请将此注解作用在net.minecraft.entity.Entity子类上!");
+                AnnotationFactory.throwException(logger,errorType,registerName,"实体应为"+ Entity.class.getName()+"的子类",c);
             }else if(isRegistered){
                 error++;
-                logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                AnnotationFactory.throwException(logger,errorType,registerName,registerName+"名称已被注册",c);
             }
 
         }
