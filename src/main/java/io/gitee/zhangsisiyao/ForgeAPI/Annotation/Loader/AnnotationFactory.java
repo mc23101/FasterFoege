@@ -36,7 +36,7 @@ public class AnnotationFactory {
         logger.error("=================================================================================");
         logger.error(errorType+":"+location+"注册失败");
         logger.error("失败原因:"+reason);
-        logger.error("错误位置:"+aClass+"类中的"+fieldName+"字段");
+        logger.error("错误位置:"+aClass.getName()+"类中的"+fieldName+"字段");
         logger.error("=================================================================================");
     }
 }

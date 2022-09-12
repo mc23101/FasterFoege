@@ -1,6 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Texture;
 
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.TextureUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
@@ -35,7 +35,7 @@ public class GuiTextureLoader extends AbstractTexture {
     public GuiTextureLoader(ResourceLocation location){
         try {
             this.location=location;
-            if(MinecraftCore.ResourceManger.containResource(location)){
+            if(ResourceManager.containResource(location)){
                 resource =Minecraft.getMinecraft().getResourceManager().getResource(location);
                 InputStream  stream=resource.getInputStream();
                 ByteArrayOutputStream byteArrayOutputStream = TextureUtils.cloneInputStream(stream);

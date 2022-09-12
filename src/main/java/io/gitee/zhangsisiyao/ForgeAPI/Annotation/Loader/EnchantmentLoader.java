@@ -1,7 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftEnchantment;
-import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
+import io.gitee.zhangsisiyao.ForgeAPI.Manager.EnchantmentManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -20,6 +20,8 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class EnchantmentLoader {
+
+    private static final String errorType="附魔";
 
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
@@ -46,21 +48,21 @@ public class EnchantmentLoader {
                 ResourceLocation registerName = new ResourceLocation(modId, name);
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(c, Enchantment.class);
-                boolean isRegistered=MinecraftCore.EntityManger.containEntity(registerName);
+                boolean isRegistered= EnchantmentManager.containEnchantment(registerName);
                 boolean canRegister= isExtended && !isRegistered;
 
                 if(canRegister){
                     Constructor constructor = c.getConstructor(Enchantment.Rarity.class, EnumEnchantmentType.class, EntityEquipmentSlot[].class);
                     Enchantment enchantment =(Enchantment) constructor.newInstance(rarity, type, slot);
-                    MinecraftCore.EnchantmentManger.registerEnchantment(enchantment);
+                    EnchantmentManager.registerEnchantment(enchantment);
                     logger.debug("附魔:"+modId+":"+name+"注册成功!");
                     success++;
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+c.getName()+"处的MinecraftEnchantment注解使用错误,请将此注解作用在net.minecraft.enchantment.Enchantment子类上!");
+                    AnnotationFactory.throwException(logger,errorType,registerName,"附魔应为"+Enchantment.class.getName()+"的子类",c);
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,registerName,registerName+"名称已被注册",c);
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
@@ -80,8 +82,9 @@ public class EnchantmentLoader {
 
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(), Block.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
-                boolean isRegistered=MinecraftCore.EnchantmentManger.containEnchantment(registerName);
+                boolean isRegistered=EnchantmentManager.containEnchantment(registerName);
                 boolean canRegister=isExtended && isStatic && !isRegistered;
+                Class DeclaringClass=field.getDeclaringClass();
 
                 if(canRegister){
                     Object object = field.get(field.getDeclaringClass());
@@ -89,21 +92,21 @@ public class EnchantmentLoader {
                     if(!isNull){
                         Enchantment enchantment = (Enchantment) object;
                         enchantment.setRegistryName(new ResourceLocation(modId,name));
-                        MinecraftCore.EnchantmentManger.registerEnchantment(enchantment);
+                        EnchantmentManager.registerEnchantment(enchantment);
                         logger.debug("附魔:"+modId+":"+name+"注册成功!");
                         success++;
                     }else{
                         error++;
-                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"为null");
+                        AnnotationFactory.throwException(logger,errorType,registerName,"字段:"+field.getName()+"为Null",DeclaringClass,field.getName());
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftEnchantment注解使用错误,请将此注解作用在类型为net.minecraft.enchantment.Enchantment类或其子类的字段上!");
+                    AnnotationFactory.throwException(logger,errorType,registerName,"附魔应为"+Enchantment.class.getName()+"的子类",DeclaringClass,field.getName());
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,registerName,registerName+"名称已被注册",DeclaringClass,field.getName());
                 }else if(!isStatic){
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftEnchantment注解使用错误，请作用在static字段上.");
+                    AnnotationFactory.throwException(logger,errorType,registerName,"字段:"+field.getName()+"为非static",DeclaringClass,field.getName());
                 }
 
             }
