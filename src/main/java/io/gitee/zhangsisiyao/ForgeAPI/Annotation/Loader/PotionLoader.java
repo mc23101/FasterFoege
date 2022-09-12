@@ -3,6 +3,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftPotion;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.PotionManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
+import net.minecraft.block.Block;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 public class PotionLoader {
 
+    private static final String errorType="药水效果";
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
@@ -54,10 +56,10 @@ public class PotionLoader {
                     logger.debug("药水效果:"+id+":"+name+"注册成功");
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+c.getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在net.minecraft.potion.Potion的子类上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"药水效果应为"+ Block.class.getName()+"的子类",c);
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的"+id+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",c);
                 }
 
             }
@@ -84,6 +86,8 @@ public class PotionLoader {
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
                 boolean canRegister= isExtended && !isRegistered && isStatic;
 
+                Class DeclaringClass=field.getDeclaringClass();
+
                 if(canRegister){
                     Object object=field.get(field.getDeclaringClass());
                     boolean isNull=(object==null);
@@ -94,17 +98,17 @@ public class PotionLoader {
                         success++;
                     }else{
                         error++;
-                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                        AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为Null",DeclaringClass,field.getName());
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftPotion注解使用错误,请将此注解作用在类型为net.minecraft.potion.Potion类或其子类的字段!");
+                    AnnotationFactory.throwException(logger,errorType,location,"方块应为"+Potion.class.getName()+"的子类",DeclaringClass,field.getName());
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的"+id+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",DeclaringClass,field.getName());
                 }else if(!isStatic){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftPotion注解使用错误，请作用在static字段上.");
+                    AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为非static",DeclaringClass,field.getName());
                 }
             }
         } catch (IllegalAccessException e) {
