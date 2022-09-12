@@ -18,7 +18,7 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class MinecraftCore {
 
-    private static Logger logger= LogManager.getLogger("ForgeFrame");
+    private static Logger logger= LogManager.getLogger("FasterForge");
 
     public static String MODID="";
 
