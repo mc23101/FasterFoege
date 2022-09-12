@@ -13,6 +13,8 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class TileEntityLoader {
 
+    private static final String errorType="TileEntity";
+
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
@@ -36,7 +38,7 @@ public class TileEntityLoader {
                     logger.debug("方块"+block+"绑定TileEntity成功");
                     success++;
                 }else{
-                    logger.error("在"+c.getName()+"中MinecraftTileEntity注解的 参数Blocks中的元素:"+block+"绑定TileEntity失败。原因:方块"+block+"不存在.");
+                    AnnotationFactory.throwException(logger,errorType,location,"在"+c.getName()+"中MinecraftTileEntity注解的 参数Blocks中的元素:"+block+"绑定TileEntity失败。原因:方块"+block+"不存在.",c);
                     error++;
                 }
             }

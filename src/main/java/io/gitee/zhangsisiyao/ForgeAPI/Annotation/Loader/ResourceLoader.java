@@ -21,6 +21,8 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class ResourceLoader {
 
+    private static final String errorType="资源";
+
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
     private static int success=0;
@@ -53,10 +55,10 @@ public class ResourceLoader {
                     success++;
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+c.getName()+"处的MinecraftResource注解使用错误,请将此注解作用在实现net.minecraft.client.resources.IResource接口的子类上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"资源应实现"+ IResource.class.getName()+"的子类接口",c);
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的modId:"+modId+",name:"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",c);
                 }
             }
         } catch (InstantiationException | IllegalAccessException e) {
@@ -84,6 +86,8 @@ public class ResourceLoader {
                 boolean isStatic= Modifier.isStatic(field.getModifiers());
                 boolean canRegister= isExtended && !isRegistered && isStatic;
 
+                Class DeclaringClass =field.getDeclaringClass();
+
                 if(canRegister){
                     Object resourceObject = field.get(field.getDeclaringClass());
                     IResource resource = null;
@@ -104,18 +108,18 @@ public class ResourceLoader {
                             logger.debug("资源:"+location+"加载成功!!");
                         }else{
                             error++;
-                            logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源不存在.");
+                            AnnotationFactory.throwException(logger,errorType,location,"无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源不存在.",DeclaringClass);
                         }
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源类型错误，请确保字段的类型为String、File或者URL.");
+                    AnnotationFactory.throwException(logger,errorType,location,"无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源，资源类型错误，请确保字段的类型为String、File或者URL.",DeclaringClass);
                 }else if(isRegistered){
                     error++;
-                    logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源.资源:"+location+"已经被注册");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",DeclaringClass,field.getName());
                 }else if(!isStatic){
                     error++;
-                    logger.info("无法加载到在"+field.getDeclaringClass().getName()+"处+"+field.getName()+"字段的资源.字段:"+field.getName()+"不是static字段");
+                    AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为非static",DeclaringClass,field.getName());
                 }
             }
         } catch (IllegalAccessException e) {
