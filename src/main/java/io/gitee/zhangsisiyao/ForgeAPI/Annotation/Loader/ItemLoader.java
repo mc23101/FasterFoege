@@ -3,6 +3,7 @@ package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
 import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftItem;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,8 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class ItemLoader {
+
+    private static final String errorType="物品";
 
     private static Logger logger= LogManager.getLogger("ForgeFrame");
 
@@ -49,10 +52,10 @@ public class ItemLoader {
                     success++;
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+c.getName()+"处的MinecraftItem注解使用错误,请将此注解作用在net.minecraft.block.Item的子类上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"物品应为"+ Block.class.getName()+"的子类",c);
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+c.getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",c);
                 }
             }
         } catch (InstantiationException | IllegalAccessException e) {
@@ -72,8 +75,9 @@ public class ItemLoader {
                 boolean isExtended=ReflectionUtil.isExtendFrom(field.getType(), Item.class);
                 boolean isStatic=Modifier.isStatic(field.getModifiers());
                 boolean isRegistered= ItemManager.containBlock(location);
-
                 boolean canRegister=isExtended && isStatic && !isRegistered;
+
+                Class DeclaringClass=field.getDeclaringClass();
 
                 if(canRegister){
                     Object object = field.get(field.getDeclaringClass());
@@ -85,17 +89,17 @@ public class ItemLoader {
                         success++;
                     }else{
                         error++;
-                        logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"对象为null");
+                        AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为Null",DeclaringClass,field.getName());
                     }
                 }else if(!isExtended){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的MinecraftItem注解使用错误,请将此注解作用在类型为net.minecraft.item.Item类或其子类的字段上!");
+                    AnnotationFactory.throwException(logger,errorType,location,"物品应为"+Item.class.getName()+"的子类",DeclaringClass,field.getName());
                 }else if(isRegistered){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"处的"+modId+":"+name+"已经被注册!!!");
+                    AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",DeclaringClass,field.getName());
                 }else if(!isStatic){
                     error++;
-                    logger.error("在"+field.getDeclaringClass().getName()+"中的字段:"+field.getName()+"注解MinecraftItem注解使用错误，请作用在static字段上.");
+                    AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为非static",DeclaringClass,field.getName());
                 }
             }
         } catch (IllegalAccessException e) {
