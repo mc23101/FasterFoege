@@ -1,6 +1,6 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftTileEntity;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftTileEntity;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.TileEntityManager;
 import net.minecraft.util.ResourceLocation;

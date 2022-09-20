@@ -49,7 +49,6 @@ public class GuiTextureLoader extends AbstractTexture {
                     startGifTread();
                 }
                 this.imageBuffer = TextureUtil.readBufferedImage(inputStream4);
-
                 IOUtils.closeQuietly(stream,inputStream1,inputStream2,inputStream3,inputStream4);
             }
 
@@ -82,20 +81,18 @@ public class GuiTextureLoader extends AbstractTexture {
 
     public void startGifTread(){
         long timeInterval = gifTimes.get(gifFrameIndex);
-        Runnable runnable = new Runnable() {
-            public void run() {
-                while (true) {
-                    imageBuffer=gifFrames.get(gifFrameIndex);
-                    gifFrameIndex++;
-                    if(gifFrameIndex==gifFrames.size()){
-                        gifFrameIndex=0;
-                    }
-                    try {
-                        // sleep()：同步延迟数据，并且会阻塞线程
-                        Thread.sleep(timeInterval);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        Runnable runnable = () -> {
+            while (true) {
+                imageBuffer=gifFrames.get(gifFrameIndex);
+                gifFrameIndex++;
+                if(gifFrameIndex==gifFrames.size()){
+                    gifFrameIndex=0;
+                }
+                try {
+                    // sleep()：同步延迟数据，并且会阻塞线程
+                    Thread.sleep(timeInterval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };

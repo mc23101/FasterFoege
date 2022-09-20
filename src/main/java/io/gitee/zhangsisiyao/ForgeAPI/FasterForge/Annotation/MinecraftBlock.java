@@ -1,6 +1,6 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum.BlockMaterial;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Enum.BlockMaterial;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

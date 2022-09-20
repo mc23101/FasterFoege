@@ -1,6 +1,6 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftResource;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftResource;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResource;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;

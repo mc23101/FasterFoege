@@ -1,7 +1,7 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum.BlockMaterial;
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Enum.BlockMaterial;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftBlock;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ItemManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ public class BlockLoader {
     }
 
     /**
-     *加载类上得{@link io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock} 注解
+     *加载类上得{@link io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftBlock} 注解
      * @param reflections mod主类得反射包
      * */
     private static void loadFromClass(Reflections reflections)  {
@@ -79,7 +79,7 @@ public class BlockLoader {
     }
 
     /**
-     * 加载静态变量的{@link io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftBlock}注解
+     * 加载静态变量的{@link io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftBlock}注解
      * @param reflections mod的主类反射包
      * */
     private static void loadFromField(Reflections reflections){

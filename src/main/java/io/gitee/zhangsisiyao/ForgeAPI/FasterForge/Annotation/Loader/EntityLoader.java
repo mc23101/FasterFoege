@@ -1,7 +1,7 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftEntity;
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftEntityRender;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftEntity;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftEntityRender;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.EntityManager;
 import io.gitee.zhangsisiyao.ForgeAPI.MinecraftCore;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;

@@ -1,4 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.Logger;

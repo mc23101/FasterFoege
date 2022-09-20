@@ -1,4 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;

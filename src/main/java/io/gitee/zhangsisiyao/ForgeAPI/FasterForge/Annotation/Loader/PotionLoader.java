@@ -1,6 +1,6 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.MinecraftPotion;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.MinecraftPotion;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.PotionManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Utils.ReflectionUtil;
 import net.minecraft.block.Block;

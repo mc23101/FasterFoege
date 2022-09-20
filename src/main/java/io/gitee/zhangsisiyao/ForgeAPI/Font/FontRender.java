@@ -10,7 +10,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.Random;
 
@@ -37,7 +36,7 @@ public class FontRender {
     /**
      * 粗体
      * */
-    private boolean boldStyle=true;
+    private boolean boldStyle=false;
    /**
     * 斜体
     * */
@@ -104,7 +103,7 @@ public class FontRender {
         }
         finally
         {
-            IOUtils.closeQuietly((Closeable)iresource);
+            IOUtils.closeQuietly(iresource);
         }
     }
 
@@ -216,21 +215,21 @@ public class FontRender {
     /**
      * 绘制字符串
      * */
-    private void renderStringAtPos(String text, boolean shadow)
+    private void renderStringAtPos(String text)
     {
         for (int i = 0; i < text.length(); ++i)
         {
             char c0 = text.charAt(i);
             float f = this.renderChar(c0, this.italicStyle);
-            float f1 = (float) ((0.5f*fontSize)/9.0);
+            float f1 = (float) ((0.5*fontSize)/9.0);
             if (this.boldStyle)
             {
                 this.posX += f1;
                 this.renderChar(c0, this.italicStyle);
                 this.posX -= f1;
-                f+=fontSize*0.15;
+                f+=fontSize*0.1;
             }
-            this.posX += (float)((int)f);
+            this.posX += f;
         }
 
     }
@@ -261,21 +260,11 @@ public class FontRender {
             setColor(this.red, this.blue, this.green, this.alpha);
             this.posX = x;
             this.posY = y;
-            this.renderStringAtPos(text, dropShadow);
+            this.renderStringAtPos(text);
             return (int)this.posX;
         }
     }
 
-
-    public void setUnicodeFlag(boolean unicodeFlagIn)
-    {
-        this.unicodeFlag = unicodeFlagIn;
-    }
-
-    public boolean getUnicodeFlag()
-    {
-        return this.unicodeFlag;
-    }
 
     protected void setColor(float r, float g, float b, float a)
     {

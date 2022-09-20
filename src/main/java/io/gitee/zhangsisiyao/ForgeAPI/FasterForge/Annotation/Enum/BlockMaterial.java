@@ -1,4 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation.Enum;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Enum;
 @SuppressWarnings("all")
 public enum BlockMaterial {
 

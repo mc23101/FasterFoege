@@ -1,9 +1,11 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
-import io.gitee.zhangsisiyao.ForgeAPI.Annotation.Loader.AnnotationFactory;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader.AnnotationFactory;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.ServerChatListener;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,8 +33,8 @@ public class MinecraftCore {
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
     public static void preinit(Object o){
-
         mod=o;
+        registerEvents();
         Package pack = o.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
@@ -52,5 +54,9 @@ public class MinecraftCore {
 
     public static void init(){
 
+    }
+
+    private static void registerEvents(){
+        MinecraftForge.EVENT_BUS.register(ServerChatListener.class);
     }
 }

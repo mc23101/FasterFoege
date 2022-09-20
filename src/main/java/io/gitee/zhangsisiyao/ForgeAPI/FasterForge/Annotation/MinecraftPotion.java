@@ -1,6 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation;
-
-import net.minecraft.entity.Entity;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +7,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.FIELD})
-public @interface MinecraftEntityRender {
-    Class<? extends Entity> EntityClass();
+public @interface MinecraftPotion {
+    String modId();
+    String name();
+    boolean isBadEffect() default false;
+    int liquidColor() default 0;
 }

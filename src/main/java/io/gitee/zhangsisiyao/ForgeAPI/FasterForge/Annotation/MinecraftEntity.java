@@ -1,4 +1,4 @@
-package io.gitee.zhangsisiyao.ForgeAPI.Annotation;
+package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
