@@ -1,6 +1,8 @@
 package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -21,6 +23,9 @@ public class AnnotationFactory {
         PotionLoader.PotionAnnotationLoader(reflections);
         EnchantmentLoader.EnchantmentAnnotationLoader(reflections);
         TileEntityLoader.TileEntityAnnotationLoader(reflections);
+        if(FMLCommonHandler.instance().getEffectiveSide()== Side.CLIENT){
+            ResourceLoader.ResourceAnnotationLoader(reflections);
+        }
     }
 
 

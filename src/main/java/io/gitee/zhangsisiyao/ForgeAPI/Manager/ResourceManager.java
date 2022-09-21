@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -24,11 +26,13 @@ public class ResourceManager {
      * 注册自定义资源加载器
      * @param loader 实现{@link ISelectiveResourceReloadListener} 接口的类
      * */
+    @SideOnly(Side.CLIENT)
     public static void registerCustomResourceManger(ISelectiveResourceReloadListener loader){
         SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager) net.minecraft.client.Minecraft.getMinecraft().getResourceManager();
         resourceManager.registerReloadListener(loader);
     }
 
+    @SideOnly(Side.CLIENT)
     public static IResource getResource(ResourceLocation location){
         try {
             Class simpleReloadableResourceManagerClass = SimpleReloadableResourceManager.class;
@@ -46,6 +50,7 @@ public class ResourceManager {
         return null;
     }
 
+    @SideOnly(Side.CLIENT)
     public static boolean containResource(ResourceLocation location){
         boolean bool=false;
         try {
@@ -78,6 +83,7 @@ public class ResourceManager {
      * 注册自定义模型加载器
      * @param customModelLoader 实现{@link ICustomModelLoader}接口的类
      * */
+    @SideOnly(Side.CLIENT)
     public static void registerCustomModelLoder(ICustomModelLoader customModelLoader){
         ModelLoaderRegistry.registerLoader(customModelLoader);
     }
@@ -89,6 +95,7 @@ public class ResourceManager {
      * @param resource 资源
      * @param type 资源类型
      * */
+    @SideOnly(Side.CLIENT)
     public static void registerResource(ResourceLocation location, IResource resource){
 
         try {

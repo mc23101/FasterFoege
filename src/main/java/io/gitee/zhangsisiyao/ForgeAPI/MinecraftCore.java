@@ -1,12 +1,17 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader.AnnotationFactory;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.ServerChatListener;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.AdvancementListener;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerTickListener;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.ServerChatListener;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
@@ -40,7 +45,6 @@ public class MinecraftCore {
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
         Reflections reflections = new Reflections(configuration);
 
-
         Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Mod.class);
 
         for (Class c :typesAnnotatedWith){
@@ -48,6 +52,17 @@ public class MinecraftCore {
             MinecraftCore.MODID=annotation.modid();
         }
         AnnotationFactory.AnnotationLoader(o);
+
+
+        if(FMLCommonHandler.instance().getEffectiveSide()== Side.CLIENT){
+            System.out.println("客户端执行");
+            registerResourceListener();
+        }
+
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void registerResourceListener(){
         ResourceManager.registerCustomModelLoder(new CustomModelLoader());
         ResourceManager.registerCustomResourceManger(new CustomResourceListener());
     }
@@ -58,5 +73,7 @@ public class MinecraftCore {
 
     private static void registerEvents(){
         MinecraftForge.EVENT_BUS.register(ServerChatListener.class);
+        MinecraftForge.EVENT_BUS.register(AdvancementListener.class);
+        MinecraftForge.EVENT_BUS.register(PlayerTickListener.class);
     }
 }
