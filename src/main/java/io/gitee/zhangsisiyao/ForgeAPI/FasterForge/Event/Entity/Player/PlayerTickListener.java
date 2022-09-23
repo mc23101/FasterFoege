@@ -22,14 +22,23 @@ public class PlayerTickListener {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(TickEvent.PlayerTickEvent event){
-        if(event.player.world.isRemote){
+        if(event.side==Side.CLIENT){
             EntityPlayerSP player = (EntityPlayerSP) event.player;
-            GameType gameType = player.connection.getPlayerInfo(player.getUniqueID()).getGameType();
-            onPlayerGameModeChangedEvent(player,player.getUniqueID().toString(),gameType,Side.CLIENT);
+            ClientEvent(player);
         }else {
             EntityPlayerMP player = (EntityPlayerMP) event.player;
-            onPlayerGameModeChangedEvent(player,player.getUniqueID().toString(),player.interactionManager.getGameType(),Side.SERVER);
+            ServerEvent(player);
         }
+    }
+    private static void ClientEvent(EntityPlayerSP playerSP){
+        Side side=Side.CLIENT;
+        GameType gameType = playerSP.connection.getPlayerInfo(playerSP.getUniqueID()).getGameType();
+        onPlayerGameModeChangedEvent(playerSP,playerSP.getUniqueID().toString(),gameType,side);
+    }
+
+    private static void ServerEvent(EntityPlayerMP playerMP){
+        Side side=Side.SERVER;
+        onPlayerGameModeChangedEvent(playerMP,playerMP.getUniqueID().toString(),playerMP.interactionManager.getGameType(),side);
     }
 
     private static void onPlayerGameModeChangedEvent(EntityPlayer player, String uuid, GameType gameType,Side side){
@@ -40,22 +49,22 @@ public class PlayerTickListener {
             MinecraftForge.EVENT_BUS.post(new PlayerGameTypeChangeEvent(player,gameType, side));
             playerGameTypeMap.put(uuid, gameType);
         }
-        clearPlayerGameTypeMap();
-    }
-
-    private static void clearPlayerGameTypeMap(){
         MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
         if(minecraftServer!=null){
             List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();
             Map<String,GameType> curry=new Hashtable<>();
             for(EntityPlayerMP playerMP:players){
-                String uuid=playerMP.getUniqueID().toString();
-                if(playerGameTypeMap.containsKey(uuid)){
-                    curry.put(uuid,playerGameTypeMap.get(uuid));
+                String id=playerMP.getUniqueID().toString();
+                if(playerGameTypeMap.containsKey(id)){
+                    curry.put(uuid,playerGameTypeMap.get(id));
                 }
             }
             playerGameTypeMap=curry;
         }
     }
+
+
+
+
 
 }

@@ -11,9 +11,16 @@ public class PlayerGameTypeChangeEvent extends PlayerEvent {
 
     private final GameType newGameType;
 
+    private final Side side;
+
     public PlayerGameTypeChangeEvent(EntityPlayer player, GameType newGameType, Side side) {
         super(player);
         this.newGameType = newGameType;
+        this.side = side;
+    }
+
+    public Side getSide() {
+        return side;
     }
 
     public GameType getNewGameType() {

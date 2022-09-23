@@ -6,6 +6,7 @@ import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.relauncher.Side;
 
 /**
  * 玩家与玩家之间发送消息事件 <br/>
@@ -20,20 +21,26 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
  *  **/
 @Cancelable
 public class PlayerChatEvent extends PlayerEvent {
-    private EntityPlayer sender;
+    private final EntityPlayer sender;
 
-    private String message;
+    private final String message;
 
-    public PlayerChatEvent(EntityPlayer sender, String message) {
+    private final Side side;
+
+    public PlayerChatEvent(EntityPlayer sender, String message, Side side) {
         super(sender);
         this.message=message;
         this.sender=sender;
+        this.side = side;
     }
 
     public EntityPlayer getSender() {
         return sender;
     }
 
+    public Side getSide() {
+        return side;
+    }
 
     public String getMessage() {
         return message;
