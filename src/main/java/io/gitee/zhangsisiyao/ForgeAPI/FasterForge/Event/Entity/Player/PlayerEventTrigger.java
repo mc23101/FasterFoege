@@ -23,7 +23,7 @@ import java.util.Map;
  * 触发的事件:<br/>
  * {@link PlayerGameTypeChangeEvent}<br/>
  * */
-public class PlayerTickListener {
+public class PlayerEventTrigger {
     private static Map<String, GameType> playerGameTypeMap=new Hashtable<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

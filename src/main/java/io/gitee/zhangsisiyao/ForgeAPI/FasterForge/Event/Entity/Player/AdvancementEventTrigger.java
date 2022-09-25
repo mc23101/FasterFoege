@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class AdvancementListener {
+public class AdvancementEventTrigger {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(AdvancementEvent event){
         if(event.getEntityPlayer().world.isRemote){

@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ServerChatListener {
+public class ServerChatTrigger {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(net.minecraftforge.event.ServerChatEvent event){
         if(event.getPlayer().world.isRemote){

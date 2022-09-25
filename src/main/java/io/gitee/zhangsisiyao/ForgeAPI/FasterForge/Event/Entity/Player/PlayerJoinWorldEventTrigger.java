@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PlayerJoinWorldEvent {
+public class PlayerJoinWorldEventTrigger {
     @SubscribeEvent
     public static void onEvent(EntityJoinWorldEvent event){
         if(event.getWorld().isRemote){
