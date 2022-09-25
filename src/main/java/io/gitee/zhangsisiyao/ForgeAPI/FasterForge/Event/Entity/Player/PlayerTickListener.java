@@ -12,32 +12,40 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 玩家Tick事件,用于捕捉触发玩家的事件<br/>
+ * 触发的事件:<br/>
+ * {@link PlayerGameTypeChangeEvent}<br/>
+ * */
 public class PlayerTickListener {
     private static Map<String, GameType> playerGameTypeMap=new Hashtable<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(TickEvent.PlayerTickEvent event){
-        if(event.side==Side.CLIENT){
-            EntityPlayerSP player = (EntityPlayerSP) event.player;
-            ClientEvent(player);
+        if(event.player.world.isRemote){
+            ClientEvent(event.player);
         }else {
-            EntityPlayerMP player = (EntityPlayerMP) event.player;
-            ServerEvent(player);
+            ServerEvent(event.player);
         }
+        System.out.println(playerGameTypeMap.keySet());
     }
-    private static void ClientEvent(EntityPlayerSP playerSP){
+    @SideOnly(Side.CLIENT)
+    private static void ClientEvent(EntityPlayer player){
         Side side=Side.CLIENT;
+        EntityPlayerSP playerSP = (EntityPlayerSP) player;
         GameType gameType = playerSP.connection.getPlayerInfo(playerSP.getUniqueID()).getGameType();
         onPlayerGameModeChangedEvent(playerSP,playerSP.getUniqueID().toString(),gameType,side);
     }
 
-    private static void ServerEvent(EntityPlayerMP playerMP){
+    private static void ServerEvent(EntityPlayer player){
         Side side=Side.SERVER;
+        EntityPlayerMP playerMP = (EntityPlayerMP) player;
         onPlayerGameModeChangedEvent(playerMP,playerMP.getUniqueID().toString(),playerMP.interactionManager.getGameType(),side);
     }
 

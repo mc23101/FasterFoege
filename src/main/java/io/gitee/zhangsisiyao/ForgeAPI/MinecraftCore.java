@@ -2,6 +2,7 @@ package io.gitee.zhangsisiyao.ForgeAPI;
 
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader.AnnotationFactory;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.AdvancementListener;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinWorldEvent;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerTickListener;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.ServerChatListener;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
@@ -75,5 +76,6 @@ public class MinecraftCore {
         MinecraftForge.EVENT_BUS.register(ServerChatListener.class);
         MinecraftForge.EVENT_BUS.register(AdvancementListener.class);
         MinecraftForge.EVENT_BUS.register(PlayerTickListener.class);
+        MinecraftForge.EVENT_BUS.register(PlayerJoinWorldEvent.class);
     }
 }
