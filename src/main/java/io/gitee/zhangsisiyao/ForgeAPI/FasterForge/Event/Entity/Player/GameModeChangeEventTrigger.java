@@ -14,26 +14,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 玩家Tick事件,用于捕捉触发玩家的事件<br/>
  * 触发的事件:<br/>
  * {@link PlayerGameTypeChangeEvent}<br/>
  * */
-public class PlayerEventTrigger {
+public class GameModeChangeEventTrigger {
     private static Map<String, GameType> playerGameTypeMap=new Hashtable<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(TickEvent.PlayerTickEvent event){
-        if(event.player.world.isRemote){
-            ClientEvent(event.player);
+        if(!event.player.world.isRemote){
+            if(event.player instanceof  EntityPlayerMP){
+                ServerEvent(event.player);
+            }
         }else {
-            ServerEvent(event.player);
+            if(event.player instanceof EntityPlayerSP){
+                ClientEvent(event.player);
+            }
         }
-        System.out.println(playerGameTypeMap.keySet());
+        //System.out.println(playerGameTypeMap.keySet().size());
     }
     @SideOnly(Side.CLIENT)
     private static void ClientEvent(EntityPlayer player){
@@ -50,7 +53,7 @@ public class PlayerEventTrigger {
     }
 
     private static void onPlayerGameModeChangedEvent(EntityPlayer player, String uuid, GameType gameType,Side side){
-        if(!playerGameTypeMap.containsKey(uuid)) {
+        if (!playerGameTypeMap.containsKey(uuid)) {
             playerGameTypeMap.put(uuid, gameType);
         }
         if (playerGameTypeMap.get(uuid)!=gameType) {
@@ -60,14 +63,17 @@ public class PlayerEventTrigger {
         MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
         if(minecraftServer!=null){
             List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();
-            Map<String,GameType> curry=new Hashtable<>();
-            for(EntityPlayerMP playerMP:players){
-                String id=playerMP.getUniqueID().toString();
-                if(playerGameTypeMap.containsKey(id)){
-                    curry.put(uuid,playerGameTypeMap.get(id));
+            Set<String> playerSet=new HashSet<>();
+            for(EntityPlayerMP playerMP:players) {
+                String id = playerMP.getUniqueID().toString();
+                playerSet.add(id);
+            }
+            Map<String, GameType> map = new ConcurrentHashMap<>(playerGameTypeMap);
+            for(Map.Entry<String, GameType> entry : map.entrySet()){
+                if(!playerSet.contains(entry.getKey())){
+                    playerGameTypeMap.remove(entry.getKey());
                 }
             }
-            playerGameTypeMap=curry;
         }
     }
 

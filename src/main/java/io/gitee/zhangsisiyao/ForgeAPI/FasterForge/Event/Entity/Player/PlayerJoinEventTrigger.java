@@ -1,15 +1,25 @@
 package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player;
 
+import io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player.PlayerJoinEvent;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PlayerJoinWorldEventTrigger {
-    @SubscribeEvent
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class PlayerJoinEventTrigger {
+
+    public static List<String> playerJoinList=new CopyOnWriteArrayList<>();
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEvent(EntityJoinWorldEvent event){
         if(event.getWorld().isRemote){
             if(event.getEntity() instanceof EntityPlayerSP){
@@ -24,10 +34,21 @@ public class PlayerJoinWorldEventTrigger {
 
     @SideOnly(Side.CLIENT)
     private static void onClientEvent(EntityPlayerSP playerSP,World world){
-
+        Side side=Side.CLIENT;
+        onPlayerJoinEvent(playerSP,side);
     }
 
     private static void onServerEvent(EntityPlayerMP playerMP, World world){
+        Side side=Side.SERVER;
+        onPlayerJoinEvent(playerMP,side);
+    }
 
+
+    private static void onPlayerJoinEvent(EntityPlayer player,Side side){
+        String uuid = player.getUniqueID().toString();
+        if(!playerJoinList.contains(uuid)){
+            MinecraftForge.EVENT_BUS.post(new PlayerJoinEvent(player,side));
+            playerJoinList.add(uuid);
+        }
     }
 }
