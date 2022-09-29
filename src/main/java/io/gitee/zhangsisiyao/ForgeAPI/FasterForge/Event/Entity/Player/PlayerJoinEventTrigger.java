@@ -53,6 +53,7 @@ public class PlayerJoinEventTrigger {
                 }
             }
         }
+        System.out.println(playerJoinList.size());
     }
 
     @SideOnly(Side.CLIENT)

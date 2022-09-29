@@ -2,8 +2,10 @@ package io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.relauncher.Side;
 
+@Cancelable
 public class PlayerJoinEvent extends PlayerEvent {
 
     private final Side side;
