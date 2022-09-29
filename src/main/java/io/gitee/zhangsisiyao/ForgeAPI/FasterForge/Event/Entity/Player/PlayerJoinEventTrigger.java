@@ -4,15 +4,20 @@ import io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player.PlayerJoinEvent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PlayerJoinEventTrigger {
@@ -28,6 +33,24 @@ public class PlayerJoinEventTrigger {
         }else {
             if(event.getEntity() instanceof EntityPlayerMP){
                 onServerEvent((EntityPlayerMP) event.getEntity(),event.getWorld());
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onEventTick(TickEvent.WorldTickEvent event){
+        MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
+        if(minecraftServer!=null){
+            List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();
+            Set<String> playerSet=new HashSet<>();
+            for(EntityPlayerMP playerMP:players){
+                String s=playerMP.getUniqueID().toString();
+                playerSet.add(s);
+            }
+            for(String s:PlayerJoinEventTrigger.playerJoinList){
+                if(!playerSet.contains(s)){
+                    PlayerJoinEventTrigger.playerJoinList.remove(s);
+                }
             }
         }
     }

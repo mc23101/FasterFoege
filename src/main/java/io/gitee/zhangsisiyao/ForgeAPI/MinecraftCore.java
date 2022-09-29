@@ -5,7 +5,6 @@ import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.Advancemen
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.GameModeChangeEventTrigger;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinEventTrigger;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.ServerChatTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.WorldTickEvent;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
@@ -78,6 +77,5 @@ public class MinecraftCore {
         MinecraftForge.EVENT_BUS.register(AdvancementEventTrigger.class);
         MinecraftForge.EVENT_BUS.register(GameModeChangeEventTrigger.class);
         MinecraftForge.EVENT_BUS.register(PlayerJoinEventTrigger.class);
-        MinecraftForge.EVENT_BUS.register(WorldTickEvent.class);
     }
 }
