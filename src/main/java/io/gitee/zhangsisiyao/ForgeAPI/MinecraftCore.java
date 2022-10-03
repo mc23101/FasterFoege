@@ -1,10 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader.AnnotationFactory;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerAdvancementEventTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerChatTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerGameModeChangeEventTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinEventTrigger;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.*;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
@@ -69,6 +66,6 @@ public class MinecraftCore {
         MinecraftForge.EVENT_BUS.register(PlayerAdvancementEventTrigger.class);
         MinecraftForge.EVENT_BUS.register(PlayerGameModeChangeEventTrigger.class);
         MinecraftForge.EVENT_BUS.register(PlayerJoinEventTrigger.class);
-        MinecraftForge.EVENT_BUS.register(PlayerAdvancementEventTrigger.class);
+        MinecraftForge.EVENT_BUS.register(PlayerArmorStandManipulateEventTrigger.class);
     }
 }
