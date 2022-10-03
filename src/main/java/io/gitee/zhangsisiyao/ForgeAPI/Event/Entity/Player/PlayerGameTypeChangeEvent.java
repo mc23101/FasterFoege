@@ -16,7 +16,8 @@ import net.minecraftforge.fml.relauncher.Side;
  * {@link PlayerGameTypeChangeEvent#side} 触发事件的提供方（客户端或服务端）<br/>
  * <br/>
  * 此事件可取消 {@link Cancelable}.<br/>
- * 取消后,优先级较低或同级的此事件将被忽略<br/>
+ * 如果在服务端事件被取消，则玩家模式无法改变，为旧的游戏模式<br/>
+ * 可能存在服务端事件被取消，客户端事件未被取消，游戏模式以服务端为准<br/>
  * 此事件是通过 {@link MinecraftForge#EVENT_BUS}执行的.
  * */
 @Cancelable

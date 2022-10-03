@@ -38,6 +38,26 @@ public class PlayerGameModeChangeEventTrigger {
         }
         //System.out.println(playerGameTypeMap.keySet().size());
     }
+
+    @SubscribeEvent(priority =EventPriority.HIGHEST)
+    public static void onWorldTickEvent(TickEvent.WorldTickEvent event){
+        MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
+        if(minecraftServer!=null){
+            List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();
+            Set<String> playerSet=new HashSet<>();
+            for(EntityPlayerMP playerMP:players) {
+                String id = playerMP.getUniqueID().toString();
+                playerSet.add(id);
+            }
+            Map<String, GameType> map = new ConcurrentHashMap<>(playerGameTypeMap);
+            for(Map.Entry<String, GameType> entry : map.entrySet()){
+                if(!playerSet.contains(entry.getKey())){
+                    playerGameTypeMap.remove(entry.getKey());
+                }
+            }
+        }
+    }
+
     @SideOnly(Side.CLIENT)
     private static void ClientEvent(EntityPlayer player){
         Side side=Side.CLIENT;
@@ -57,22 +77,10 @@ public class PlayerGameModeChangeEventTrigger {
             playerGameTypeMap.put(uuid, gameType);
         }
         if (playerGameTypeMap.get(uuid)!=gameType) {
-            MinecraftForge.EVENT_BUS.post(new PlayerGameTypeChangeEvent(player,gameType, playerGameTypeMap.get(uuid),side));
-            playerGameTypeMap.put(uuid, gameType);
-        }
-        MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
-        if(minecraftServer!=null){
-            List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();
-            Set<String> playerSet=new HashSet<>();
-            for(EntityPlayerMP playerMP:players) {
-                String id = playerMP.getUniqueID().toString();
-                playerSet.add(id);
-            }
-            Map<String, GameType> map = new ConcurrentHashMap<>(playerGameTypeMap);
-            for(Map.Entry<String, GameType> entry : map.entrySet()){
-                if(!playerSet.contains(entry.getKey())){
-                    playerGameTypeMap.remove(entry.getKey());
-                }
+            if(MinecraftForge.EVENT_BUS.post(new PlayerGameTypeChangeEvent(player,gameType, playerGameTypeMap.get(uuid),side))){
+                player.setGameType(playerGameTypeMap.get(uuid));
+            }else {
+                playerGameTypeMap.put(uuid, gameType);
             }
         }
     }
