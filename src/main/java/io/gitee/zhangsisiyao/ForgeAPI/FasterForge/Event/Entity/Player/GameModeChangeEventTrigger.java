@@ -57,7 +57,7 @@ public class GameModeChangeEventTrigger {
             playerGameTypeMap.put(uuid, gameType);
         }
         if (playerGameTypeMap.get(uuid)!=gameType) {
-            MinecraftForge.EVENT_BUS.post(new PlayerGameTypeChangeEvent(player,gameType, side));
+            MinecraftForge.EVENT_BUS.post(new PlayerGameTypeChangeEvent(player,gameType, playerGameTypeMap.get(uuid),side));
             playerGameTypeMap.put(uuid, gameType);
         }
         MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();

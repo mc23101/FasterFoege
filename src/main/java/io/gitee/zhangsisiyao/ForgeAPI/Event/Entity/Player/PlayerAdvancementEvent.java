@@ -13,7 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
  * {@link #entityPlayer} 完成成就的玩家<br/>
  * {@link #advancement}  完成的成就<br/>
  *
- * 此事件可取消.取消后,优先级较低或同级的此事件将被忽略
+ * 此事件可取消 {@link Cancelable}.<br/>
+ * 取消后,优先级较低或同级的此事件将被忽略<br/>
  * 此事件是通过 {@link MinecraftForge#EVENT_BUS}执行的.
  * */
 @Cancelable
