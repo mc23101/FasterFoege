@@ -38,7 +38,7 @@ public class PlayerJoinEventTrigger {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEventTick(TickEvent.WorldTickEvent event){
+    public static void onWorldTickEvent(TickEvent.WorldTickEvent event){
         MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance();
         if(minecraftServer!=null){
             List<EntityPlayerMP> players = minecraftServer.getPlayerList().getPlayers();

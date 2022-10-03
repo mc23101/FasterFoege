@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class AdvancementEventTrigger {
+public class PlayerAdvancementEventTrigger {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEvent(AdvancementEvent event){
+    public static void onAdvancementEvent(AdvancementEvent event){
         if(event.getEntityPlayer().world.isRemote){
             MinecraftForge.EVENT_BUS.post(new PlayerAdvancementEvent(event.getEntityPlayer(), event.getAdvancement(), Side.CLIENT));
         }else {

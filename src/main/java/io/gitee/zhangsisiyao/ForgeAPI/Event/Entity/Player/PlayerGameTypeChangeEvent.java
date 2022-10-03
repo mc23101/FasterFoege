@@ -1,5 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player;
 
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerGameModeChangeEventTrigger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.GameType;
 import net.minecraftforge.common.MinecraftForge;
@@ -8,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.relauncher.Side;
 /**
  * 玩家模式改变事件<br/>
- * 此事件通过{@link io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.GameModeChangeEventTrigger}触发<br/>
+ * 此事件通过{@link PlayerGameModeChangeEventTrigger}触发<br/>
  * {@link PlayerGameTypeChangeEvent#entityPlayer} 改变模式的玩家<br/>
  * {@link PlayerGameTypeChangeEvent#newGameType} 新的游戏模式<br/>
  * {@link PlayerGameTypeChangeEvent#oldGameType} 旧的游戏模式<br/>

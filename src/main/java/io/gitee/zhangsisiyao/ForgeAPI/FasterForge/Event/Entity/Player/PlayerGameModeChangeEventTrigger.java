@@ -22,11 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * 触发的事件:<br/>
  * {@link PlayerGameTypeChangeEvent}<br/>
  * */
-public class GameModeChangeEventTrigger {
+public class PlayerGameModeChangeEventTrigger {
     private static Map<String, GameType> playerGameTypeMap=new Hashtable<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEvent(TickEvent.PlayerTickEvent event){
+    public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event){
         if(!event.player.world.isRemote){
             if(event.player instanceof  EntityPlayerMP){
                 ServerEvent(event.player);

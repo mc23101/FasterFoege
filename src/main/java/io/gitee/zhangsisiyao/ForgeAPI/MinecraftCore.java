@@ -1,15 +1,14 @@
 package io.gitee.zhangsisiyao.ForgeAPI;
 
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Annotation.Loader.AnnotationFactory;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.AdvancementEventTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.GameModeChangeEventTrigger;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerAdvancementEventTrigger;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerChatTrigger;
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerGameModeChangeEventTrigger;
 import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinEventTrigger;
-import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.ServerChatTrigger;
 import io.gitee.zhangsisiyao.ForgeAPI.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.ForgeAPI.Model.CustomModelLoader;
 import io.gitee.zhangsisiyao.ForgeAPI.Resources.CustomResourceListener;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,7 +39,7 @@ public class MinecraftCore {
      * */
     public static void preinit(Object o){
         mod=o;
-        registerEvents();
+        registerPlayerEventTrigger();
         Package pack = o.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
@@ -53,13 +52,6 @@ public class MinecraftCore {
             MinecraftCore.MODID=annotation.modid();
         }
         AnnotationFactory.AnnotationLoader(o);
-
-
-        if(FMLCommonHandler.instance().getEffectiveSide()== Side.CLIENT){
-            System.out.println("客户端执行");
-            registerResourceListener();
-        }
-
     }
 
     @SideOnly(Side.CLIENT)
@@ -72,10 +64,11 @@ public class MinecraftCore {
 
     }
 
-    private static void registerEvents(){
-        MinecraftForge.EVENT_BUS.register(ServerChatTrigger.class);
-        MinecraftForge.EVENT_BUS.register(AdvancementEventTrigger.class);
-        MinecraftForge.EVENT_BUS.register(GameModeChangeEventTrigger.class);
+    private static void registerPlayerEventTrigger(){
+        MinecraftForge.EVENT_BUS.register(PlayerChatTrigger.class);
+        MinecraftForge.EVENT_BUS.register(PlayerAdvancementEventTrigger.class);
+        MinecraftForge.EVENT_BUS.register(PlayerGameModeChangeEventTrigger.class);
         MinecraftForge.EVENT_BUS.register(PlayerJoinEventTrigger.class);
+        MinecraftForge.EVENT_BUS.register(PlayerAdvancementEventTrigger.class);
     }
 }
