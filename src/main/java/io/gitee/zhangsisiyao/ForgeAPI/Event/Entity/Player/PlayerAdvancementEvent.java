@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * 玩家完成一个成就事件<br/>
  * {@link #entityPlayer} 完成成就的玩家<br/>
  * {@link #advancement}  完成的成就<br/>
- *
+ * <br/>
  * 此事件不可取消.<br/>
  * 此事件是通过 {@link MinecraftForge#EVENT_BUS}执行的.
  * */

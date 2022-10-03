@@ -15,7 +15,8 @@ import net.minecraftforge.fml.relauncher.Side;
  * {@link #message} 发送的消息<br/>
  * <br/>
  * 此事件是可取消的 {@link Cancelable}. <br/>
- * 如果事件取消，在客户端,服务器将不会收到发送者所发送的消息<br/>
+ * 如果事件取消：<br/>
+ * 在客户端,服务器将不会收到发送者所发送的消息<br/>
  * 在服务端,服务器不会分发消息到每个玩家中<br/>
  * <br/>
  *  此事件是通过 {@link MinecraftForge#EVENT_BUS}执行的.
