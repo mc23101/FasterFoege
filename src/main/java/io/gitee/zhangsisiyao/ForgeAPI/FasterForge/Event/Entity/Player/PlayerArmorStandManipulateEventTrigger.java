@@ -1,6 +1,7 @@
 package io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player;
 
 import io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player.PlayerArmorStandManipulateEvent;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -53,8 +54,8 @@ public class PlayerArmorStandManipulateEventTrigger {
         }
         //玩家手中不为空,点击盔甲架交换或放置
         if(!handItemStack.isEmpty()){
-            EntityEquipmentSlot equipmentSlot = handItemStack.getItem().getEquipmentSlot(handItemStack);
-            if(equipmentSlot!=null && equipmentSlot!=EntityEquipmentSlot.MAINHAND&&equipmentSlot!=EntityEquipmentSlot.OFFHAND){
+            EntityEquipmentSlot equipmentSlot = EntityLiving.getSlotForItemStack(handItemStack);
+            if(equipmentSlot != EntityEquipmentSlot.MAINHAND && equipmentSlot != EntityEquipmentSlot.OFFHAND){
                 event= new PlayerArmorStandManipulateEvent(entityPlayer, armorStand, handItemStack, armorStandItem, equipmentSlot, side);
             }
         }
