@@ -27,7 +27,7 @@ public class PlayerArmorStandManipulateEventTrigger {
         }
     }
 
-    private static boolean ServerEvent(EntityPlayer entityPlayer, EntityArmorStand armorStand, Vec3d vec3d){
+       private static boolean ServerEvent(EntityPlayer entityPlayer, EntityArmorStand armorStand, Vec3d vec3d){
         return postPlayerArmorStandManipulateEvent(entityPlayer,armorStand,vec3d,Side.SERVER);
     }
 
@@ -55,14 +55,14 @@ public class PlayerArmorStandManipulateEventTrigger {
         if(!handItemStack.isEmpty()){
             EntityEquipmentSlot equipmentSlot = handItemStack.getItem().getEquipmentSlot(handItemStack);
             if(equipmentSlot!=null && equipmentSlot!=EntityEquipmentSlot.MAINHAND&&equipmentSlot!=EntityEquipmentSlot.OFFHAND){
-                event= new PlayerArmorStandManipulateEvent(entityPlayer, armorStand, handItemStack, armorStandItem, clickedSlot, side);
+                event= new PlayerArmorStandManipulateEvent(entityPlayer, armorStand, handItemStack, armorStandItem, equipmentSlot, side);
             }
         }
         return event != null && MinecraftForge.EVENT_BUS.post(event);
     }
 
     private static EntityEquipmentSlot getClickedSlot(EntityArmorStand armorStand, Vec3d vec3d){
-        EntityEquipmentSlot entityequipmentslot = EntityEquipmentSlot.MAINHAND;
+        EntityEquipmentSlot entityequipmentslot =EntityEquipmentSlot.MAINHAND;
         boolean flag = armorStand.isSmall();
         double d0 = flag ? vec3d.y * 2.0D : vec3d.y;
         if (d0 >= 0.1D && d0 < 0.1D + (flag ? 0.8D : 0.45D) )
