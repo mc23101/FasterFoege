@@ -90,10 +90,8 @@ public class ResourceManager {
 
     /**
      * <p>注册自定义资源(纹理，模型等)</p>
-     * @param modId modID
      * @param location 资源在Minecraft中表示的位置
      * @param resource 资源
-     * @param type 资源类型
      * */
     @SideOnly(Side.CLIENT)
     public static void registerResource(ResourceLocation location, IResource resource){
