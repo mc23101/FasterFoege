@@ -3,6 +3,8 @@ package io.gitee.zhangsisiyao.ForgeAPI.Resources;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,7 @@ import java.net.URL;
 /**
  * 自定义资源,用于存放单个资源
  * */
+@SideOnly(Side.CLIENT)
 public class CustomResource implements IResource {
     private InputStream inputStream;
     private ResourceLocation resourceLocation;

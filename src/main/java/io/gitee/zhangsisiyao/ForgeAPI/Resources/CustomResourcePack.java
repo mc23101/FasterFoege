@@ -5,6 +5,8 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.image.BufferedImage;
@@ -19,6 +21,7 @@ import java.util.Set;
 /**
  * 自定义资源包，用于存放加载的所有{@link CustomResource}
  * */
+@SideOnly(Side.CLIENT)
 public class CustomResourcePack implements IResourcePack {
 
     public static final CustomResourcePack  INSTANCE= new CustomResourcePack("ForgeFrame");
