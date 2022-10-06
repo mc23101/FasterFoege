@@ -1,5 +1,6 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player;
 
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerGameModeChangeEventTrigger;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  *当玩家与装甲架交互并且进行交换, 取回或放置物品时触发本事件.<br/>
+ * 此事件通过{@link PlayerGameModeChangeEventTrigger}触发<br/>
  * {@link PlayerArmorStandManipulateEvent#entityPlayer} 与装甲架交互的玩家<br/>
  * {@link PlayerArmorStandManipulateEvent#armorStand} 装甲架实体<br/>
  * {@link PlayerArmorStandManipulateEvent#armorStandItem} 与玩家交互的装甲架装备<br/>

@@ -7,6 +7,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.relauncher.Side;
+import org.jetbrains.annotations.NotNull;
+
 /**
  * 玩家模式改变事件<br/>
  * 此事件通过{@link PlayerGameModeChangeEventTrigger}触发<br/>
@@ -29,7 +31,9 @@ public class PlayerGameTypeChangeEvent extends PlayerEvent {
 
     private final Side side;
 
-    public PlayerGameTypeChangeEvent(EntityPlayer entityPlayer, GameType newGameType,GameType oldGameType, Side side) {
+    public PlayerGameTypeChangeEvent(@NotNull EntityPlayer entityPlayer,
+                                     @NotNull GameType newGameType,
+                                     @NotNull GameType oldGameType,@NotNull Side side) {
         super(entityPlayer);
         this.newGameType = newGameType;
         this.side = side;

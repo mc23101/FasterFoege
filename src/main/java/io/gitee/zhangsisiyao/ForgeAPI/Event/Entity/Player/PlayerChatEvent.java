@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.relauncher.Side;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 玩家与玩家之间发送消息事件 <br/>
@@ -29,7 +30,7 @@ public class PlayerChatEvent extends PlayerEvent {
 
     private final Side side;
 
-    public PlayerChatEvent(EntityPlayer sender, String message, Side side) {
+    public PlayerChatEvent(@NotNull EntityPlayer sender,@NotNull String message,@NotNull Side side) {
         super(sender);
         this.message=message;
         this.sender=sender;

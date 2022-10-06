@@ -1,15 +1,17 @@
 package io.gitee.zhangsisiyao.ForgeAPI.Event.Entity.Player;
 
+import io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinEventTrigger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.relauncher.Side;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
  * 玩家加入游戏事件<br/>
- * 该事件通过{@link io.gitee.zhangsisiyao.ForgeAPI.FasterForge.Event.Entity.Player.PlayerJoinEventTrigger}触发<br/>
+ * 该事件通过{@link PlayerJoinEventTrigger}触发<br/>
  * {@link PlayerJoinEvent#entityPlayer} 加入游戏的玩家<br/>
  * {@link PlayerJoinEvent#side} 触发事件的提供方（客户端或服务端）<br/>
  * <br/>
@@ -22,7 +24,7 @@ public class PlayerJoinEvent extends PlayerEvent {
 
     private final Side side;
 
-    public PlayerJoinEvent(EntityPlayer entityPlayer, Side side) {
+    public PlayerJoinEvent(@NotNull EntityPlayer entityPlayer,@NotNull Side side) {
         super(entityPlayer);
         this.side = side;
     }
