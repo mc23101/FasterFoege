@@ -1,6 +1,5 @@
 package io.gitee.zhangsisiyao.FasterForge;
 
-import io.gitee.zhangsisiyao.FasterForge.ForgeBoot.Annotation.Loader.AnnotationFactory;
 import io.gitee.zhangsisiyao.FasterForge.ForgeBoot.FasterForge;
 import io.gitee.zhangsisiyao.FasterForge.Manager.ResourceManager;
 import io.gitee.zhangsisiyao.FasterForge.Model.CustomModelLoader;
@@ -40,7 +39,7 @@ public class MinecraftCore {
     public static void preinit(Object o){
         mod=o;
         initModInfo();
-        AnnotationFactory.AnnotationLoader(o);
+        FasterForge.loadAnnotation(o);
         FasterForge.registerTrigger();
     }
 
