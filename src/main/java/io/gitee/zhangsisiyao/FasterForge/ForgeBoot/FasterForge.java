@@ -30,6 +30,8 @@ public class FasterForge {
         if(FMLCommonHandler.instance().getEffectiveSide()== Side.CLIENT){
             ResourceLoader.ResourceAnnotationLoader(reflections);
         }
+
+
     }
     private static void PlayerEventTrigger(){
         MinecraftForge.EVENT_BUS.register(PlayerChatTrigger.class);
