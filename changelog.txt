@@ -29,7 +29,7 @@ Build: 1.12.2-14.23.5.2855 - Sat Dec 19 01:47:20 GMT 2020
 	41816363+nerdthened:
 		Only apply the MC-68754 fix on Windows, closes #7546 (#7549)
 		
-		MC-68754 only affects com.zhang.io.gitee.zhangsisiyao.ForgeAPI.Minecraft on Windows, as per the comments on Mojang's bug tracker, and the LWJGL bug report (https://github.com/LWJGL/lwjgl/issues/142). This change simply checks if the OS running com.zhang.io.gitee.zhangsisiyao.ForgeAPI.Minecraft is Windows before applying the fix. This was tested on Windows 10, MacOS Mojave, and Lubuntu (5.8.0-31), and all platforms allowed the window to be resized as expected after exiting fullscreen. As the MC-68754 fix was the cause of #7546, this issue is fixed by applying this patch.
+		MC-68754 only affects com.zhang.io.gitee.zhangsisiyao.FasterForge.Minecraft on Windows, as per the comments on Mojang's bug tracker, and the LWJGL bug report (https://github.com/LWJGL/lwjgl/issues/142). This change simply checks if the OS running com.zhang.io.gitee.zhangsisiyao.FasterForge.Minecraft is Windows before applying the fix. This was tested on Windows 10, MacOS Mojave, and Lubuntu (5.8.0-31), and all platforms allowed the window to be resized as expected after exiting fullscreen. As the MC-68754 fix was the cause of #7546, this issue is fixed by applying this patch.
 
 =========
 Build: 1.12.2-14.23.5.2854 - Sun Apr 12 17:54:06 GMT 2020
