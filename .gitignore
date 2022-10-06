@@ -16,6 +16,8 @@ out
 build
 .gradle
 
+gradle.properties
+
 # other
 eclipse
 run
