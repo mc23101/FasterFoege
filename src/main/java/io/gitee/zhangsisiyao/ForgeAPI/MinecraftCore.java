@@ -25,6 +25,10 @@ public class MinecraftCore {
 
     public static String MODID="";
 
+    public static String NAME="";
+
+    public static String VERSION="";
+
     public static Object mod;
 
     /**
@@ -36,19 +40,23 @@ public class MinecraftCore {
      * */
     public static void preinit(Object o){
         mod=o;
+        initModInfo();
+        AnnotationFactory.AnnotationLoader(o);
         registerPlayerEventTrigger();
-        Package pack = o.getClass().getPackage();
+    }
+
+    private static void initModInfo(){
+        Package pack = mod.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
         Reflections reflections = new Reflections(configuration);
-
         Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Mod.class);
-
         for (Class c :typesAnnotatedWith){
             Mod annotation = (Mod) c.getAnnotation(Mod.class);
             MinecraftCore.MODID=annotation.modid();
+            MinecraftCore.NAME=annotation.name();
+            MinecraftCore.VERSION=annotation.name();
         }
-        AnnotationFactory.AnnotationLoader(o);
     }
 
     @SideOnly(Side.CLIENT)
