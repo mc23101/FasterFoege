@@ -2,8 +2,6 @@ package com.github.zhangsiyao.FasterForge.ForgeBoot;
 
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Loader.*;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Event.Entity.Player.*;
-import io.gitee.zhangsisiyao.FasterForge.ForgeBoot.Annotation.Loader.*;
-import io.gitee.zhangsisiyao.FasterForge.ForgeBoot.Event.Entity.Player.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
