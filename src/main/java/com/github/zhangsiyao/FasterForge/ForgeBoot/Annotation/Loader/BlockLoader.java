@@ -19,12 +19,104 @@ import java.lang.reflect.Modifier;
 import java.util.Set;
 
 @SuppressWarnings("all")
-public class BlockLoader {
+public class BlockLoader implements IAnnotationLoader {
     public static final Logger logger = LogManager.getLogger("FasterForge");
 
     private static final String errorType="方块";
     private static int success=0;
     private static int error=0;
+    private Reflections reflection;
+
+    public BlockLoader(Reflections reflection) {
+        this.reflection=reflection;
+    }
+
+    @Override
+    public void loadFromClass() {
+        try {
+            Set<Class<?>> classes = reflection.getTypesAnnotatedWith(MinecraftBlock.class);
+            for(Class c:classes){
+                MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
+                String modId = annotation.modId();
+                String name=annotation.name();
+                BlockMaterial blockMaterial=annotation.material();
+                Material material=BlockLoader.getMaterial(blockMaterial);
+                ResourceLocation location = new ResourceLocation(modId, name);
+
+                if(canRegister(location,c)){
+                    Block block;
+                    Constructor constructor = c.getConstructor(Material.class);
+                    constructor.setAccessible(true);
+                    block = (Block) constructor.newInstance(material);
+                    block.setRegistryName(location);
+                    ItemManager.registerBlocks(block);
+                    ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
+                    success++;
+                }
+            }
+        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadFromField() {
+        try {
+            Set<Field> fields = reflection.getFieldsAnnotatedWith(MinecraftBlock.class);
+            for(Field field:fields){
+                MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
+                String modId = annotation.modId();
+                String name=annotation.name();
+                Class DeclaringClass=field.getDeclaringClass();
+                ResourceLocation location = new ResourceLocation(modId, name);
+                field.setAccessible(true);
+
+                if(!Modifier.isStatic(field.getModifiers())){
+                    continue;
+                }
+                Block block = (Block) field.get(DeclaringClass);
+                if(block==null){
+                    error++;
+                    AnnotationFactory.throwException(logger,errorType,location,"字段:"+field.getName()+"为Null",DeclaringClass,field.getName());
+                    continue;
+                }
+                if(canRegister(location,field.getType())){
+                    block.setRegistryName(location);
+                    ItemManager.registerBlocks(block);
+                    ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
+                    logger.debug("方块:"+location+"注册成功!");
+                    success++;
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadFromMethod() {
+
+    }
+
+    private boolean canRegister(ResourceLocation location,Class c){
+        boolean isExtended= ReflectionUtil.isExtendFrom(c,Block.class);
+        boolean isRegistered= ItemManager.containBlock(location);
+        boolean canRegister=isExtended && !isRegistered;
+        if(canRegister){
+            return true;
+        }else if(!isExtended){
+            error++;
+            AnnotationFactory.throwException(logger,errorType,location,"方块应为"+Block.class.getName()+"的子类",c);
+            return false;
+        }else if(isRegistered){
+            error++;
+            AnnotationFactory.throwException(logger,errorType,location,location+"名称已被注册",c);
+            return false;
+        }else {
+            return false;
+        }
+    }
+
 
     public static void BlockAnnotationLoader(Reflections reflections) {
         loadFromClass(reflections);
@@ -127,7 +219,6 @@ public class BlockLoader {
         }
     }
 
-
     public static Material getMaterial(BlockMaterial blockMaterial){
         switch (blockMaterial){
             case AIR:
@@ -219,7 +310,9 @@ public class BlockLoader {
             case STRUCTURE_VOID:
                 return Material.STRUCTURE_VOID;
             default:
-                return null;
+                return Material.AIR;
         }
     }
+
+
 }
