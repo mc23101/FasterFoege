@@ -61,8 +61,4 @@ public class MinecraftCore {
         ResourceManager.registerCustomResourceManger(new CustomResourceListener());
     }
 
-    public static void init(){
-
-    }
-
 }
