@@ -11,5 +11,7 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 ## `@MinecraftItem`注解
 
+## `@MinecraftBlock`注解
+
 
 
