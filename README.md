@@ -13,5 +13,9 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 ## `Block(方块)`自动注册
 
+## `Enchantment(附魔)`自动注册
+
+## `Entity(实体)、EntityRender(实体模型渲染)`自动注册
+
 
 
