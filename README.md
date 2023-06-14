@@ -9,9 +9,9 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 使用FasterForge您只需要在类上使用注解，FasterForge就会帮您自动注册Minecraft内容.
 
-## `@MinecraftItem`注解
+## `Item(物品)`自动注册
 
-## `@MinecraftBlock`注解
+## `Block(方块)`自动注册
 
 
 
