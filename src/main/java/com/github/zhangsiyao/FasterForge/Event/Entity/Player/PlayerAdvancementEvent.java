@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.Event.Entity.Player;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.Event.Entity.Player.PlayerAdvancementEventTrigger;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.EventTrigger.Entity.Player.PlayerAdvancementEventTrigger;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;

@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.FasterForge;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.ForgeApplication;
 import com.github.zhangsiyao.FasterForge.Manager.ResourceManager;
 import com.github.zhangsiyao.FasterForge.Model.CustomModelLoader;
 import com.github.zhangsiyao.FasterForge.Resources.CustomResourceListener;
@@ -19,15 +19,15 @@ import java.util.Set;
 @SuppressWarnings("all")
 public class MinecraftCore {
 
-    private static Logger logger= LogManager.getLogger("FasterForge");
-
     public static String MODID="";
 
     public static String NAME="";
 
     public static String VERSION="";
 
-    public static Object mod;
+    public static Class mod;
+
+    public static Reflections reflection;
 
     /**
      * <p>API初始化工作</p>
@@ -36,19 +36,17 @@ public class MinecraftCore {
      * @param o {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}的Class类
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
-    public static void preinit(Object o){
-        mod=o;
+    public static void preinit(Class mod){
+        MinecraftCore.mod=mod;
         initModInfo();
-        FasterForge.loadAnnotation(o);
-        FasterForge.registerTrigger();
     }
 
     private static void initModInfo(){
         Package pack = mod.getClass().getPackage();
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages(pack.getName());
         configuration.addScanners(new SubTypesScanner()).addScanners(Scanners.FieldsAnnotated,Scanners.TypesAnnotated,Scanners.ConstructorsAnnotated,Scanners.MethodsAnnotated);
-        Reflections reflections = new Reflections(configuration);
-        Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Mod.class);
+        reflection = new Reflections(configuration);
+        Set<Class<?>> typesAnnotatedWith = reflection.getTypesAnnotatedWith(Mod.class);
         for (Class c :typesAnnotatedWith){
             Mod annotation = (Mod) c.getAnnotation(Mod.class);
             MinecraftCore.MODID=annotation.modid();

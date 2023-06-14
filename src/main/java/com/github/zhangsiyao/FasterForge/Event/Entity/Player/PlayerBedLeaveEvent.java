@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.Event.Entity.Player;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.Event.Entity.Player.PlayerBedEventTrigger;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.EventTrigger.Entity.Player.PlayerBedEventTrigger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;

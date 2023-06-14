@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.Event.Entity.Player;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.Event.Entity.Player.PlayerGameModeChangeEventTrigger;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.EventTrigger.Entity.Player.PlayerGameModeChangeEventTrigger;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

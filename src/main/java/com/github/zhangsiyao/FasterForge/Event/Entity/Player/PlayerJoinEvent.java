@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.Event.Entity.Player;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.Event.Entity.Player.PlayerJoinEventTrigger;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.EventTrigger.Entity.Player.PlayerJoinEventTrigger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;

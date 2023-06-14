@@ -53,13 +53,8 @@ public class EntityManager {
                 Render render1=null;
                 try {
                     render1 = render.getConstructor(RenderManager.class).newInstance(manager);
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                         NoSuchMethodException e) {
                     e.printStackTrace();
                 }
                 return render1;
