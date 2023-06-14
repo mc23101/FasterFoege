@@ -7,8 +7,6 @@ import com.github.zhangsiyao.FasterForge.Resources.CustomResourceListener;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
@@ -39,6 +37,8 @@ public class MinecraftCore {
     public static void preinit(Class mod){
         MinecraftCore.mod=mod;
         initModInfo();
+        ForgeApplication.registerAnnotationLoader();
+        ForgeApplication.registerEventTrigger();
     }
 
     private static void initModInfo(){
