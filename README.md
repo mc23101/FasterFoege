@@ -27,3 +27,7 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 ## `Dimension(维度)`自动注册
 
+# 强大的GUI组件
+
+# 完整的游戏事件
+
