@@ -26,10 +26,7 @@ public class ItemManager {
      * */
     private static Map<ResourceLocation, Item> itemMap=new HashMap<>();
 
-    /**
-     * 用于存放此mod注册的所有方块
-     * */
-    private static Map<ResourceLocation, Block> blockMap=new HashMap<>();
+
 
     /**
      * 注册创造模式物品栏
@@ -70,16 +67,6 @@ public class ItemManager {
         }
     }
 
-    /**
-     * 注册方块
-     * @param blocks 注册的方块(可变参数)
-     * */
-    public static void registerBlocks(Block...blocks){
-        GameRegistry.findRegistry(Block.class).registerAll(blocks);
-        for(Block block:blocks){
-            blockMap.put(block.getRegistryName(),block);
-        }
-    }
 
     /**
      * 获取mod已经注册过的物品
@@ -93,17 +80,6 @@ public class ItemManager {
         return null;
     }
 
-    /**
-     * 获取mod已经注册过的方块
-     * @param location 方块的注册名
-     * @return 返回方块,如果方块未被注册，则返回null
-     * */
-    public static Block getBlock(ResourceLocation location){
-        if(blockMap.containsKey(location)){
-            return  blockMap.get(location);
-        }
-        return null;
-    }
 
     /**
      * 检查Item是否已经注册
@@ -113,11 +89,5 @@ public class ItemManager {
         return GameRegistry.findRegistry(Item.class).containsKey(location);
     }
 
-    /**
-     * 检查Block是否已经注册
-     * @param location Block的注册名
-     * */
-    public static boolean containBlock(ResourceLocation location){
-        return GameRegistry.findRegistry(Block.class).containsKey(location);
-    }
+
 }

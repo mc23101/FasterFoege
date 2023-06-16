@@ -4,6 +4,8 @@ import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.EventTrigger;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Loader;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.Annotation.Loader.*;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
@@ -12,6 +14,8 @@ import org.reflections.util.ConfigurationBuilder;
 import java.util.Set;
 
 public class ForgeApplication {
+
+    public static final Logger logger= LogManager.getLogger("FasterForge");
 
     public static void registerEventTrigger(){
         ConfigurationBuilder configuration = new ConfigurationBuilder().forPackages("com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.EventTrigger");

@@ -2,6 +2,7 @@ package com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.Annotation.Loader;
 
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Loader;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.Annotation.MinecraftBlock;
+import com.github.zhangsiyao.FasterForge.Manager.BlockManager;
 import com.github.zhangsiyao.FasterForge.Manager.ItemManager;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Utils.ReflectionUtil;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Minecraft.Annotation.Enum.BlockMaterial;
@@ -14,15 +15,11 @@ import net.minecraft.util.ResourceLocation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 import java.util.Set;
 
 @SuppressWarnings("all")
 @Loader
 public class BlockLoader extends AnnotationLoader {
-    private static int success=0;
-    private static int error=0;
-
     public BlockLoader() {
     }
 
@@ -38,16 +35,11 @@ public class BlockLoader extends AnnotationLoader {
                 Material material=BlockLoader.getMaterial(blockMaterial);
                 ResourceLocation location = new ResourceLocation(modId, name);
 
-                if(canRegister(location,c)){
-                    Block block;
-                    Constructor constructor = c.getConstructor(Material.class);
-                    constructor.setAccessible(true);
-                    block = (Block) constructor.newInstance(material);
-                    block.setRegistryName(location);
-                    ItemManager.registerBlocks(block);
-                    ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
-                    success++;
-                }
+                Constructor constructor = c.getConstructor(Material.class);
+                constructor.setAccessible(true);
+                Block block = (Block) constructor.newInstance(material);
+                block.setRegistryName(location);
+                BlockManager.registerBlock(block);
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
@@ -65,19 +57,12 @@ public class BlockLoader extends AnnotationLoader {
                 Class DeclaringClass=field.getDeclaringClass();
                 ResourceLocation location = new ResourceLocation(modId, name);
                 field.setAccessible(true);
-
-                if(!isStaticField(field,location)){
-                    error++;
+                if(!isStaticField(field,MinecraftBlock.class)){
                     continue;
                 }
                 Block block= (Block) field.get(DeclaringClass);
-                if(canRegister(location,field.getType())){
-                    block.setRegistryName(location);
-                    ItemManager.registerBlocks(block);
-                    ItemManager.registerItems(new ItemBlock(block).setRegistryName(location));
-                    logger.debug("方块:"+location+"注册成功!");
-                    success++;
-                }
+                block.setRegistryName(location);
+                BlockManager.registerBlock(block);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -87,34 +72,6 @@ public class BlockLoader extends AnnotationLoader {
     @Override
     public void loadFromMethod() {
 
-    }
-
-
-    private boolean canRegister(ResourceLocation location,Class c){
-        boolean isExtended= ReflectionUtil.isExtendFrom(c,Block.class);
-        boolean isRegistered= ItemManager.containBlock(location);
-        boolean canRegister=isExtended && !isRegistered;
-        if(canRegister){
-            return true;
-        }else if(!isExtended){
-            error++;
-            logger.error("=================================================================================");
-            logger.error("方块："+location+"注册失败");
-            logger.error("失败原因：方块"+ location+"应继承"+Block.class.getName()+"类，请检查是否继承.");
-            logger.error("错误位置："+c.getName()+"类");
-            logger.error("=================================================================================");
-            return false;
-        }else if(isRegistered){
-            error++;
-            logger.error("=================================================================================");
-            logger.error("方块："+location+"注册失败");
-            logger.error("失败原因：方块"+ location+"名称已被注册，请更换一个名称");
-            logger.error("错误位置："+c.getName()+"类");
-            logger.error("=================================================================================");
-            return false;
-        }else {
-            return false;
-        }
     }
 
 
