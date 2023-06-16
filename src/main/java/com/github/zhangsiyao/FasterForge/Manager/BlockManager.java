@@ -28,7 +28,7 @@ public class BlockManager {
 
     /**
      * 注册方块
-     * @param blocks 注册的方块(可变参数)
+     * @param block 注册的方块
      * */
     public static void registerBlock(Block block){
         if(containBlock(block.getRegistryName())){
