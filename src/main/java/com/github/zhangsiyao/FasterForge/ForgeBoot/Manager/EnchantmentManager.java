@@ -14,7 +14,7 @@ public class EnchantmentManager {
      * @param enchantments 注册的附魔属性
      * */
     public static void registerEnchantment(Enchantment enchantment){
-        if(!containEnchantment(enchantment.getRegistryName())){
+        if(containEnchantment(enchantment.getRegistryName())){
             ForgeApplication.logger.error("=================================================================================");
             ForgeApplication.logger.error("附魔:"+enchantment.getRegistryName()+"注册失败");
             ForgeApplication.logger.error("失败原因:附魔已经存在,请更换注册名");
