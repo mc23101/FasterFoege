@@ -25,6 +25,9 @@ public class BlockLoader extends com.github.zhangsiyao.FasterForge.ForgeBoot.Ann
         try {
             Set<Class<?>> classes = MinecraftCore.reflection.getTypesAnnotatedWith(MinecraftBlock.class);
             for(Class c:classes){
+                if(!checkClass(c,Block.class,MinecraftBlock.class)){
+                    continue;
+                }
                 MinecraftBlock annotation = (MinecraftBlock) c.getAnnotation(MinecraftBlock.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
@@ -48,13 +51,16 @@ public class BlockLoader extends com.github.zhangsiyao.FasterForge.ForgeBoot.Ann
         try {
             Set<Field> fields = MinecraftCore.reflection.getFieldsAnnotatedWith(MinecraftBlock.class);
             for(Field field:fields){
+                if (!checkField(field,Block.class,MinecraftBlock.class)) {
+                    continue;
+                }
                 MinecraftBlock annotation = field.getAnnotation(MinecraftBlock.class);
                 String modId = annotation.modId();
                 String name=annotation.name();
                 Class DeclaringClass=field.getDeclaringClass();
                 ResourceLocation location = new ResourceLocation(modId, name);
                 field.setAccessible(true);
-                if(!isStaticField(field,MinecraftBlock.class)){
+                if(!checkField(field,Block.class,MinecraftBlock.class)){
                     continue;
                 }
                 Block block= (Block) field.get(DeclaringClass);
