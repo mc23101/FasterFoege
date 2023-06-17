@@ -1,9 +1,9 @@
 package com.github.zhangsiyao.FasterForge;
 
 import com.github.zhangsiyao.FasterForge.ForgeBoot.ForgeApplication;
-import com.github.zhangsiyao.FasterForge.Manager.ResourceManager;
-import com.github.zhangsiyao.FasterForge.Model.CustomModelLoader;
-import com.github.zhangsiyao.FasterForge.Resources.CustomResourceListener;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Manager.ResourceManager;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Model.CustomModelLoader;
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Resources.CustomResourceListener;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
