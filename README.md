@@ -21,10 +21,10 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 `@MinecraftItem`注解的参数说明:
 
-| 参数 | 说明 |
-| :--: | :--: |
-|      |      |
-|      |      |
+| 参数  |   说明   |
+| :---: | :------: |
+| modId | 模组的id |
+| name  | 物品名称 |
 
 
 
@@ -32,7 +32,7 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 @MinecraftItem在类上使用时，应注意以下几点事项
 -  被注解的类应为`net.minecraft.item.Item`的子类
--  被注解的类应拥有无参构造.
+-  被注解的类应拥有`无参构造`
 
 以下代码是在类上使用`@MinecraftItem`注解来注册一个普通物品：
 
@@ -42,7 +42,6 @@ public class TestItem extends Item {
     public TestItem(){
     }
 }
-
 ```
 
 ### 在静态成员上使用
