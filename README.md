@@ -47,7 +47,7 @@ public class TestItem extends Item {
 
 ### 在静态成员上使用
 
-`@Minecraft`在静态成员上使用时，应注意以下几点事项
+`@MinecraftItem`在静态成员上使用时，应注意以下几点事项
 
 - 静态成员的类型应为`net.minecraft.item.Item`的子类
 - 静态成员应被`static`修饰(静态成员的定义)
@@ -64,6 +64,20 @@ public class Items {
 
 ### 在静态方法上使用
 
+`@MinecraftItem`在静态方法上使用时，应注意以下几点事项
+
+- 静态方法应有返回值，且返回值类型为`net.minecraft.item.Item`的子类
+- 静态方法应被`static`修饰(静态方法的定义)
+- 静态方法应为`无参`静态方法
+
+以下代码是在静态方法上使用`@MinecraftItem`注解来注册一个物品：
+
+```java
+@MinecraftItem(modId = ExampleMod.MODID,name = "testItem")
+public static TestItem testItem(){
+	return new TestItem();
+}
+```
 
 ## `Block(方块)`自动注册
 
