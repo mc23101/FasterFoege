@@ -19,10 +19,36 @@ FasterForge通过注解来自动注册Minecraft的内容，例如：Item(物品)
 
 - 静态方法
 
+`@MinecraftItem`注解的参数说明:
+
+| 参数 | 说明 |
+| :--: | :--: |
+|      |      |
+|      |      |
+
+
+
 ### 在类上使用
+
+@MinecraftItem在类上使用时，应注意以下几点事项
+-  被注解的类应为`net.minecraft.item.Item`的子类
+-  被注解的类应拥有无参构造.
+
+以下代码是在类上使用`@MinecraftItem`注解来注册一个普通物品：
+
+```java
+@MinecraftItem(modId = ExampleMod.MODID,name = "testItem")
+public class TestItem extends Item {
+    public TestItem(){
+    }
+}
+
+```
+
 ### 在静态成员上使用
+
 ### 在静态方法上使用
-  
+
 
 ## `Block(方块)`自动注册
 
