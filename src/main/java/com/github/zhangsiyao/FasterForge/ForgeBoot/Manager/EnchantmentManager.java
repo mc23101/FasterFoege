@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.ForgeBoot.Manager;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.ForgeApplication;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -15,14 +15,14 @@ public class EnchantmentManager {
      * */
     public static void registerEnchantment(Enchantment enchantment){
         if(containEnchantment(enchantment.getRegistryName())){
-            ForgeApplication.logger.error("=================================================================================");
-            ForgeApplication.logger.error("附魔:"+enchantment.getRegistryName()+"注册失败");
-            ForgeApplication.logger.error("失败原因:附魔已经存在,请更换注册名");
-            ForgeApplication.logger.error("=================================================================================");
+            FasterForge.logger.error("=================================================================================");
+            FasterForge.logger.error("附魔:"+enchantment.getRegistryName()+"注册失败");
+            FasterForge.logger.error("失败原因:附魔已经存在,请更换注册名");
+            FasterForge.logger.error("=================================================================================");
             return;
         }
         GameRegistry.findRegistry(Enchantment.class).register(enchantment);
-        ForgeApplication.logger.debug("附魔"+enchantment.getRegistryName()+"注册成功");
+        FasterForge.logger.debug("附魔"+enchantment.getRegistryName()+"注册成功");
     }
 
     /**

@@ -33,14 +33,14 @@ public class TileEntityLoader {
             String[] blocks = annotation.Blocks();
             for(String block:blocks){
                 ResourceLocation location = new ResourceLocation(block);
-                if(ItemManager.containBlock(location)){
-                    TileEntityManager.registerTileEntity(c,location);
-                    logger.debug("方块"+block+"绑定TileEntity成功");
-                    success++;
-                }else{
-                    AnnotationFactory.throwException(logger,errorType,location,"在"+c.getName()+"中MinecraftTileEntity注解的 参数Blocks中的元素:"+block+"绑定TileEntity失败。原因:方块"+block+"不存在.",c);
-                    error++;
-                }
+//                if(ItemManager.containBlock(location)){
+//                    TileEntityManager.registerTileEntity(c,location);
+//                    logger.debug("方块"+block+"绑定TileEntity成功");
+//                    success++;
+//                }else{
+//                    AnnotationFactory.throwException(logger,errorType,location,"在"+c.getName()+"中MinecraftTileEntity注解的 参数Blocks中的元素:"+block+"绑定TileEntity失败。原因:方块"+block+"不存在.",c);
+//                    error++;
+//                }
             }
         }
     }

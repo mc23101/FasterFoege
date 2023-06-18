@@ -7,6 +7,8 @@ import com.github.zhangsiyao.FasterForge.ForgeBoot.Resources.CustomResourceListe
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
@@ -15,15 +17,16 @@ import org.reflections.util.ConfigurationBuilder;
 import java.util.Set;
 
 @SuppressWarnings("all")
-public class MinecraftCore {
+public class FasterForge {
 
+    public static Logger logger;
     public static String MODID="";
 
     public static String NAME="";
 
     public static String VERSION="";
 
-    public static Class mod;
+    public static Object mod;
 
     public static Reflections reflection;
 
@@ -34,9 +37,10 @@ public class MinecraftCore {
      * @param o {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}的Class类
      * <p>正常情况下在此事件中调用MinecraftCore.preinit(this);即可</p>
      * */
-    public static void preinit(Class mod){
-        MinecraftCore.mod=mod;
+    public static void preinit(Object mod){
+        FasterForge.mod=mod;
         initModInfo();
+        logger=LogManager.getLogger("FasterFoegr/"+MODID);
         ForgeApplication.registerAnnotationLoader();
         ForgeApplication.registerEventTrigger();
     }
@@ -49,9 +53,9 @@ public class MinecraftCore {
         Set<Class<?>> typesAnnotatedWith = reflection.getTypesAnnotatedWith(Mod.class);
         for (Class c :typesAnnotatedWith){
             Mod annotation = (Mod) c.getAnnotation(Mod.class);
-            MinecraftCore.MODID=annotation.modid();
-            MinecraftCore.NAME=annotation.name();
-            MinecraftCore.VERSION=annotation.name();
+            FasterForge.MODID=annotation.modid();
+            FasterForge.NAME=annotation.name();
+            FasterForge.VERSION=annotation.name();
         }
     }
 

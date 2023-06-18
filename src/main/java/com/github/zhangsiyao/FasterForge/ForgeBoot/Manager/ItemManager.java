@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.ForgeBoot.Manager;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.ForgeApplication;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
 /**
  * 物品管理器,用于操作Item和Block
  * <p>例如:注册物品、注册方块</p>
@@ -41,14 +39,14 @@ public class ItemManager {
      * */
     public static void registerItem(Item item){
         if(containItem(item.getRegistryName())){
-            ForgeApplication.logger.error("=================================================================================");
-            ForgeApplication.logger.error("物品:"+item.getRegistryName()+"注册失败");
-            ForgeApplication.logger.error("失败原因:物品已经存在,请更换注册名");
-            ForgeApplication.logger.error("=================================================================================");
+            FasterForge.logger.error("=================================================================================");
+            FasterForge.logger.error("物品:"+item.getRegistryName()+"注册失败");
+            FasterForge.logger.error("失败原因:物品已经存在,请更换注册名");
+            FasterForge.logger.error("=================================================================================");
             return;
         }
         GameRegistry.findRegistry(Item.class).register(item);
-        ForgeApplication.logger.debug("物品:"+item.getRegistryName()+"注册成功");
+        FasterForge.logger.debug("物品:"+item.getRegistryName()+"注册成功");
 
     }
 

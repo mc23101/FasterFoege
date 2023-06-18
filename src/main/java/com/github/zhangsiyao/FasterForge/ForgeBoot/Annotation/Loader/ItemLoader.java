@@ -1,22 +1,27 @@
 package com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Loader;
 
+import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.AnnotationLoader;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Manager.ItemManager;
 import com.github.zhangsiyao.FasterForge.Minecraft.Annotation.MinecraftItem;
-import com.github.zhangsiyao.FasterForge.MinecraftCore;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 @SuppressWarnings("all")
-public class ItemLoader extends AnnotationLoader{
+@AnnotationLoader
+public class ItemLoader extends AbstractLoader {
 
 
     @Override
     public void loadFromClass() {
         try {
-            Set<Class<?>> classes = MinecraftCore.reflection.getTypesAnnotatedWith(MinecraftItem.class);
+            Set<Class<?>> classes = FasterForge.reflection.getTypesAnnotatedWith(MinecraftItem.class);
+            System.out.println(classes.size());
             for(Class c:classes){
                 if(!checkClass(c,Item.class,MinecraftItem.class)){
                     continue;
@@ -37,7 +42,7 @@ public class ItemLoader extends AnnotationLoader{
     @Override
     public void loadFromField() {
         try {
-            Set<Field> fieldsAnnotatedWith = MinecraftCore.reflection.getFieldsAnnotatedWith(MinecraftItem.class);
+            Set<Field> fieldsAnnotatedWith = FasterForge.reflection.getFieldsAnnotatedWith(MinecraftItem.class);
             for(Field field:fieldsAnnotatedWith){
                 field.setAccessible(true);
                 MinecraftItem annotation = field.getAnnotation(MinecraftItem.class);
@@ -55,6 +60,25 @@ public class ItemLoader extends AnnotationLoader{
 
     @Override
     public void loadFromMethod() {
-
+        try {
+            Set<Method> methodsAnnotatedWith = FasterForge.reflection.getMethodsAnnotatedWith(MinecraftItem.class);
+            for(Method method:methodsAnnotatedWith){
+                if(!checkMethod(method,Item.class,MinecraftItem.class)){
+                    continue;
+                }
+                method.setAccessible(true);
+                MinecraftItem annotation = method.getAnnotation(MinecraftItem.class);
+                String modId = annotation.modId();
+                String name=annotation.name();
+                ResourceLocation location = new ResourceLocation(modId, name);
+                Item item = (Item) method.invoke(null);
+                item.setRegistryName(location);
+                ItemManager.registerItem(item);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

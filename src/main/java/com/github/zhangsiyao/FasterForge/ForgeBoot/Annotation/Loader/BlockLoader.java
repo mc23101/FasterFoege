@@ -4,7 +4,7 @@ import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.AnnotationLoader;
 import com.github.zhangsiyao.FasterForge.Minecraft.Annotation.MinecraftBlock;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Manager.BlockManager;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Enum.BlockMaterial;
-import com.github.zhangsiyao.FasterForge.MinecraftCore;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
@@ -16,14 +16,14 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 @AnnotationLoader
-public class BlockLoader extends com.github.zhangsiyao.FasterForge.ForgeBoot.Annotation.Loader.AnnotationLoader {
+public class BlockLoader extends AbstractLoader {
     public BlockLoader() {
     }
 
     @Override
     public void loadFromClass() {
         try {
-            Set<Class<?>> classes = MinecraftCore.reflection.getTypesAnnotatedWith(MinecraftBlock.class);
+            Set<Class<?>> classes = FasterForge.reflection.getTypesAnnotatedWith(MinecraftBlock.class);
             for(Class c:classes){
                 if(!checkClass(c,Block.class,MinecraftBlock.class)){
                     continue;
@@ -34,7 +34,6 @@ public class BlockLoader extends com.github.zhangsiyao.FasterForge.ForgeBoot.Ann
                 BlockMaterial blockMaterial=annotation.material();
                 Material material=BlockLoader.getMaterial(blockMaterial);
                 ResourceLocation location = new ResourceLocation(modId, name);
-
                 Constructor constructor = c.getConstructor(Material.class);
                 constructor.setAccessible(true);
                 Block block = (Block) constructor.newInstance(material);
@@ -49,7 +48,7 @@ public class BlockLoader extends com.github.zhangsiyao.FasterForge.ForgeBoot.Ann
     @Override
     public void loadFromField() {
         try {
-            Set<Field> fields = MinecraftCore.reflection.getFieldsAnnotatedWith(MinecraftBlock.class);
+            Set<Field> fields = FasterForge.reflection.getFieldsAnnotatedWith(MinecraftBlock.class);
             for(Field field:fields){
                 if (!checkField(field,Block.class,MinecraftBlock.class)) {
                     continue;

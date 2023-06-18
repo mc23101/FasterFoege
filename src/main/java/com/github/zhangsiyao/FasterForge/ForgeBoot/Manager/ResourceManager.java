@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.ForgeBoot.Manager;
 
-import com.github.zhangsiyao.FasterForge.MinecraftCore;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Resources.BaseResourcePack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.FallbackResourceManager;
@@ -39,7 +39,7 @@ public class ResourceManager {
             Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
             domainResourceManagers.setAccessible(true);
             Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
-            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
+            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(FasterForge.MODID);
 
             return fallbackResourceManager.getResource(location);
         } catch (NoSuchFieldException | IOException e) {
@@ -58,7 +58,7 @@ public class ResourceManager {
             Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
             domainResourceManagers.setAccessible(true);
             Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
-            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
+            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(FasterForge.MODID);
 
             Class<FallbackResourceManager> fallbackResourceManagerClass = FallbackResourceManager.class;
             Field resourcePacksField = fallbackResourceManagerClass.getDeclaredField("resourcePacks");
@@ -102,7 +102,7 @@ public class ResourceManager {
             Field domainResourceManagers = simpleReloadableResourceManagerClass.getDeclaredField("domainResourceManagers");
             domainResourceManagers.setAccessible(true);
             Map<String, FallbackResourceManager> resourcePackMap = (Map<String, FallbackResourceManager>) domainResourceManagers.get(Minecraft.getMinecraft().getResourceManager());
-            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(MinecraftCore.MODID);
+            FallbackResourceManager fallbackResourceManager = resourcePackMap.get(FasterForge.MODID);
 
             //获取资源包
             Class<FallbackResourceManager> fallbackResourceManagerClass = FallbackResourceManager.class;

@@ -4,7 +4,7 @@ import com.github.zhangsiyao.FasterForge.Minecraft.Annotation.MinecraftEntity;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Manager.EntityManager;
 import com.github.zhangsiyao.FasterForge.ForgeBoot.Utils.ReflectionUtil;
 import com.github.zhangsiyao.FasterForge.Minecraft.Annotation.MinecraftEntityRender;
-import com.github.zhangsiyao.FasterForge.MinecraftCore;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +50,7 @@ public class EntityLoader {
             boolean canRegister=isExtended&&!isRegistered;
 
             if(canRegister){
-                EntityManager.registerEntity(registerName,c,name,id, MinecraftCore.mod,range,frequency,updates,primary,secondary);
+                EntityManager.registerEntity(registerName,c,name,id, FasterForge.mod,range,frequency,updates,primary,secondary);
                 logger.debug("实体:"+modId+":"+name+"注册成功!");
                 success++;
             }else if(!isExtended){

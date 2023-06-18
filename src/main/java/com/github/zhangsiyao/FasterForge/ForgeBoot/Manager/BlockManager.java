@@ -1,6 +1,6 @@
 package com.github.zhangsiyao.FasterForge.ForgeBoot.Manager;
 
-import com.github.zhangsiyao.FasterForge.ForgeBoot.ForgeApplication;
+import com.github.zhangsiyao.FasterForge.FasterForge;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -22,22 +22,24 @@ public class BlockManager {
      * */
     public static void registerBlock(Block block){
         if(containBlock(block.getRegistryName())){
-            ForgeApplication.logger.error("=================================================================================");
-            ForgeApplication.logger.error("方块:"+block.getRegistryName()+"注册失败");
-            ForgeApplication.logger.error("失败原因:方块已经存在,请更换注册名");
-            ForgeApplication.logger.error("=================================================================================");
+            FasterForge.logger.error("=================================================================================");
+            FasterForge.logger.error("方块:"+block.getRegistryName()+"注册失败");
+            FasterForge.logger.error("失败原因:方块已经存在,请更换注册名");
+            FasterForge.logger.error("=================================================================================");
             return;
         }
         if(ItemManager.containItem(block.getRegistryName())){
-            ForgeApplication.logger.error("=================================================================================");
-            ForgeApplication.logger.error("方块:"+block.getRegistryName()+"注册失败");
-            ForgeApplication.logger.error("失败原因:方块所绑定的物品名称已经存在,请更换注册名");
-            ForgeApplication.logger.error("=================================================================================");
+            FasterForge.logger.error("=================================================================================");
+            FasterForge.logger.error("方块:"+block.getRegistryName()+"注册失败");
+            FasterForge.logger.error("失败原因:方块所绑定的物品名称已经存在,请更换注册名");
+            FasterForge.logger.error("=================================================================================");
             return;
         }
         GameRegistry.findRegistry(Block.class).register(block);
-        ItemManager.registerItem(new ItemBlock(block));
-        ForgeApplication.logger.debug("方块"+block.getRegistryName()+"注册成功");
+        ItemBlock itemBlock = new ItemBlock(block);
+        itemBlock.setRegistryName(block.getRegistryName());
+        ItemManager.registerItem(itemBlock);
+        FasterForge.logger.debug("方块"+block.getRegistryName()+"注册成功");
     }
 
     /**
