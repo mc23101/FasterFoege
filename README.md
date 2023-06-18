@@ -53,6 +53,15 @@ public class TestItem extends Item {
 - 静态成员应被`static`修饰(静态成员的定义)
 - 静态成员的数据应不为`null`
 
+以下代码是在静态成员上使用`@MinecraftItem`注解来注册一个物品：
+
+```java
+public class Items {
+    @MinecraftItem(modId = ExampleMod.MODID,name = "testItem2")
+    public static TestItem testItem=new TestItem();
+}
+```
+
 ### 在静态方法上使用
 
 
