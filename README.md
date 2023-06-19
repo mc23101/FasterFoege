@@ -97,6 +97,8 @@ public static TestItem testItem(){
 
 # GUI组件
 
+为了保证Gui组件的稳定性和泛用性，本项目的Gui组件的实现借鉴`javax.swing`的实现方式.
+
 # 游戏事件
 
 # 模型动画机

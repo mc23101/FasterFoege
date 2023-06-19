@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 注册Minecraft的实体
  * */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.FIELD})
+@Target({ElementType.TYPE,ElementType.FIELD,ElementType.METHOD})
 public @interface MinecraftEntity {
     /**
      * Mod的Id

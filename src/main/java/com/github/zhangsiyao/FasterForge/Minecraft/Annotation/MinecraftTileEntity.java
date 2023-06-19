@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * <p>可以说，绝大部分看上去功能异常强大的方块都是基于 TileEntity 的。</p>
  * */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.FIELD})
+@Target({ElementType.TYPE,ElementType.FIELD,ElementType.METHOD})
 public @interface MinecraftTileEntity {
     /**
      * <p>与TileEntity绑定的Block的注册名</p>

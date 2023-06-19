@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * <p>通过注解注册Minecraft的Block方块</p>
  * */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.FIELD})
+@Target({ElementType.TYPE,ElementType.FIELD,ElementType.METHOD})
 public @interface MinecraftBlock {
     /**
      * ModID
