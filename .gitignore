@@ -5,6 +5,7 @@ bin
 .metadata
 .classpath
 .project
+.vscode
 
 # idea
 out
@@ -25,4 +26,3 @@ mcmodsrepo
 
 # Files from Forge MDK
 forge*changelog.txt
-gradle.properties
