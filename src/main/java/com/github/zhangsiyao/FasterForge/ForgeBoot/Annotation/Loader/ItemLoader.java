@@ -72,7 +72,7 @@ public class ItemLoader extends AbstractLoader {
             e.printStackTrace();
         }
     }
-    public static Item createItem(Item item,MinecraftItem minecraftItem){
+    private static Item createItem(Item item,MinecraftItem minecraftItem){
         String modId = minecraftItem.modId();
         String name=minecraftItem.name();
         ResourceLocation location = new ResourceLocation(modId, name);
