@@ -27,11 +27,8 @@ public class ItemLoader extends AbstractLoader {
                     continue;
                 }
                 MinecraftItem annotation = (MinecraftItem) c.getAnnotation(MinecraftItem.class);
-                String modId = annotation.modId();
-                String name=annotation.name();
-                ResourceLocation location = new ResourceLocation(modId, name);
                 Item item = (Item) c.newInstance();
-                item.setRegistryName(location);
+                item=createItem(item,annotation);
                 ItemManager.registerItem(item);
             }
         } catch (InstantiationException | IllegalAccessException e) {
@@ -46,11 +43,8 @@ public class ItemLoader extends AbstractLoader {
             for(Field field:fieldsAnnotatedWith){
                 field.setAccessible(true);
                 MinecraftItem annotation = field.getAnnotation(MinecraftItem.class);
-                String modId = annotation.modId();
-                String name=annotation.name();
-                ResourceLocation location = new ResourceLocation(modId, name);
                 Item item = (Item) field.get(field.getDeclaringClass());
-                item.setRegistryName(location);
+                item=createItem(item,annotation);
                 ItemManager.registerItem(item);
             }
         } catch (IllegalAccessException e) {
@@ -68,11 +62,8 @@ public class ItemLoader extends AbstractLoader {
                 }
                 method.setAccessible(true);
                 MinecraftItem annotation = method.getAnnotation(MinecraftItem.class);
-                String modId = annotation.modId();
-                String name=annotation.name();
-                ResourceLocation location = new ResourceLocation(modId, name);
                 Item item = (Item) method.invoke(null);
-                item.setRegistryName(location);
+                item=createItem(item,annotation);
                 ItemManager.registerItem(item);
             }
         } catch (IllegalAccessException e) {
@@ -80,5 +71,12 @@ public class ItemLoader extends AbstractLoader {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+    public static Item createItem(Item item,MinecraftItem minecraftItem){
+        String modId = minecraftItem.modId();
+        String name=minecraftItem.name();
+        ResourceLocation location = new ResourceLocation(modId, name);
+        item.setRegistryName(location);
+        return item;
     }
 }
