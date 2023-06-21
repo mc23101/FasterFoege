@@ -7,7 +7,7 @@
 
 FasterForge框架是介于Forge和mod开发之间的中间层，集成涵盖Forge的基本功能，并拓展了其他功能。
 
-[](./image/1.png)
+[](/image/1.png)
 
 设计FasterForge框架的目的是：规范Minecraft模组的开发，并支持Minecraft模组各个版本的兼容，使用FasterForge可以帮助mod开发者在不修改代码的情况下，可以移植到Minecraft的各个版本.
 
