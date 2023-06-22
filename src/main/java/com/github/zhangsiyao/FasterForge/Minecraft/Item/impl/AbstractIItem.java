@@ -1,4 +1,6 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Item;
+package com.github.zhangsiyao.FasterForge.Minecraft.Item.impl;
+
+import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItem;
 
 /*
 * FasterForge的抽象物品类
