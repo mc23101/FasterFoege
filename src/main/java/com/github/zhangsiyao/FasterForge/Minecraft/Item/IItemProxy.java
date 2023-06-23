@@ -1,14 +1,11 @@
 package com.github.zhangsiyao.FasterForge.Minecraft.Item;
 
-import com.github.zhangsiyao.FasterForge.Minecraft.Entity.Player.IPlayerProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockPosProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockStateProxy;
 import com.github.zhangsiyao.FasterForge.Minecraft.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Minecraft.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
-import com.github.zhangsiyao.FasterForge.Minecraft.World.IWorldProxy;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.item.Item;
 
 public interface IItemProxy {
 
@@ -23,8 +20,38 @@ public interface IItemProxy {
 
     boolean updateItemStackNBT(INbt nbt);
 
-    public boolean hasCustomProperties();
+    boolean hasCustomProperties();
 
-    EnumActionResult onItemUse(IPlayerProxy player, IWorldProxy worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ);
+    float getDestroySpeed(IItemStackProxy stack, IBlockPosProxy state);
+
+    int getMaxDamage();
+
+    IItemProxy setMaxDamage(int damage);
+
+    boolean isDamageable();
+
+    boolean canHarvestBlock(IBlockStateProxy blockIn);
+
+    IItemProxy setFull3D();
+
+    boolean isFull3D();
+
+    boolean shouldRotateAroundWhenRendering();
+
+    IItemProxy setUnlocalizedName(String unlocalizedName);
+
+    String getUnlocalizedNameInefficiently(IItemStackProxy stack);
+
+    String getUnlocalizedName();
+
+    IItemProxy setContainerItem(IItemProxy containerItem);
+
+    boolean getShareTag();
+
+    IItemProxy getContainerItem();
+
+    boolean hasContainerItem();
+
+    boolean isMap();
 
 }
