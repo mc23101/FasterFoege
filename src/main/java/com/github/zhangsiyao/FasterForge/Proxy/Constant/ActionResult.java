@@ -1,4 +1,4 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Constant;
+package com.github.zhangsiyao.FasterForge.Proxy.Constant;
 
 public enum ActionResult {
     SUCCESS,

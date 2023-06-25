@@ -1,22 +1,15 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Item.impl;
+package com.github.zhangsiyao.FasterForge.Proxy.Item.impl;
 
-import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockPosProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockStateProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Action;
-import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemPropertyProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemStackProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Nbt.INbt;
+import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockStateProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Constant.Action;
+import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemPropertyProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemStackProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 /**
  * FasterForge的物品代理，用于对Minecraft的Item进行操作.
@@ -86,7 +79,7 @@ public class ItemProxy implements IItemProxy {
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockPosProxy state) {
+    public float getDestroySpeed() {
         return 0;
     }
 

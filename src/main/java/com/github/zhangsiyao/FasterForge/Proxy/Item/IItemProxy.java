@@ -1,19 +1,16 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Item;
+package com.github.zhangsiyao.FasterForge.Proxy.Item;
 
-import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockPosProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockStateProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Action;
-import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Facing;
-import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Hand;
-import com.github.zhangsiyao.FasterForge.Minecraft.Entity.Player.IPlayerProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Item.impl.ItemPropertyProxy;
-import com.github.zhangsiyao.FasterForge.Minecraft.Nbt.INbt;
+import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockPosProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockStateProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Constant.Action;
+import com.github.zhangsiyao.FasterForge.Proxy.Constant.Facing;
+import com.github.zhangsiyao.FasterForge.Proxy.Constant.Hand;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityBase;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
-import com.github.zhangsiyao.FasterForge.Minecraft.World.IWorldProxy;
-import com.google.common.collect.Multimap;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
+import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
 
 public interface IItemProxy {
 
@@ -62,7 +59,7 @@ public interface IItemProxy {
 
     boolean hasCustomProperties();
 
-    float getDestroySpeed(ItemStack stack, IBlockPosProxy state);
+    float getDestroySpeed();
 
     int getMaxDamage();
 
@@ -100,21 +97,34 @@ public interface IItemProxy {
     /* ======================================== 物品属性 =====================================*/
 
     /* ======================================== 物品事件 =====================================*/
+
+
     @FunctionalInterface
     interface OnItemUse{
         void run(IPlayerProxy playerProxy, IWorldProxy worldProxy, IBlockPosProxy blockPosProxy, Hand hand, Facing facing, float hitX, float hitY, float hitZ);
     }
+    /**
+     * 物品Item使用事件
+     * */
     void onItemUse(OnItemUse itemUse);
+
 
     @FunctionalInterface
     interface  OnItemRightClick{
         void run(IWorldProxy worldProxy,IPlayerProxy playerProxy,Hand hand);
     }
+    /**
+     * 物品Item右键时事件
+     * */
     void onItemRightClick(OnItemRightClick onItemRightClick);
 
+    @FunctionalInterface
     interface OnItemUseFinish{
-        void run();
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityBase entity);
     }
+    /**
+     * 物品Item使用完成事件
+     * */
     void onItemUseFinish(OnItemUseFinish onItemUseFinish);
 
     /* ======================================== 物品事件 =====================================*/

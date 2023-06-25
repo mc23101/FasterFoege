@@ -1,6 +1,7 @@
 package com.github.zhangsiyao.FasterForge.Minecraft.Item.impl;
 
 import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItem;
+import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemProxy;
 
 /*
 * FasterForge的抽象物品类

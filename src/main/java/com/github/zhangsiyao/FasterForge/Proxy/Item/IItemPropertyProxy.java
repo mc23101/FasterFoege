@@ -1,4 +1,4 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Item;
+package com.github.zhangsiyao.FasterForge.Proxy.Item;
 
 import net.minecraft.item.IItemPropertyGetter;
 

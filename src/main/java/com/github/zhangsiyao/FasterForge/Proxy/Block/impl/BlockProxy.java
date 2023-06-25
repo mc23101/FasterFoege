@@ -1,4 +1,4 @@
-package com.github.zhangsiyao.FasterForge.Minecraft.Block;
+package com.github.zhangsiyao.FasterForge.Proxy.Block.impl;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
