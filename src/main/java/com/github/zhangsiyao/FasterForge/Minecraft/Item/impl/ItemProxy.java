@@ -1,11 +1,22 @@
 package com.github.zhangsiyao.FasterForge.Minecraft.Item.impl;
 
+import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockPosProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Block.IBlockStateProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Action;
 import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemStackProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 /**
  * FasterForge的物品代理，用于对Minecraft的Item进行操作.
@@ -16,12 +27,18 @@ import net.minecraft.util.ResourceLocation;
 public class ItemProxy implements IItemProxy {
     private final Item item;
 
+   private OnItemUseFinish onItemUseFinish;
+
+   private OnItemRightClick onItemRightClick;
+
     protected ItemProxy(Item item){
         this.item=item;
     }
 
     public ItemProxy(){
-        item=new Item();
+        item=new Item() {
+
+        };
     }
 
     public Item getItem() {
@@ -56,6 +73,121 @@ public class ItemProxy implements IItemProxy {
 
     public final ItemPropertyProxy getProperty(ResourceName key){
         return new ItemPropertyProxy(item.getPropertyGetter(new ResourceLocation(key.getLocation())));
+    }
+
+    @Override
+    public boolean updateItemStackNBT(INbt nbt) {
+        return false;
+    }
+
+    @Override
+    public boolean hasCustomProperties() {
+        return false;
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockPosProxy state) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return 0;
+    }
+
+    @Override
+    public IItemProxy setMaxDamage(int damage) {
+        return null;
+    }
+
+    @Override
+    public boolean isDamageable() {
+        return false;
+    }
+
+    @Override
+    public boolean canHarvestBlock(IBlockStateProxy blockIn) {
+        return false;
+    }
+
+    @Override
+    public IItemProxy setFull3D() {
+        return null;
+    }
+
+    @Override
+    public boolean isFull3D() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRotateAroundWhenRendering() {
+        return false;
+    }
+
+    @Override
+    public IItemProxy setUnlocalizedName(String unlocalizedName) {
+        return null;
+    }
+
+    @Override
+    public String getUnlocalizedNameInefficiently(IItemStackProxy stack) {
+        return null;
+    }
+
+    @Override
+    public String getUnlocalizedName() {
+        return null;
+    }
+
+    @Override
+    public IItemProxy setContainerItem(IItemProxy containerItem) {
+        return null;
+    }
+
+    @Override
+    public boolean getShareTag() {
+        return false;
+    }
+
+    @Override
+    public IItemProxy getContainerItem() {
+        return null;
+    }
+
+    @Override
+    public boolean hasContainerItem() {
+        return false;
+    }
+
+    @Override
+    public boolean isMap() {
+        return false;
+    }
+
+    @Override
+    public Action getItemUseAction(IItemStackProxy stack) {
+        return null;
+    }
+
+    @Override
+    public int getMaxItemUseDuration(IItemStackProxy stack) {
+        return 0;
+    }
+
+    @Override
+    public void onItemUse(OnItemUse itemUse) {
+
+    }
+
+    @Override
+    public void onItemRightClick(OnItemRightClick onItemRightClick) {
+        this.onItemRightClick=onItemRightClick;
+    }
+
+    @Override
+    public void onItemUseFinish(OnItemUseFinish onItemUseFinish) {
+
     }
 
 

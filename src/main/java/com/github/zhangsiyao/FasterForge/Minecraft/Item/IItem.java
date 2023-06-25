@@ -18,18 +18,4 @@ import net.minecraft.world.World;
 */
 public interface IItem {
 
-    /**
-     * 设置在玩家背包一堆物品的最大数量，默认为64
-     * */
-    public IItem setMaxItemStackSize(int maxStackSize);
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ);
-
-    public float getDestroySpeed(ItemStack stack, IBlockState state);
-
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn);
-
-
-    /* ======================================== FORGE START =====================================*/
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack);
-
 }

@@ -20,4 +20,8 @@ public abstract class AbstractIItem implements IItem {
         item.setMaxStackSize(size);
         return this;
     }
+
+    public ItemProxy getItem() {
+        return item;
+    }
 }
