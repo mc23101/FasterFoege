@@ -11,6 +11,11 @@ import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface IItemProxy {
 
@@ -126,6 +131,16 @@ public interface IItemProxy {
      * 物品Item使用完成事件
      * */
     void onItemUseFinish(OnItemUseFinish onItemUseFinish);
+
+
+    @FunctionalInterface
+    interface OnBlockDestroyed{
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IBlockStateProxy state, IBlockPosProxy pos, IEntityBase entityBase);
+    }
+    /**
+     * 手持物品Item破坏方块Block触发的事件
+     * */
+    void onBlockDestroyed(OnBlockDestroyed onBlockDestroyed);
 
     /* ======================================== 物品事件 =====================================*/
 
