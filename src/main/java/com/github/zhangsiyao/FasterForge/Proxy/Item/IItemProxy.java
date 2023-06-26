@@ -9,10 +9,14 @@ import com.github.zhangsiyao.FasterForge.Proxy.Constant.Hand;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntity;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityItem;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityLivingBase;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IMobEntity;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public interface IItemProxy {
 
@@ -273,6 +277,19 @@ public interface IItemProxy {
     }
 
     void onEntityItemUpdate(OnEntityItemUpdate onEntityItemUpdate);
+
+    @FunctionalInterface
+    interface OnEntitySwing{
+        boolean run(IEntityLivingBase entityLiving, IItemStackProxy stack);
+    }
+    void onEntitySwing(OnEntitySwing onEntitySwing);
+
+    @FunctionalInterface
+    interface OnHorseArmorTick{
+        void run(IWorldProxy world, IMobEntity horse, ItemStack armor);
+    }
+
+    void onHouseArmorTick(OnHorseArmorTick onHorseArmorTick);
 
 
     /* ======================================== 物品事件 =====================================*/
