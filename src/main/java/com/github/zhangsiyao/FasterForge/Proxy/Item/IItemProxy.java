@@ -14,7 +14,6 @@ import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
-import net.minecraft.item.ItemStack;
 
 public interface IItemProxy {
 
@@ -283,7 +282,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnHorseArmorTick{
-        void run(IWorldProxy world, IMobEntity horse, ItemStack armor);
+        void run(IWorldProxy world, IMobEntity horse, IItemStackProxy armor);
     }
     void onHouseArmorTick(OnHorseArmorTick onHorseArmorTick);
 
