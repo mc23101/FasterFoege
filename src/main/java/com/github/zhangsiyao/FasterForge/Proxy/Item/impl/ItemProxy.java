@@ -267,7 +267,7 @@ public class ItemProxy implements IItemProxy {
     }
 
     @Override
-    public void onItemUseFirst(OnItemUseFirst onItemUseFirst) {
+    public void onItemUseFirst(OnItemUseBegin onItemUseBegin) {
 
     }
 

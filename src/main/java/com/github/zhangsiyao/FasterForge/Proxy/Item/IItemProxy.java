@@ -123,13 +123,13 @@ public interface IItemProxy {
     void onRightClick(OnRightClick onRightClick);
 
     @FunctionalInterface
-    interface OnItemUseFinish{
+    interface OnItemUseEnd{
         void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBase entity);
     }
     /**
      * 物品Item使用完成事件
      * */
-    void onItemUseFinish(OnItemUseFinish onItemUseFinish);
+    void onItemUseEnd(OnItemUseEnd onItemUseFinish);
 
 
     @FunctionalInterface
@@ -148,7 +148,7 @@ public interface IItemProxy {
     /**
      * 手持物品Item交互实体触发的事件
      * */
-    void onItemInteractionEntity(OnInteractionEntity onInteractionEntity);
+    void onInteractionEntity(OnInteractionEntity onInteractionEntity);
 
 
     @FunctionalInterface
@@ -196,7 +196,7 @@ public interface IItemProxy {
 
 
     @FunctionalInterface
-    interface OnItemUseFirst{
+    interface OnItemUseBegin {
         /**
          * 当物品使用时被调用(在方块生成之间被调用)
          * @param player 使用物品的玩家
@@ -207,7 +207,7 @@ public interface IItemProxy {
          * */
         void run(IPlayerProxy player, IWorldProxy world, IBlockPosProxy pos,Facing side, float hitX, float hitY, float hitZ, Hand hand);
     }
-    void onItemUseFirst(OnItemUseFirst onItemUseFirst);
+    void onItemUseBegin(OnItemUseBegin onItemUseBegin);
 
     @FunctionalInterface
     interface OnBlockStartBreak{
@@ -277,10 +277,10 @@ public interface IItemProxy {
     void onEntityItemUpdate(OnEntityItemUpdate onEntityItemUpdate);
 
     @FunctionalInterface
-    interface OnEntitySwing{
+    interface OnEntitySwingTick {
         boolean run(IEntityLivingBase entityLiving, IItemStackProxy stack);
     }
-    void onEntitySwing(OnEntitySwing onEntitySwing);
+    void onEntitySwing(OnEntitySwingTick onEntitySwingTick);
 
     @FunctionalInterface
     interface OnHorseArmorTick{
