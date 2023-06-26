@@ -264,17 +264,16 @@ public interface IItemProxy {
     void onArmorTick(OnArmorTick onArmorTick);
 
     @FunctionalInterface
-    interface OnEntityItemUpdate{
+    interface OnEntityItemTick {
 
         /**
-         * 玩家掉落物品，在地面上生成的掉落物，update事件
+         * 玩家掉落物品，在地面上生成的掉落物，tick事件
          * @param entityItem 凋落物实体类
          * @return 返回true时，取消进一步更新事件.
          * */
         boolean run(IEntityItem entityItem);
     }
-
-    void onEntityItemUpdate(OnEntityItemUpdate onEntityItemUpdate);
+    void onEntityItemTick(OnEntityItemTick onEntityItemTick);
 
     @FunctionalInterface
     interface OnEntitySwingTick {
@@ -286,7 +285,6 @@ public interface IItemProxy {
     interface OnHorseArmorTick{
         void run(IWorldProxy world, IMobEntity horse, ItemStack armor);
     }
-
     void onHouseArmorTick(OnHorseArmorTick onHorseArmorTick);
 
 
