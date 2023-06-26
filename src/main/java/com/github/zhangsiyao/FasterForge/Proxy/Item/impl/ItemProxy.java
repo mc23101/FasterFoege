@@ -44,6 +44,7 @@ public class ItemProxy implements IItemProxy {
 
             @Override
             public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+                onItemRightClick.run(null,null,null);
                 return super.onItemRightClick(worldIn, playerIn, handIn);
             }
 
@@ -81,6 +82,8 @@ public class ItemProxy implements IItemProxy {
                 System.out.println("ItemCreated");
                 super.onCreated(stack, worldIn, playerIn);
             }
+
+
         };
     }
 
@@ -250,6 +253,41 @@ public class ItemProxy implements IItemProxy {
 
     @Override
     public void onItemCreated(OnItemCreated onItemCreated) {
+
+    }
+
+    @Override
+    public void onPlayerStoppedUsing(OnPlayerStoppedUsing onPlayerStoppedUsing) {
+
+    }
+
+    @Override
+    public void onDroppedByPlayer(OnDroppedByPlayer onDroppedByPlayer) {
+
+    }
+
+    @Override
+    public void onItemUseFirst(OnItemUseFirst onItemUseFirst) {
+
+    }
+
+    @Override
+    public void onBlockStartBreak(OnBlockStartBreak onBlockStartBreak) {
+
+    }
+
+    @Override
+    public void onUsingTick(OnUsingTick onUsingTick) {
+
+    }
+
+    @Override
+    public void onLeftClickEntity(OnLeftClickEntity onLeftClickEntity) {
+
+    }
+
+    @Override
+    public void onArmorTick(OnArmorTick onArmorTick) {
 
     }
 

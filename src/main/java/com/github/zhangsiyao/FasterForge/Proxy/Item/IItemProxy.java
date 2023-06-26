@@ -7,19 +7,12 @@ import com.github.zhangsiyao.FasterForge.Proxy.Constant.Action;
 import com.github.zhangsiyao.FasterForge.Proxy.Constant.Facing;
 import com.github.zhangsiyao.FasterForge.Proxy.Constant.Hand;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntity;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityItem;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityLivingBase;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public interface IItemProxy {
 
@@ -267,6 +260,19 @@ public interface IItemProxy {
         void run(IWorldProxy world, IPlayerProxy player, IItemStackProxy stack);
     }
     void onArmorTick(OnArmorTick onArmorTick);
+
+    @FunctionalInterface
+    interface OnEntityItemUpdate{
+
+        /**
+         * 玩家掉落物品，在地面上生成的掉落物，update事件
+         * @param entityItem 凋落物实体类
+         * @return 返回true时，取消进一步更新事件.
+         * */
+        boolean run(IEntityItem entityItem);
+    }
+
+    void onEntityItemUpdate(OnEntityItemUpdate onEntityItemUpdate);
 
 
     /* ======================================== 物品事件 =====================================*/
