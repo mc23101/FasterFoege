@@ -14,9 +14,7 @@ import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public interface IItemProxy {
 
@@ -116,13 +114,13 @@ public interface IItemProxy {
 
 
     @FunctionalInterface
-    interface  OnItemRightClick{
+    interface OnRightClick {
         void run(IWorldProxy worldProxy,IPlayerProxy playerProxy,Hand hand);
     }
     /**
      * 物品Item右键时事件
      * */
-    void onItemRightClick(OnItemRightClick onItemRightClick);
+    void onRightClick(OnRightClick onRightClick);
 
     @FunctionalInterface
     interface OnItemUseFinish{
@@ -144,13 +142,13 @@ public interface IItemProxy {
     void onBlockDestroyed(OnBlockDestroyed onBlockDestroyed);
 
     @FunctionalInterface
-    interface OnItemInteractionEntity{
+    interface OnInteractionEntity {
         void run(IItemStackProxy stack, IPlayerProxy playerIn, IEntityLivingBase target, Hand hand);
     }
     /**
      * 手持物品Item交互实体触发的事件
      * */
-    void onItemInteractionEntity(OnItemInteractionEntity onItemInteractionEntity);
+    void onItemInteractionEntity(OnInteractionEntity onInteractionEntity);
 
 
     @FunctionalInterface

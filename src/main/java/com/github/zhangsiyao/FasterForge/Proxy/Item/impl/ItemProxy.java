@@ -29,7 +29,7 @@ public class ItemProxy implements IItemProxy {
 
    private OnItemUseFinish onItemUseFinish;
 
-   private OnItemRightClick onItemRightClick;
+   private OnRightClick onRightClick;
 
     protected ItemProxy(Item item){
         this.item=item;
@@ -44,7 +44,7 @@ public class ItemProxy implements IItemProxy {
 
             @Override
             public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                onItemRightClick.run(null,null,null);
+                onRightClick.run(null,null,null);
                 return super.onItemRightClick(worldIn, playerIn, handIn);
             }
 
@@ -227,8 +227,8 @@ public class ItemProxy implements IItemProxy {
     }
 
     @Override
-    public void onItemRightClick(OnItemRightClick onItemRightClick) {
-        this.onItemRightClick=onItemRightClick;
+    public void onItemRightClick(OnRightClick onRightClick) {
+        this.onRightClick = onRightClick;
     }
 
     @Override
@@ -242,7 +242,7 @@ public class ItemProxy implements IItemProxy {
     }
 
     @Override
-    public void onItemInteractionEntity(OnItemInteractionEntity onItemInteractionEntity) {
+    public void onItemInteractionEntity(OnInteractionEntity onInteractionEntity) {
 
     }
 
