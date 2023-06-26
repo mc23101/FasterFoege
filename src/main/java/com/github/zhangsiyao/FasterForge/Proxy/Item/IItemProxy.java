@@ -12,6 +12,7 @@ import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -216,7 +217,7 @@ public interface IItemProxy {
     @FunctionalInterface
     interface OnBlockStartBreak{
         /**
-         * 方块被破坏之前被调用</br>
+         * 方块被破坏之前被调用<br>
          * Note：在客户端和服务器端都被调用!
          * @param stack 当前使用的物品堆
          * @param pos 方块的位置
@@ -225,6 +226,49 @@ public interface IItemProxy {
         boolean run(IItemStackProxy stack, IBlockPosProxy pos,IPlayerProxy player);
     }
     void onBlockStartBreak(OnBlockStartBreak onBlockStartBreak);
+
+
+    @FunctionalInterface
+    interface OnUsingTick{
+        /**
+         * 在使用物品Item时，每个tick都会被调用
+         * @param stack 正在使用的物品
+         * @param entityLivingBase 使用此物品的实体
+         * @param count 物品连续使用的时间
+         * */
+        void run(IItemStackProxy stack, IEntityLivingBase entityLivingBase, int count);
+    }
+    void  onUsingTick(OnUsingTick onUsingTick);
+
+
+    @FunctionalInterface
+    interface OnLeftClickEntity{
+        /**
+         * 当玩家左键点击(攻击)一个实体时调用.<br>
+         * 在造成伤害之前进行调用.
+         * @param stack 玩家手持的物品堆
+         * @param player 玩家
+         * @param entity 点击(攻击)的实体
+         * @return 如果返回值为true，则取消进一步处理并且实体不受到攻击。
+         * */
+        boolean run(IItemStackProxy stack, IPlayerProxy player,IEntity entity);
+    }
+    void onLeftClickEntity(OnLeftClickEntity onLeftClickEntity);
+
+
+    @FunctionalInterface
+    interface OnArmorTick{
+        /**
+         * 物品Item在装备槽时，每tick被调用
+         * @param world 当前世界
+         * @param player 装备物品Item的玩家
+         * @param stack 装备的物品堆
+         * */
+        void run(IWorldProxy world, IPlayerProxy player, IItemStackProxy stack);
+    }
+    void onArmorTick(OnArmorTick onArmorTick);
+
+
     /* ======================================== 物品事件 =====================================*/
 
 }
