@@ -1,4 +1,12 @@
 package com.github.zhangsiyao.FasterForge.Proxy.World.impl;
 
-public class WorldProxy {
+import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
+import net.minecraft.world.World;
+
+public class WorldProxy implements IWorldProxy {
+    private World world;
+
+    public WorldProxy(World world) {
+        this.world = world;
+    }
 }

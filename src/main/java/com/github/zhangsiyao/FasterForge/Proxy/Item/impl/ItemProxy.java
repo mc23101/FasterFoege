@@ -1,20 +1,20 @@
 package com.github.zhangsiyao.FasterForge.Proxy.Item.impl;
 
-import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockStateProxy;
-import com.github.zhangsiyao.FasterForge.Proxy.Constant.Action;
-import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemPropertyProxy;
+import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Hand;
+import com.github.zhangsiyao.FasterForge.Proxy.Block.impl.BlockPosProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.Impl.PlayerProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemProxy;
-import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemStackProxy;
-import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
-import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
+import com.github.zhangsiyao.FasterForge.Proxy.World.impl.WorldProxy;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,9 +27,42 @@ import net.minecraft.world.World;
 public class ItemProxy implements IItemProxy {
     private final Item item;
 
-   private OnItemUseFinish onItemUseFinish;
 
-   private OnRightClick onRightClick;
+    private OnItemUse onItemUse;
+
+    private OnRightClick onRightClick;
+
+    private OnItemUseEnd onItemUseEnd;
+
+    private OnBlockDestroyed onBlockDestroyed;
+
+    private OnInteractionEntity onInteractionEntity;
+
+    private OnItemUpdate onItemUpdate;
+
+    private OnItemCreated onItemCreated;
+
+    private OnPlayerStoppedUsing onPlayerStoppedUsing;
+
+    private OnDroppedByPlayer onDroppedByPlayer;
+
+    private  OnItemUseBegin onItemUseBegin;
+
+    private OnBlockStartBreak onBlockStartBreak;
+
+    private OnUsingTick onUsingTick;
+
+    private OnLeftClickEntity onLeftClickEntity;
+
+    private OnArmorTick onArmorTick;
+
+    private OnEntityItemTick onEntityItemTick;
+
+    private OnEntitySwingTick onEntitySwingTick;
+
+    private OnHorseArmorTick onHorseArmorTick;
+
+
 
     protected ItemProxy(Item item){
         this.item=item;
@@ -37,9 +70,11 @@ public class ItemProxy implements IItemProxy {
 
     public ItemProxy(){
         item=new Item() {
+
             @Override
             public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+                onItemUse.run(new PlayerProxy(player),new WorldProxy(worldIn),new BlockPosProxy(pos),getHand(),null,hitX,hitY,hitZ);
+                return EnumActionResult.SUCCESS;
             }
 
             @Override
@@ -88,5 +123,88 @@ public class ItemProxy implements IItemProxy {
     }
 
 
+    @Override
+    public void onItemUse(OnItemUse itemUse) {
+        this.onItemUse=itemUse;
+    }
 
+    @Override
+    public void onRightClick(OnRightClick onRightClick) {
+        this.onRightClick=onRightClick;
+    }
+
+    @Override
+    public void onItemUseEnd(OnItemUseEnd onItemUseFinish) {
+        this.onItemUseEnd=onItemUseFinish;
+    }
+
+    @Override
+    public void onBlockDestroyed(OnBlockDestroyed onBlockDestroyed) {
+        this.onBlockDestroyed=onBlockDestroyed;
+    }
+
+    @Override
+    public void onInteractionEntity(OnInteractionEntity onInteractionEntity) {
+        this.onInteractionEntity=onInteractionEntity;
+    }
+
+    @Override
+    public void onItemUpdate(OnItemUpdate onItemUpdate) {
+        this.onItemUpdate=onItemUpdate;
+    }
+
+    @Override
+    public void onItemCreated(OnItemCreated onItemCreated) {
+        this.onItemCreated=onItemCreated;
+    }
+
+    @Override
+    public void onPlayerStoppedUsing(OnPlayerStoppedUsing onPlayerStoppedUsing) {
+        this.onPlayerStoppedUsing=onPlayerStoppedUsing;
+    }
+
+    @Override
+    public void onDroppedByPlayer(OnDroppedByPlayer onDroppedByPlayer) {
+        this.onDroppedByPlayer=onDroppedByPlayer;
+    }
+
+    @Override
+    public void onItemUseBegin(OnItemUseBegin onItemUseBegin) {
+        this.onItemUseBegin=onItemUseBegin;
+    }
+
+    @Override
+    public void onBlockStartBreak(OnBlockStartBreak onBlockStartBreak) {
+        this.onBlockStartBreak=onBlockStartBreak;
+    }
+
+    @Override
+    public void onUsingTick(OnUsingTick onUsingTick) {
+        this.onUsingTick=onUsingTick;
+    }
+
+    @Override
+    public void onLeftClickEntity(OnLeftClickEntity onLeftClickEntity) {
+        this.onLeftClickEntity=onLeftClickEntity;
+    }
+
+    @Override
+    public void onArmorTick(OnArmorTick onArmorTick) {
+        this.onArmorTick=onArmorTick;
+    }
+
+    @Override
+    public void onEntityItemTick(OnEntityItemTick onEntityItemTick) {
+        this.onEntityItemTick=onEntityItemTick;
+    }
+
+    @Override
+    public void onEntitySwing(OnEntitySwingTick onEntitySwingTick) {
+        this.onEntitySwingTick=onEntitySwingTick;
+    }
+
+    @Override
+    public void onHouseArmorTick(OnHorseArmorTick onHorseArmorTick) {
+        this.onHorseArmorTick=onHorseArmorTick;
+    }
 }
