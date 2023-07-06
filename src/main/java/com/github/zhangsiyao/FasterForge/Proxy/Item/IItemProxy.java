@@ -1,5 +1,6 @@
 package com.github.zhangsiyao.FasterForge.Proxy.Item;
 
+import com.github.zhangsiyao.FasterForge.Minecraft.Item.IItemStack;
 import com.github.zhangsiyao.FasterForge.Minecraft.Resource.ResourceName;
 import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockPosProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockStateProxy;
@@ -14,8 +15,6 @@ import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 
 public interface IItemProxy {
 
@@ -126,7 +125,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnItemUseEnd{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBaseProxy entity);
+        void run(IItemStack stack, IWorldProxy worldIn, IEntityLivingBaseProxy entity);
     }
     /**
      * 物品Item使用完成事件

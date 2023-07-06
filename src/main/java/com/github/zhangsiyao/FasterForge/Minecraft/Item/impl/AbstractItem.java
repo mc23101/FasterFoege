@@ -6,13 +6,13 @@ import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemProxy;
 /*
 * FasterForge的抽象物品类
 * */
-public abstract class AbstractIItem implements IItem {
+public abstract class AbstractItem implements IItem {
 
     private final ItemProxy item=new ItemProxy();
 
     private String str="dawdada";
 
-    public AbstractIItem(){
+    public AbstractItem(){
         item.onItemRightClick((a,b,c)-> System.out.println(str));
     }
 

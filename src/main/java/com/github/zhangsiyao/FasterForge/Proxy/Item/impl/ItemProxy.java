@@ -4,8 +4,10 @@ import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Hand;
 import com.github.zhangsiyao.FasterForge.Proxy.Block.impl.BlockPosProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Block.impl.BlockStateProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.impl.PlayerProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.impl.EntityItemProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.impl.EntityLivingBaseProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Entity.impl.EntityProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.impl.MobEntityProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.IItemProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.World.impl.WorldProxy;
 import net.minecraft.block.state.IBlockState;
@@ -130,48 +132,53 @@ public class ItemProxy implements IItemProxy {
 
             @Override
             public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-                return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+                onItemUseBegin.run(new PlayerProxy(player),new WorldProxy(world),new BlockPosProxy(pos),null,hitX,hitY,hitZ,hand==EnumHand.MAIN_HAND? Hand.MAIN_HAND:Hand.OFF_HAND);
+                return null;
             }
 
             @Override
             public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-                return super.onLeftClickEntity(stack, player, entity);
+                onLeftClickEntity.run(new ItemStackProxy(stack),new PlayerProxy(player),new EntityProxy(entity));
+                return true;
             }
 
             @Override
             public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
-                return super.onBlockStartBreak(itemstack, pos, player);
+                onBlockStartBreak.run(new ItemStackProxy(itemstack),new BlockPosProxy(pos),new PlayerProxy(player));
+                return true;
             }
 
             @Override
             public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+                onUsingTick.run(new ItemStackProxy(stack),new EntityLivingBaseProxy(player),count);
                 super.onUsingTick(stack, player, count);
             }
 
             @Override
             public boolean onEntityItemUpdate(EntityItem entityItem) {
-                return super.onEntityItemUpdate(entityItem);
+                onEntityItemTick.run(new EntityItemProxy(entityItem));
+                return true;
             }
 
             @Override
             public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-                super.onArmorTick(world, player, itemStack);
+                onArmorTick.run(new WorldProxy(world),new PlayerProxy(player),new ItemStackProxy(itemStack));
             }
 
             @Override
             public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
-                return super.onEntitySwing(entityLiving, stack);
+                onEntitySwingTick.run(new EntityLivingBaseProxy(entityLiving),new ItemStackProxy(stack));
+                return true;
             }
 
             @Override
             public void onHorseArmorTick(World world, EntityLiving horse, ItemStack armor) {
-                super.onHorseArmorTick(world, horse, armor);
+                onHorseArmorTick.run(new WorldProxy(world),new MobEntityProxy(horse),new ItemStackProxy(armor));
             }
 
             @Override
             public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-                System.out.println("ItemCreated");
-                super.onCreated(stack, worldIn, playerIn);
+                onItemCreated.run(new ItemStackProxy(stack),new WorldProxy(worldIn),new PlayerProxy(playerIn));
             }
 
 
@@ -205,8 +212,8 @@ public class ItemProxy implements IItemProxy {
     }
 
     @Override
-    public void onItemUpdate(OnItemTick onItemUpdate) {
-        this.onItemUpdate=onItemUpdate;
+    public void onItemTick(OnItemTick onItemTick) {
+        this.onItemTick=onItemTick;
     }
 
     @Override
