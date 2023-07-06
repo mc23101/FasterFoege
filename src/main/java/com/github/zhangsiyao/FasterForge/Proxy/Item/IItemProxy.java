@@ -6,14 +6,16 @@ import com.github.zhangsiyao.FasterForge.Proxy.Block.IBlockStateProxy;
 import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Action;
 import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Facing;
 import com.github.zhangsiyao.FasterForge.Minecraft.Constant.Hand;
-import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntity;
-import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityItem;
-import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityLivingBase;
-import com.github.zhangsiyao.FasterForge.Proxy.Entity.IMobEntity;
-import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityItemProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IEntityLivingBaseProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.IMobEntityProxy;
+import com.github.zhangsiyao.FasterForge.Proxy.Entity.Player.IPlayerProxyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Item.impl.ItemPropertyProxy;
 import com.github.zhangsiyao.FasterForge.Proxy.Nbt.INbt;
 import com.github.zhangsiyao.FasterForge.Proxy.World.IWorldProxy;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 
 public interface IItemProxy {
 
@@ -104,8 +106,9 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnItemUse{
-        void run(IPlayerProxy playerProxy, IWorldProxy worldProxy, IBlockPosProxy blockPosProxy, Hand hand, Facing facing, float hitX, float hitY, float hitZ);
+        void run(IPlayerProxyProxy who);
     }
+
     /**
      * 物品Item使用事件
      * */
@@ -114,7 +117,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnRightClick {
-        void run(IWorldProxy worldProxy,IPlayerProxy playerProxy,Hand hand);
+        void run(IPlayerProxyProxy who);
     }
     /**
      * 物品Item右键时事件
@@ -123,7 +126,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnItemUseEnd{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBase entity);
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBaseProxy entity);
     }
     /**
      * 物品Item使用完成事件
@@ -133,7 +136,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnBlockDestroyed{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IBlockStateProxy state, IBlockPosProxy pos, IEntityLivingBase entityBase);
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IBlockStateProxy state, IBlockPosProxy pos, IEntityLivingBaseProxy entityBase);
     }
     /**
      * 手持物品Item破坏方块Block触发的事件
@@ -142,7 +145,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnInteractionEntity {
-        void run(IItemStackProxy stack, IPlayerProxy playerIn, IEntityLivingBase target, Hand hand);
+        void run(IItemStackProxy stack, IPlayerProxyProxy playerIn, IEntityLivingBaseProxy target, Hand hand);
     }
     /**
      * 手持物品Item交互实体触发的事件
@@ -151,18 +154,18 @@ public interface IItemProxy {
 
 
     @FunctionalInterface
-    interface OnItemUpdate{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntity entityIn, int itemSlot, boolean isSelected);
+    interface OnItemTick {
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityProxy entityIn, int itemSlot, boolean isSelected);
     }
     /**
      * 物品Item在玩家背包时每tick都会执行此事件
      * */
-    void onItemUpdate(OnItemUpdate onItemUpdate);
+    void onItemTick(OnItemTick onItemTick);
 
 
     @FunctionalInterface
     interface OnItemCreated{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IPlayerProxy playerIn);
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IPlayerProxyProxy playerIn);
     }
     /**
      * 猜测
@@ -173,7 +176,7 @@ public interface IItemProxy {
 
     @FunctionalInterface
     interface OnPlayerStoppedUsing{
-        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBase entityLiving, int timeLeft);
+        void run(IItemStackProxy stack, IWorldProxy worldIn, IEntityLivingBaseProxy entityLiving, int timeLeft);
     }
     void onPlayerStoppedUsing(OnPlayerStoppedUsing onPlayerStoppedUsing);
 
@@ -186,7 +189,7 @@ public interface IItemProxy {
          * @param player 掉落物品的玩家
          * @return 返回false将阻止道具从玩家的库存中移除并在游戏世界中生成
          * */
-        boolean run(IItemStackProxy item, IPlayerProxy player);
+        boolean run(IItemStackProxy item, IPlayerProxyProxy player);
     }
     /**
      * 玩家掉落物品Item触发的事件
@@ -204,7 +207,7 @@ public interface IItemProxy {
          * @param side 玩家面向目标的方向
          * @param hand 玩家哪只手持有物品
          * */
-        void run(IPlayerProxy player, IWorldProxy world, IBlockPosProxy pos,Facing side, float hitX, float hitY, float hitZ, Hand hand);
+        void run(IPlayerProxyProxy player, IWorldProxy world, IBlockPosProxy pos, Facing side, float hitX, float hitY, float hitZ, Hand hand);
     }
     void onItemUseBegin(OnItemUseBegin onItemUseBegin);
 
@@ -217,7 +220,7 @@ public interface IItemProxy {
          * @param pos 方块的位置
          * @param player 手持此物品的玩家
          * */
-        boolean run(IItemStackProxy stack, IBlockPosProxy pos,IPlayerProxy player);
+        boolean run(IItemStackProxy stack, IBlockPosProxy pos, IPlayerProxyProxy player);
     }
     void onBlockStartBreak(OnBlockStartBreak onBlockStartBreak);
 
@@ -230,7 +233,7 @@ public interface IItemProxy {
          * @param entityLivingBase 使用此物品的实体
          * @param count 物品连续使用的时间
          * */
-        void run(IItemStackProxy stack, IEntityLivingBase entityLivingBase, int count);
+        void run(IItemStackProxy stack, IEntityLivingBaseProxy entityLivingBase, int count);
     }
     void  onUsingTick(OnUsingTick onUsingTick);
 
@@ -245,7 +248,7 @@ public interface IItemProxy {
          * @param entity 点击(攻击)的实体
          * @return 如果返回值为true，则取消进一步处理并且实体不受到攻击。
          * */
-        boolean run(IItemStackProxy stack, IPlayerProxy player,IEntity entity);
+        boolean run(IItemStackProxy stack, IPlayerProxyProxy player, IEntityProxy entity);
     }
     void onLeftClickEntity(OnLeftClickEntity onLeftClickEntity);
 
@@ -258,7 +261,7 @@ public interface IItemProxy {
          * @param player 装备物品Item的玩家
          * @param stack 装备的物品堆
          * */
-        void run(IWorldProxy world, IPlayerProxy player, IItemStackProxy stack);
+        void run(IWorldProxy world, IPlayerProxyProxy player, IItemStackProxy stack);
     }
     void onArmorTick(OnArmorTick onArmorTick);
 
@@ -270,19 +273,26 @@ public interface IItemProxy {
          * @param entityItem 凋落物实体类
          * @return 返回true时，取消进一步更新事件.
          * */
-        boolean run(IEntityItem entityItem);
+        boolean run(IEntityItemProxy entityItem);
     }
     void onEntityItemTick(OnEntityItemTick onEntityItemTick);
 
     @FunctionalInterface
+    interface OnAttackEntity{
+        boolean run(IItemStackProxy stack, IEntityLivingBaseProxy target, IEntityLivingBaseProxy attacker);
+    }
+
+    void onAttackEntity(OnAttackEntity onAttackEntity);
+
+    @FunctionalInterface
     interface OnEntitySwingTick {
-        boolean run(IEntityLivingBase entityLiving, IItemStackProxy stack);
+        boolean run(IEntityLivingBaseProxy entityLiving, IItemStackProxy stack);
     }
     void onEntitySwing(OnEntitySwingTick onEntitySwingTick);
 
     @FunctionalInterface
     interface OnHorseArmorTick{
-        void run(IWorldProxy world, IMobEntity horse, IItemStackProxy armor);
+        void run(IWorldProxy world, IMobEntityProxy horse, IItemStackProxy armor);
     }
     void onHouseArmorTick(OnHorseArmorTick onHorseArmorTick);
 
